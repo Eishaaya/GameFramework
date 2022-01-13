@@ -126,7 +126,7 @@ namespace BaseGameLibrary
                 }
                 else
                 {
-                    ChangeColor(newColor, .1f + (float)(changeSpeed / 100));
+                    this.ChangeColor(newColor, .1f + (float)(changeSpeed / 100));
                 }
             }
         }

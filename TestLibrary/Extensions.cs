@@ -4,12 +4,29 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using static BaseGameLibrary.VisualObject;
 
 namespace BaseGameLibrary
 {
-    static class Extensions
+    public static class Extensions
     {
+
         public static Random random = new Random();
+
+
+        //VisualObject
+
+        
+        public static bool ChangeColor(VisualObject me, Color newColor, float sped = .1f)
+        {
+            return me.ChangeColor(newColor, sped);
+        }
+
+        public static bool FadeTo(this VisualObject me, ColorNums colorChoice)
+        {
+            return me.FadeTo(colorChoice);
+        }
+
         public static int Previous(this Random random, int min, int max)
         {
             switch (random.Next(0, 2))
@@ -93,6 +110,16 @@ namespace BaseGameLibrary
             return result;
         }
 
+        public static int RunSequence(ref int current, params IParamFunc<bool>[] funcs)
+        {
+            if (current >= funcs.Length)
+            {
+                current = 0;
+            }
+            current += funcs[current].Call() ? 1 : 0;
+            return current;
+        }
+
         public static double[] AllAddBy(this double[] numbers, double addend)
         {
             for (int i = 0; i < numbers.Length; i++)
@@ -118,7 +145,7 @@ namespace BaseGameLibrary
 
         #region behaviors
 
-        public static Vector2 Bounds (this Game game)
+        public static Vector2 Bounds(this Game game)
         {
             return new Vector2(game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
         }

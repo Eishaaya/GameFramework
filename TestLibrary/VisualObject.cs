@@ -14,7 +14,7 @@ namespace BaseGameLibrary
             Black,
             Red,
             Blue,
-            Green,            
+            Green,
         }
 
         //Dictionary<ColorNums, int> fullColorSpots = new Dictionary<ColorNums, int>()
@@ -24,7 +24,7 @@ namespace BaseGameLibrary
         //    { ColorNums.Green, 1},
         //    { ColorNums.Blue, 2},
         //};
-
+        float changeFactor = 0;
         public Color Color;
         public Vector2 Location;
         public float rotation;
@@ -75,7 +75,7 @@ namespace BaseGameLibrary
             CloneLogic(copy);
             return copy;
         }
-        protected void CloneLogic<T>(T copy) where T:VisualObject
+        protected void CloneLogic<T>(T copy) where T : VisualObject
         {
             copy.bigger = bigger;
             copy.rotated = rotated;
@@ -210,14 +210,34 @@ namespace BaseGameLibrary
                 }
             }
         }
-        public void ChangeColor(Color newColor, float sped = .1f)
+        public bool ChangeColor(Color newColor, float sped = .1f)
         {
             var temp = Color;
-            Color = Color.FromNonPremultiplied((int)MathHelper.LerpPrecise(Color.R, newColor.R, sped), (int)MathHelper.LerpPrecise(Color.G, newColor.G, sped), (int)MathHelper.LerpPrecise(Color.B, newColor.B, sped), (int)MathHelper.LerpPrecise(Color.A, newColor.A, sped));
-            if (temp == Color)
-            {
-                Color = newColor;
+            changeFactor += sped;
+            Color =                                                 // new Color(Vector4.LerpPrecise(Color.ToVector4(), newColor.ToVector4(), changeFactor);
+                    Color.FromNonPremultiplied(
+            (int)MathHelper.LerpPrecise(Color.R, newColor.R, changeFactor),
+            (int)MathHelper.LerpPrecise(Color.G, newColor.G, changeFactor),
+            (int)MathHelper.LerpPrecise(Color.B, newColor.B, changeFactor),
+            (int)MathHelper.LerpPrecise(Color.A, newColor.A, changeFactor));
+
+
+            if (temp != Color)
+            {                
+                if (Vector4.Distance(temp.ToVector4(), newColor.ToVector4()) < Vector4.Distance(Color.ToVector4(), newColor.ToVector4()))
+                {
+                    changeFactor = 0;
+                }
+                else
+                {
+                    Color = temp;
+                }
             }
+            if (newColor == Color)
+            {
+                return true;
+            }
+            return false;
         }
         public bool Fade(int speed = 3)
         {
@@ -264,7 +284,7 @@ namespace BaseGameLibrary
 
                 for (int i = 0; i < 3; i++)
                 {
-                     colorBytes[i] = (byte)Math.Max(colorBytes[i] - tint.A, 0);
+                    colorBytes[i] = (byte)Math.Max(colorBytes[i] - tint.A, 0);
                 }
                 colorBytes[(int)colorChoice] = tint.A;
 
@@ -278,7 +298,7 @@ namespace BaseGameLibrary
                 ;
             }
 
-            return Fade(tint, 3);            
+            return Fade(tint, 3);
         }
         public bool Fill()
         {
