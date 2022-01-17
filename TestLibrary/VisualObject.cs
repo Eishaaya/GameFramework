@@ -24,7 +24,11 @@ namespace BaseGameLibrary
         //    { ColorNums.Green, 1},
         //    { ColorNums.Blue, 2},
         //};
+        
+        //ColorChange variables
         float changeFactor = 0;
+        float totalColorDistance = -1;
+
         public Color Color;
         public Vector2 Location;
         public float rotation;
@@ -92,7 +96,7 @@ namespace BaseGameLibrary
         #endregion
 
         #region visualFunctions
-        public void Vibrate(int distance, float sped, bool rando = true)
+        public bool Vibrate(int distance, float sped, bool rando = true)
         {
             if (float.IsNaN(spotSet.X))
             {
@@ -123,10 +127,12 @@ namespace BaseGameLibrary
                     spotSet = new Vector2(float.NaN, float.NaN);
                     moved = false;
                     offset = Vector2.Zero;
+                    return true;
                 }
             }
+            return false;
         }
-        public void Pulsate(int size, float sped, bool rando = true)
+        public bool Pulsate(int size, float sped, bool rando = true)
         {
             if (float.IsNaN(sizeSet))
             {
@@ -161,14 +167,17 @@ namespace BaseGameLibrary
                     sizeSet = float.NaN;
                     Scale = oldScale;
                     bigger = false;
+                    return true;
                 }
                 else
                 {
-                    Scale = temp.X;
+                    Scale = temp.X;                   
                 }
             }
+            return false;
         }
-        public void Rotate(float target, float sped, bool rando = true)
+        //ISSUE
+        public bool Rotate(float target, float sped, bool rando = true)
         {
             if (float.IsNaN(degreeSet))
             {
@@ -203,15 +212,21 @@ namespace BaseGameLibrary
                     degreeSet = float.NaN;
                     rotation = temp.X;
                     rotated = false;
+                    return true;
                 }
                 else
                 {
                     rotation = temp.X;
                 }
             }
+            return false;
         }
         public bool ChangeColor(Color newColor, float sped = .1f)
         {
+            if (totalColorDistance == -1)
+            {
+                totalColorDistance = Vector4.Distance(Color.ToVector4(), newColor.ToVector4());
+            }
             var temp = Color;
             changeFactor += sped;
             Color =                                                 // new Color(Vector4.LerpPrecise(Color.ToVector4(), newColor.ToVector4(), changeFactor);
@@ -223,19 +238,22 @@ namespace BaseGameLibrary
 
 
             if (temp != Color)
-            {                
-                if (Vector4.Distance(temp.ToVector4(), newColor.ToVector4()) < Vector4.Distance(Color.ToVector4(), newColor.ToVector4()))
+            {
+                var DistanceLeft = Vector4.Distance(Color.ToVector4(), newColor.ToVector4());
+                if (Vector4.Distance(temp.ToVector4(), newColor.ToVector4()) > DistanceLeft)
                 {
                     changeFactor = 0;
                 }
                 else
                 {
                     Color = temp;
+                    changeFactor *= 30 - DistanceLeft / totalColorDistance * 30;
                 }
             }
             if (newColor == Color)
             {
-                return true;
+                totalColorDistance = -1;
+                return true;                
             }
             return false;
         }
@@ -254,7 +272,7 @@ namespace BaseGameLibrary
             Color = Color.FromNonPremultiplied(tint.R, tint.G, tint.B, Color.A - speed);
             return false;
         }
-
+        //ISSUE?
         public bool FadeTo(ColorNums colorChoice)
         {
             var tint = Color;

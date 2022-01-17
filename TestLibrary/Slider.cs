@@ -51,7 +51,7 @@ namespace BaseGameLibrary
             texts = labels;
             if (font != null)
             {
-                laby = new Label(font, Color, new Vector2(bar.Location.X - (int)font.MeasureString(text).X / 2, bar.Location.Y + stringH), text, TimeSpan.Zero);
+                laby = new Label(font, Color, new Vector2(bar.Location.X - (int)font.MeasureString(text).X / 2, bar.Location.Y + stringH), text);
             }
 
             Location = points[value].Location;

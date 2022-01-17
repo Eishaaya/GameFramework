@@ -20,13 +20,13 @@ namespace TestProj
         }
 
         protected override void Initialize()
-        {            
+        {
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            test = new Label(Content.Load<SpriteFont>("File"), Color.Wheat, Vector2.Zero, "Shid & fard");
+            test = new Label(Content.Load<SpriteFont>("File"), Color.Wheat, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), "Shid & fard", true);
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
@@ -36,9 +36,12 @@ namespace TestProj
         {
             RunSequence(ref runner,
                 //new ParamFunc<bool>(FadeTo, test, ColorNums.Blue),
-                new ParamFunc<Label, Color, float, bool>(ChangeColor, test, Color.Blue, .001f),
-                new ParamFunc<Label, Color, float, bool>(ChangeColor, test, Color.Red, .001f));
-
+                new ParamFunc<Label, Color, float, bool>(ChangeColor, test, Color.Blue, .1f),
+                new ParamFunc<Label, int, float, bool, bool>(Pulsate, test, 150, .1f, false),
+                new ParamFunc<Label, Color, float, bool>(ChangeColor, test, Color.Red, .1f),
+                new ParamFunc<Label, int, float, bool, bool>(Vibrate, test, 50, .1f, true),
+                new ParamFunc<Label, int, float, bool, bool>(Rotate, test, 90, .01f, false),
+                new ParamFunc<Label, Color, int, bool>(Fade, test, test.Color, 3));
         }
 
         protected override void Draw(GameTime gameTime)

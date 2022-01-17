@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,41 +9,66 @@ using System.Threading.Tasks;
 
 namespace BaseGameLibrary
 {
-    public class Label : VisualObject
+    public class FadingLabel : Label
     {
-        string text;
-        public SpriteFont Font { get; }
-        TimeSpan time;
-        TimeSpan tick;
+        Timer lifeTimer;
+        bool fading;
 
+        public FadingLabel(SpriteFont font, Color color, Vector2 location, string text, int lifeTime, bool middle = false)
+            : this(font, color, location, text, middle ? font.MeasureString(text) / 2 : Vector2.Zero, lifeTime) { }
+        public FadingLabel(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin, int lifeTime)
+            : this(font, color, location, text, Origin, 1, lifeTime) { }
+        public FadingLabel(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin, float Scale, int lifeTime)
+            : this(font, color, location, text, Origin, 0, SpriteEffects.None, Scale, 1, lifeTime) { }
 
-        public Label(SpriteFont font, Color color, Vector2 location, string text)
-            : this(font, color, location, text, TimeSpan.Zero) { }
-        public Label(SpriteFont font, Color color, Vector2 location, string text, TimeSpan lifetime)
-            : this(font, color, location, text, lifetime, new Vector2(0, 0), 0, SpriteEffects.None, 1, 1) { }
-        public Label(SpriteFont font, Color color, Vector2 location, string text, TimeSpan lifetime, float Scale)
-            : this(font, color, location, text, lifetime, new Vector2(0, 0), 0, SpriteEffects.None, Scale, 1) { }
-        public Label(SpriteFont font, Color color, Vector2 location, string text, TimeSpan lifetime, Vector2 Origin, float Rotation, SpriteEffects Effect, float Scale, float Depth)
-        : base (location, color, Origin, Rotation, Effect, Scale, Depth)
+        public FadingLabel(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin, float Rotation, SpriteEffects Effect, float Scale, float Depth, int lifeTime)
+        : base(font, color, location, text, Origin, Rotation, Effect, Scale, Depth)
         {
-            this.text = text;
-            Font = font;
-            time = lifetime;            
+            lifeTimer = new Timer(lifeTime);
+            fading = false;
         }
-        public void Update(GameTime timetick)
+
+        public void Update(GameTime gameTime)
         {
-            tick += timetick.ElapsedGameTime;
-            if (tick > time)
+            if (!fading)
+            {
+                lifeTimer.Tick(gameTime);
+                if (lifeTimer.Ready())
+                {
+                    fading = true;
+                }
+            }
+            else
             {
                 Fade();
             }
         }
+    }
+    public class Label : VisualObject
+    {
+        protected string text;
+        public SpriteFont Font { get; }
 
-        public void Text (string text)
+
+        public Label(SpriteFont font, Color color, Vector2 location, string text, bool middle = false)
+            : this(font, color, location, text, middle ? font.MeasureString(text) / 2 : Vector2.Zero) { }
+        public Label(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin)
+            : this(font, color, location, text, Origin, 1) { }
+        public Label(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin, float Scale)
+            : this(font, color, location, text, Origin, 0, SpriteEffects.None, Scale, 1) { }
+        public Label(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin, float Rotation, SpriteEffects Effect, float Scale, float Depth)
+        : base(location, color, Origin, Rotation, Effect, Scale, Depth)
+        {
+            this.text = text;
+            Font = font;
+        }
+
+
+        public void Text(string text)
         {
             this.text = text;
         }
-        public void Text (double number, int maxDigits = 0)
+        public void Text(double number, int maxDigits = 0)
         {
             text = Math.Round(number, maxDigits).ToString();
         }
@@ -62,7 +88,7 @@ namespace BaseGameLibrary
             return text;
         }
 
-        public static Label operator + (Label me, string newWord)          
+        public static Label operator +(Label me, string newWord)
         {
             me.text += newWord;
             return me;

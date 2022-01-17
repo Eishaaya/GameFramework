@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using static BaseGameLibrary.VisualObject;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BaseGameLibrary
 {
@@ -14,18 +15,18 @@ namespace BaseGameLibrary
         public static Random random = new Random();
 
 
-        //VisualObject
+        //Wrapping for sequence
+        public static bool ChangeColor(VisualObject me, Color newColor, float sped = .1f) => me.ChangeColor(newColor, sped);
+        public static bool FadeTo(VisualObject me, ColorNums colorChoice) => me.FadeTo(colorChoice);
+        public static bool Pulsate(VisualObject me, int size, float sped, bool rando) => me.Pulsate(size, sped, rando);
+        public static bool Vibrate(VisualObject me, int distance, float sped, bool rando) => me.Vibrate(distance, sped, rando);
+        public static bool Rotate(VisualObject me, int target, float sped, bool rando) => me.Rotate(target, sped, rando);
+        public static bool Fade(VisualObject me, int speed) => me.Fade(speed);
+        public static bool Fade(VisualObject me, Color tint, int speed) => me.Fade(tint, speed);
 
-        
-        public static bool ChangeColor(VisualObject me, Color newColor, float sped = .1f)
-        {
-            return me.ChangeColor(newColor, sped);
-        }
 
-        public static bool FadeTo(this VisualObject me, ColorNums colorChoice)
-        {
-            return me.FadeTo(colorChoice);
-        }
+
+        public static Vector2 GetDimensions(this Label label) => label.Font.MeasureString(label.Text());
 
         public static int Previous(this Random random, int min, int max)
         {

@@ -31,7 +31,7 @@ namespace BaseGameLibrary
 
         public override void Transfer (int gamescore)
         {
-            score = new Label(font, Color.LightGray, new Vector2(240, 285), $"Your Score: {gamescore}", new TimeSpan(0, 0, 1));
+            score = new Label(font, Color.LightGray, new Vector2(240, 285), $"Your Score: {gamescore}");
 
             //Read
             topScores = new List<Label>();
@@ -49,11 +49,11 @@ namespace BaseGameLibrary
                     {
                         for (int j = i; j < 5; j++)
                         {
-                            topScores.Add(new Label(font, Color.LightGray, new Vector2(170 + 130 * e, 320 + j * 30), $"#{j + 1 + e * 5} Score: 0", new TimeSpan(0, 0, 1)));
+                            topScores.Add(new Label(font, Color.LightGray, new Vector2(170 + 130 * e, 320 + j * 30), $"#{j + 1 + e * 5} Score: 0"));
                         }
                         break;
                     }
-                    topScores.Add(new Label(font, Color.LightGray, new Vector2(170 + 130 * e, 320 + i * 30), $"#{i + 1 + e * 5} Score: {scores[i + e * 5]}", new TimeSpan(0, 0, 1)));
+                    topScores.Add(new Label(font, Color.LightGray, new Vector2(170 + 130 * e, 320 + i * 30), $"#{i + 1 + e * 5} Score: {scores[i + e * 5]}"));
                     if (scores[i + e * 5] == gamescore)
                     {
                         topScores[i + e * 5].Color = Color.Yellow;

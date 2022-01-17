@@ -30,7 +30,7 @@ namespace BaseGameLibrary
 
             if (font != null)
             {
-                laby = new Label(font, Color, new Vector2(location.X + image.Width / 2 - (int)font.MeasureString(text).X / 2, location.Y + stringH), text, TimeSpan.Zero);
+                laby = new Label(font, Color, new Vector2(location.X + image.Width / 2 - (int)font.MeasureString(text).X / 2, location.Y + stringH), text);
             }
             this.Ball = Ball;
             BottomColor = Bottom;

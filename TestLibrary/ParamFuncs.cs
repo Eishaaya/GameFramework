@@ -82,4 +82,27 @@ namespace BaseGameLibrary
             parameter3 = par3;
         }
     }
+
+    public class ParamFunc<T1, T2, T3, T4, TReturn> : IParamFunc<TReturn>
+    {
+        T1 parameter1;
+        T2 parameter2;
+        T3 parameter3;
+        T4 parameter4;
+        Func<T1, T2, T3, T4, TReturn> containedFunc;
+
+        public TReturn Call()
+        {
+            return containedFunc(parameter1, parameter2, parameter3, parameter4);
+        }
+
+        public ParamFunc(Func<T1, T2, T3, T4, TReturn> func, T1 par1, T2 par2, T3 par3, T4 par4)
+        {
+            containedFunc = func;
+            parameter1 = par1;
+            parameter2 = par2;
+            parameter3 = par3;
+            parameter4 = par4;
+        }
+    }
 }
