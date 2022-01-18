@@ -11,10 +11,10 @@ namespace BaseGameLibrary
     {
         public enum ColorNums
         {
-            Black,
             Red,
-            Blue,
             Green,
+            Blue,
+            Black,
         }
 
         //Dictionary<ColorNums, int> fullColorSpots = new Dictionary<ColorNums, int>()
@@ -148,21 +148,21 @@ namespace BaseGameLibrary
             }
             if (!bigger)
             {
-                var temp = Vector2.Lerp(new Vector2(Scale, 0), new Vector2(sizeSet, 0), sped);
-                if (Vector2.Distance(temp, new Vector2(sizeSet, 0)) <= .01f)
+                var temp = MathHelper.Lerp(Scale, sizeSet, sped);
+                if (MathHelper.Distance(temp, sizeSet) <= .01f)
                 {
                     Scale = sizeSet;
                     bigger = true;
                 }
                 else
                 {
-                    Scale = temp.X;
+                    Scale = temp;
                 }
             }
             else
             {
-                var temp = Vector2.Lerp(new Vector2(Scale, 0), new Vector2(oldScale, 0), sped);
-                if (Vector2.Distance(temp, new Vector2(oldScale, 0)) <= .01f)
+                var temp = MathHelper.Lerp(Scale, oldScale, sped);
+                if (MathHelper.Distance(temp, oldScale) <= .01f)
                 {
                     sizeSet = float.NaN;
                     Scale = oldScale;
@@ -176,7 +176,6 @@ namespace BaseGameLibrary
             }
             return false;
         }
-        //ISSUE
         public bool Rotate(float target, float sped, bool rando = true)
         {
             if (float.IsNaN(degreeSet))
@@ -191,32 +190,32 @@ namespace BaseGameLibrary
                     degreeSet = target;
                 }
             }
-            if (!rotated)
+            if (rotated)
             {
-                var temp = Vector2.Lerp(new Vector2(rotation, 0), new Vector2(oldRotation, 0), sped);
-                if (Vector2.Distance(temp, new Vector2(oldRotation, 0)) <= .01f)
+                var temp = MathHelper.Lerp(rotation, oldRotation, sped);
+                if (MathHelper.Distance(temp, oldRotation) <= .01f)
                 {
-                    rotation = degreeSet;
-                    rotated = true;
-                }
-                else
-                {
-                    rotation = temp.X;
-                }
-            }
-            else
-            {
-                var temp = Vector2.Lerp(new Vector2(rotation, 0), new Vector2(degreeSet, 0), sped);
-                if (Vector2.Distance(temp, new Vector2(rotation, 0)) <= .01f)
-                {
-                    degreeSet = float.NaN;
-                    rotation = temp.X;
+                    rotation = oldRotation;
                     rotated = false;
                     return true;
                 }
                 else
                 {
-                    rotation = temp.X;
+                    rotation = temp;
+                }
+            }
+            else
+            {
+                var temp = MathHelper.Lerp(rotation, degreeSet, sped);
+                if (MathHelper.Distance(temp, degreeSet) <= .01f)
+                {
+                    degreeSet = float.NaN;
+                    rotation = temp;
+                    rotated = true;
+                }
+                else
+                {
+                    rotation = temp;
                 }
             }
             return false;
@@ -272,10 +271,10 @@ namespace BaseGameLibrary
             Color = Color.FromNonPremultiplied(tint.R, tint.G, tint.B, Color.A - speed);
             return false;
         }
-        //ISSUE?
-        public bool FadeTo(ColorNums colorChoice)
+        public bool FadeTo(ColorNums colorChoice, int fadeSpeed = 3)
         {
             var tint = Color;
+            #region old garbage
             //if (cChoice == ColorNums)
             //{
             //    //red?
@@ -291,6 +290,7 @@ namespace BaseGameLibrary
             //    //blue?
             //    tint = Color.FromNonPremultiplied(Color.R - Color.A, Color.G - Color.A, Color.A, Color.A);
             //}
+            #endregion
             if (colorChoice != ColorNums.Black)
             {
                 byte[] colorBytes = new byte[4];
@@ -312,11 +312,10 @@ namespace BaseGameLibrary
                     newColor += (uint)colorBytes[i] << i * 8;
                 }
 
-                tint = new Color(newColor);
-                ;
+                tint = new Color(newColor);                
             }
 
-            return Fade(tint, 3);
+            return Fade(tint, fadeSpeed);
         }
         public bool Fill()
         {

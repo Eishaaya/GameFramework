@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using BaseGameLibrary;
 using static BaseGameLibrary.Extensions;
+using static BaseGameLibrary.VisualObject;
 
 namespace TestProj
 {
@@ -35,12 +36,13 @@ namespace TestProj
         protected override void Update(GameTime gameTime)
         {
             RunSequence(ref runner,
-                //new ParamFunc<bool>(FadeTo, test, ColorNums.Blue),
-                new ParamFunc<Label, Color, float, bool>(ChangeColor, test, Color.Blue, .1f),
+                new ParamFunc<Label, ColorNums, bool>(FadeTo, test, ColorNums.Red),
+                new ParamFunc<Label, Color, float, bool>(ChangeColor, test, Color.White, .1f),
+                 new ParamFunc<Label, ColorNums, bool>(FadeTo, test, ColorNums.Green),
                 new ParamFunc<Label, int, float, bool, bool>(Pulsate, test, 150, .1f, false),
-                new ParamFunc<Label, Color, float, bool>(ChangeColor, test, Color.Red, .1f),
+                new ParamFunc<Label, Color, float, bool>(ChangeColor, test, Color.White, .1f),
                 new ParamFunc<Label, int, float, bool, bool>(Vibrate, test, 50, .1f, true),
-                new ParamFunc<Label, int, float, bool, bool>(Rotate, test, 90, .01f, false),
+                new ParamFunc<Label, float, float, bool, bool>(Rotate, test, MathHelper.ToRadians(90), .1f, false),
                 new ParamFunc<Label, Color, int, bool>(Fade, test, test.Color, 3));
         }
 

@@ -20,7 +20,7 @@ namespace BaseGameLibrary
         public static bool FadeTo(VisualObject me, ColorNums colorChoice) => me.FadeTo(colorChoice);
         public static bool Pulsate(VisualObject me, int size, float sped, bool rando) => me.Pulsate(size, sped, rando);
         public static bool Vibrate(VisualObject me, int distance, float sped, bool rando) => me.Vibrate(distance, sped, rando);
-        public static bool Rotate(VisualObject me, int target, float sped, bool rando) => me.Rotate(target, sped, rando);
+        public static bool Rotate(VisualObject me, float target, float sped, bool rando) => me.Rotate(target, sped, rando);
         public static bool Fade(VisualObject me, int speed) => me.Fade(speed);
         public static bool Fade(VisualObject me, Color tint, int speed) => me.Fade(tint, speed);
 
