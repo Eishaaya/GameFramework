@@ -26,11 +26,11 @@ namespace BaseGameLibrary
             Image = image;
             Location = location;
             Color = color;
-            this.rotation = rotation;
+            this.Rotation = rotation;
             Damage = sDamage;
             speed = new Vector2(sSpeed * (float)Math.Sin((double)rotation), sSpeed * -(float)Math.Cos((double)rotation));
             acceleration = sAcc;
-            effect = effects;
+            Effect = effects;
             Origin = origin;
             Scale = scale;
             Depth = depth;

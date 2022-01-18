@@ -40,7 +40,7 @@ namespace BaseGameLibrary
 
         public new Button Clone()
         {
-            var copy = new Button(Image, Location, Color, rotation, effect, Origin, Scale, Depth, HoverColor, ClickedColor);
+            var copy = new Button(Image, Location, Color, Rotation, Effect, Origin, Scale, Depth, HoverColor, ClickedColor);
             CloneLogic(copy);
 
             return copy;

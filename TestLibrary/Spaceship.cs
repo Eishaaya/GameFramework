@@ -135,21 +135,21 @@ namespace BaseGameLibrary
         {
             foreach (Vector2 engineSpot in engineSpots)
             {
-                var tempLocation = Vector2.Transform(engineSpot - Origin, Matrix.CreateRotationZ(rotation)) + Location;
+                var tempLocation = Vector2.Transform(engineSpot - Origin, Matrix.CreateRotationZ(Rotation)) + Location;
                 var newPart = ObjectPool<Particle>.Instance.Borrow<Particle>();
-                newPart.SetParticle(exhaustImage, tempLocation, Color.Gold, Color.Red, rotation, effect, new Vector2(exhaustImage.Width / 2, exhaustImage.Height / 2), new Vector2((float)-Math.Sin(rotation) * exhaustSpeed, (float)Math.Cos(rotation) * exhaustSpeed) + new Vector2(0, Movement.Momentum.Y), exhaustTime, exhaustScale, 1, 1, 0, false, random.Next((int)-exhaustSpeed, (int)exhaustSpeed), (int)exhaustSpeed, exhaustChange);
+                newPart.SetParticle(exhaustImage, tempLocation, Color.Gold, Color.Red, Rotation, Effect, new Vector2(exhaustImage.Width / 2, exhaustImage.Height / 2), new Vector2((float)-Math.Sin(Rotation) * exhaustSpeed, (float)Math.Cos(Rotation) * exhaustSpeed) + new Vector2(0, Movement.Momentum.Y), exhaustTime, exhaustScale, 1, 1, 0, false, random.Next((int)-exhaustSpeed, (int)exhaustSpeed), (int)exhaustSpeed, exhaustChange);
                 exhaust.AddParticle(newPart);
             }
         }
         public void Shoot()
         {
             var newShot = ObjectPool<Projectile>.Instance.Borrow<Laser>();
-            var tempLocation = Vector2.Transform(gunSpots[(int)gunIndex] - Origin, Matrix.CreateRotationZ(rotation)) + Location;
-            newShot.SetProjectile(shotImage, tempLocation, Color.White, rotation, shotDamage, shotSpeed, shotAcc, shotLife, effect, new Vector2(shotImage.Width / 2, shotImage.Height), shotScale, 1);
+            var tempLocation = Vector2.Transform(gunSpots[(int)gunIndex] - Origin, Matrix.CreateRotationZ(Rotation)) + Location;
+            newShot.SetProjectile(shotImage, tempLocation, Color.White, Rotation, shotDamage, shotSpeed, shotAcc, shotLife, Effect, new Vector2(shotImage.Width / 2, shotImage.Height), shotScale, 1);
             shots.Add(newShot);
 
             var newFlash = ObjectPool<AnimatingSprite>.Instance.Borrow<AnimatingSprite>();
-            newFlash.SetAnimatingSprite(flashImage, tempLocation, Color.White, rotation, effect, Rectangle.Empty, flashOrigins[0], flashScale, Depth, flashFrames, flashTime, flashOrigins);
+            newFlash.SetAnimatingSprite(flashImage, tempLocation, Color.White, Rotation, Effect, Rectangle.Empty, flashOrigins[0], flashScale, Depth, flashFrames, flashTime, flashOrigins);
             laserFlashes.Add(newFlash);
             gunIndex++;
         }
@@ -181,19 +181,19 @@ namespace BaseGameLibrary
 
             if (ks.IsKeyDown(leftKey))
             {
-                rotation = MathHelper.Lerp(rotation, -rotationLimit, .05f);
+                Rotation = MathHelper.Lerp(Rotation, -rotationLimit, .05f);
                 CurrentTurn = TurnState.Left;
                 stallTime.Reset();
             }
             else if (ks.IsKeyDown(rightKey))
             {
-                rotation = MathHelper.Lerp(rotation, rotationLimit, .05f);
+                Rotation = MathHelper.Lerp(Rotation, rotationLimit, .05f);
                 CurrentTurn = TurnState.Right;
                 stallTime.Reset();
             }
             else
             {
-                rotation = MathHelper.Lerp(rotation, 0, .1f);
+                Rotation = MathHelper.Lerp(Rotation, 0, .1f);
                 CurrentTurn = TurnState.None;
             }
         }
@@ -263,12 +263,12 @@ namespace BaseGameLibrary
                 }
                 else
                 {
-                    Movement.Force = new Vector2(Movement.Speed * (float)Math.Sin((double)rotation), 0);
+                    Movement.Force = new Vector2(Movement.Speed * (float)Math.Sin((double)Rotation), 0);
                 }
             }
             else
             {
-                Movement.SetSpeed(rotation);
+                Movement.SetSpeed(Rotation);
                 stallTime.Reset();
             }
             Movement.Update();

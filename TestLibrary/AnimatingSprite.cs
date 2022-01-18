@@ -109,9 +109,9 @@ namespace BaseGameLibrary
             Origin = origin;
             Scale = scale;
             Depth = depth;
-            effect = effects;
-            this.rotation = rotation;
-            originalColor = color;
+            Effect = effects;
+            this.Rotation = rotation;
+            OriginalColor = color;
             oldScale = Scale;
             oldRotation = rotation;
             random = new Random();
@@ -141,7 +141,7 @@ namespace BaseGameLibrary
         }   
         public override void Draw(SpriteBatch batch)
         {
-            Frames[currentframe].Draw(batch, Image, Location, Color, rotation, origins, Origin, Scale, effect, Depth, currentframe);
+            Frames[currentframe].Draw(batch, Image, Location, Color, Rotation, origins, Origin, Scale, Effect, Depth, currentframe);
         }
     }
 }

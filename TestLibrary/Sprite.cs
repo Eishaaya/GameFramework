@@ -35,7 +35,7 @@ namespace BaseGameLibrary
 
         public new Sprite Clone()
         {
-            var copy = new Sprite(Image, Location, Color, rotation, effect, Origin, Scale, Depth);
+            var copy = new Sprite(Image, Location, Color, Rotation, Effect, Origin, Scale, Depth);
             CloneLogic(copy);
 
             return copy;
@@ -50,7 +50,7 @@ namespace BaseGameLibrary
 
         public virtual void Draw(SpriteBatch batch)
         {
-            batch.Draw(Image, Location + offset, null, Color, rotation, Origin, Scale, effect, Depth);
+            batch.Draw(Image, Location + offset, null, Color, Rotation, Origin, Scale, Effect, Depth);
         }
     }
 }

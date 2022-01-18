@@ -67,10 +67,10 @@ namespace BaseGameLibrary
                     offSet = new Vector2(offSet.X + finalRow, offSet.Y);
                 }
                 toggOns[i] = !toggOns[i];
-                toggles.Add(new Toggler(template.Image, template.Location + offSet, template.Color, template.rotation, template.effect, template.Origin, template.Scale, template.Depth, template.HoverColor, template.ClickedColor,
-                    new Sprite(template.Ball.Image, template.Ball.Location + offSet, template.Ball.Color, template.Ball.rotation, template.Ball.effect, template.Ball.Origin, template.Ball.Scale, template.Ball.Depth),
-                    new Sprite(template.BottomColor.Image, template.BottomColor.Location + offSet, template.BottomColor.Color, template.BottomColor.rotation, template.BottomColor.effect, template.BottomColor.Origin, template.BottomColor.Scale, template.BottomColor.Depth),
-                    new ScalableSprite(template.MovingColor.Image, template.MovingColor.Location + offSet, template.MovingColor.Color, template.MovingColor.rotation, template.MovingColor.effect, template.MovingColor.Origin, template.MovingColor.Scale2D, template.MovingColor.Depth, template.MovingColor.Scale), font, keyTypes[i + binds.Count], 50, 0, 0, togs[i]));
+                toggles.Add(new Toggler(template.Image, template.Location + offSet, template.Color, template.Rotation, template.Effect, template.Origin, template.Scale, template.Depth, template.HoverColor, template.ClickedColor,
+                    new Sprite(template.Ball.Image, template.Ball.Location + offSet, template.Ball.Color, template.Ball.Rotation, template.Ball.Effect, template.Ball.Origin, template.Ball.Scale, template.Ball.Depth),
+                    new Sprite(template.BottomColor.Image, template.BottomColor.Location + offSet, template.BottomColor.Color, template.BottomColor.Rotation, template.BottomColor.Effect, template.BottomColor.Origin, template.BottomColor.Scale, template.BottomColor.Depth),
+                    new ScalableSprite(template.MovingColor.Image, template.MovingColor.Location + offSet, template.MovingColor.Color, template.MovingColor.Rotation, template.MovingColor.Effect, template.MovingColor.Origin, template.MovingColor.Scale2D, template.MovingColor.Depth, template.MovingColor.Scale), font, keyTypes[i + binds.Count], 50, 0, 0, togs[i]));
             }
         }
         public override void Start()

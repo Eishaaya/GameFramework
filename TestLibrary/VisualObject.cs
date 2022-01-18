@@ -15,39 +15,39 @@ namespace BaseGameLibrary
             Green,
             Blue,
             Black,
-        }
-
-        //Dictionary<ColorNums, int> fullColorSpots = new Dictionary<ColorNums, int>()
-        //{
-        //    { ColorNums.Black, -1},
-        //    { ColorNums.Red, 0},
-        //    { ColorNums.Green, 1},
-        //    { ColorNums.Blue, 2},
-        //};
-        
-        //ColorChange variables
-        float changeFactor = 0;
-        float totalColorDistance = -1;
-
-        public Color Color;
-        public Vector2 Location;
-        public float rotation;
-        public float Scale;
-        public float Depth;
-        public SpriteEffects effect;
-        public Vector2 Origin;
-        protected bool moved;
-
-        protected bool bigger;
-        protected bool rotated;
-        protected Vector2 spotSet;
-        protected float sizeSet;
-        protected float degreeSet;
-        public Vector2 offset;
-        protected float oldScale;
+        };
         protected Random random;
-        public Color originalColor;
-        public float oldRotation;
+
+        //ColorChange variables
+        protected float changeFactor = 0;
+        protected float totalColorDistance = -1;
+
+        //Vibrate variables
+        protected bool moved;
+        protected Vector2 spotSet;
+        protected Vector2 offset;
+
+        //Pulsate variables
+        protected bool bigger;
+        protected float sizeSet;
+        protected float oldScale;
+
+        //Rotate variables
+        protected bool rotated;
+        protected float degreeSet;
+        protected float oldRotation;
+       
+
+        //Standard properties   
+        public Color Color { get; set; }
+        public Vector2 Location { get; set; }
+        public float Rotation { get; set; }
+        public float Scale { get; set; }
+        public float Depth { get; set; }
+        public SpriteEffects Effect { get; set; }
+        public Vector2 Origin { get; set; }
+        public Color OriginalColor { get; set; }
+
 
         public VisualObject(Vector2 location, Color color, Vector2 origin, float Rotation, SpriteEffects Effect, float scale, float depth)
         {
@@ -56,11 +56,11 @@ namespace BaseGameLibrary
             Origin = origin;
             Scale = scale;
             Depth = depth;
-            effect = Effect;
-            rotation = Rotation;
-            originalColor = color;
+            this.Effect = Effect;
+            this.Rotation = Rotation;
+            OriginalColor = color;
             oldScale = Scale;
-            oldRotation = rotation;
+            oldRotation = this.Rotation;
             random = Extensions.random;
 
             offset = Vector2.Zero;
@@ -75,7 +75,7 @@ namespace BaseGameLibrary
 
         public VisualObject Clone()
         {
-            var copy = new VisualObject(Location, Color, Origin, rotation, effect, Scale, Depth);
+            var copy = new VisualObject(Location, Color, Origin, Rotation, Effect, Scale, Depth);
             CloneLogic(copy);
             return copy;
         }
@@ -88,7 +88,7 @@ namespace BaseGameLibrary
             copy.degreeSet = degreeSet;
             copy.offset = offset;
             copy.oldScale = oldScale;
-            copy.originalColor = originalColor;
+            copy.OriginalColor = OriginalColor;
             copy.oldRotation = oldRotation;
         }
 
@@ -171,7 +171,7 @@ namespace BaseGameLibrary
                 }
                 else
                 {
-                    Scale = temp.X;                   
+                    Scale = temp;                   
                 }
             }
             return false;
@@ -192,30 +192,30 @@ namespace BaseGameLibrary
             }
             if (rotated)
             {
-                var temp = MathHelper.Lerp(rotation, oldRotation, sped);
+                var temp = MathHelper.Lerp(Rotation, oldRotation, sped);
                 if (MathHelper.Distance(temp, oldRotation) <= .01f)
                 {
-                    rotation = oldRotation;
+                    Rotation = oldRotation;
                     rotated = false;
                     return true;
                 }
                 else
                 {
-                    rotation = temp;
+                    Rotation = temp;
                 }
             }
             else
             {
-                var temp = MathHelper.Lerp(rotation, degreeSet, sped);
+                var temp = MathHelper.Lerp(Rotation, degreeSet, sped);
                 if (MathHelper.Distance(temp, degreeSet) <= .01f)
                 {
                     degreeSet = float.NaN;
-                    rotation = temp;
+                    Rotation = temp;
                     rotated = true;
                 }
                 else
                 {
-                    rotation = temp;
+                    Rotation = temp;
                 }
             }
             return false;
@@ -258,7 +258,7 @@ namespace BaseGameLibrary
         }
         public bool Fade(int speed = 3)
         {
-            return Fade(originalColor, speed);
+            return Fade(OriginalColor, speed);
         }
         public bool Fade(Color tint, int speed = 3)
         {
@@ -319,7 +319,7 @@ namespace BaseGameLibrary
         }
         public bool Fill()
         {
-            return Fill(originalColor);
+            return Fill(OriginalColor);
         }
         public bool Fill(Color tint)
         {

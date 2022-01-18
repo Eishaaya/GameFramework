@@ -23,8 +23,11 @@ namespace BaseGameLibrary
         public static bool Rotate(VisualObject me, float target, float sped, bool rando) => me.Rotate(target, sped, rando);
         public static bool Fade(VisualObject me, int speed) => me.Fade(speed);
         public static bool Fade(VisualObject me, Color tint, int speed) => me.Fade(tint, speed);
-
-
+        public static bool Wait(Timer timer, GameTime time)
+        {
+            timer.Tick(time);
+            return timer.Ready();
+        }
 
         public static Vector2 GetDimensions(this Label label) => label.Font.MeasureString(label.Text());
 
@@ -77,7 +80,7 @@ namespace BaseGameLibrary
             for (int i = 0; i < points.Count; i++)
             {
                 var degree = (float)Math.Pow(i / (points.Count != 1 ? (float)points.Count - 1 : 1), 1.75);
-                points[i].Color = Color.Lerp(points[i].originalColor, newColor, degree);
+                points[i].Color = Color.Lerp(points[i].OriginalColor, newColor, degree);
             }
         }
 

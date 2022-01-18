@@ -96,7 +96,7 @@ namespace BaseGameLibrary
 
         public void Print(SpriteBatch batch)
         {
-            batch.DrawString(Font, text, Location + offset, Color, rotation, Origin, Scale, effect, Depth);
+            batch.DrawString(Font, text, Location + offset, Color, Rotation, Origin, Scale, Effect, Depth);
         }
     }
 }

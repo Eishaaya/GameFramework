@@ -67,9 +67,9 @@ namespace BaseGameLibrary
             rotationSpeed = rSpeed;
             maxScale = mScale;
             Color = color;
-            originalColor = color;
-            this.rotation = rotation;
-            effect = effects;
+            OriginalColor = color;
+            this.Rotation = rotation;
+            Effect = effects;
             Origin = origin;
             noScale = !willScale;
             Scale2D = scale;
@@ -93,7 +93,7 @@ namespace BaseGameLibrary
         }
         public void Update(GameTime gameTime)
         {
-            rotation += rotationSpeed;
+            Rotation += rotationSpeed;
             if (!going)
             {
                 startTime.Tick(gameTime);
