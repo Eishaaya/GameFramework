@@ -101,7 +101,7 @@ namespace BaseGameLibrary
             }
             if (index < 0)
             {
-                if (defaltButt.Check(mousy.Position.ToVector2(), nou))
+                if (defaltButt.Check(mousy.Position.ToVector2(), mouseRightClick))
                 {
                     binds = defaults;
                     for (int i = 0; i < binds.Count; i++)
@@ -109,7 +109,7 @@ namespace BaseGameLibrary
                         bindLabels[i].Text($"{keyTypes[i]} : {binds[i]}");
                     }
                 }
-                else if (arrowButt.Check(mousy.Position.ToVector2(), nou))
+                else if (arrowButt.Check(mousy.Position.ToVector2(), mouseRightClick))
                 {
                     binds = arrows;
                     for (int i = 0; i < binds.Count; i++)
@@ -117,7 +117,7 @@ namespace BaseGameLibrary
                         bindLabels[i].Text($"{keyTypes[i]} : {binds[i]}");
                     }
                 }
-                else if (applyButt.Check(mousy.Position.ToVector2(), nou))
+                else if (applyButt.Check(mousy.Position.ToVector2(), mouseRightClick))
                 {
                     manny.BindsChanged = true;
                     for (int i = 0; i < toggles.Count; i++)
@@ -127,7 +127,7 @@ namespace BaseGameLibrary
                     manny.back();
                     return;
                 }
-                else if (menuButt.Check(mousy.Position.ToVector2(), nou))
+                else if (menuButt.Check(mousy.Position.ToVector2(), mouseRightClick))
                 {
                     binds = oldBinds;
                     manny.back();
@@ -140,7 +140,7 @@ namespace BaseGameLibrary
 
                 for (int i = 0; i < binds.Count; i++)
                 {
-                    if (bindButtons[i].Check(mousy.Position.ToVector2(), nou))
+                    if (bindButtons[i].Check(mousy.Position.ToVector2(), mouseRightClick))
                     {
                         bindLabels[i].Text($"{keyTypes[i]} : ");
                         index = i;
@@ -148,7 +148,7 @@ namespace BaseGameLibrary
                 }
                 for (int i = 0; i < toggles.Count; i++)
                 {
-                    if (toggles[i].Check(mousy.Position.ToVector2(), nou))
+                    if (toggles[i].Check(mousy.Position.ToVector2(), mouseRightClick))
                     {
                         if (i == 0)
                         {
@@ -160,7 +160,7 @@ namespace BaseGameLibrary
                             else
                             {
                                 playMusic = true;
-                                music.Resume();
+                                Music.Resume();
                             }
                         }
                     }
@@ -168,7 +168,7 @@ namespace BaseGameLibrary
             }
             else
             {
-                if (!bindButtons[index].Check(mousy.Position.ToVector2(), nou) && nou)
+                if (!bindButtons[index].Check(mousy.Position.ToVector2(), mouseRightClick) && mouseRightClick)
                 {
                     bindLabels[index].Text($"{keyTypes[index]} : {binds[index]}");
                     index = -1;

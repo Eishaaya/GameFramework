@@ -8,6 +8,10 @@ namespace BaseGameLibrary
     {
         TReturn Call();
     }
+    public interface IParamAction
+    {
+        void Call();
+    }
 
     //public class ParamFunc<TReturn> : IParamFunc<TReturn>
     //{
@@ -25,7 +29,7 @@ namespace BaseGameLibrary
     //        parameters = funcParams;
     //    }
     //}
-
+    #region funcs
     public class ParamFunc<T1, TReturn> : IParamFunc<TReturn>
     {
         T1 parameter1;
@@ -105,4 +109,87 @@ namespace BaseGameLibrary
             parameter4 = par4;
         }
     }
+    #endregion
+
+    #region actions
+    public class ParamAction<T1> : IParamAction
+    {
+        T1 parameter1;
+        Action<T1> containedFunc;
+
+        public void Call()
+        {
+            containedFunc(parameter1);
+        }
+
+        public ParamAction(Action<T1> func, T1 parameter)
+        {
+            containedFunc = func;
+            parameter1 = parameter;
+        }
+    }
+
+    public class ParamAction<T1, T2> : IParamAction
+    {
+        T1 parameter1;
+        T2 parameter2;
+        Action<T1, T2> containedFunc;
+
+        public void Call()
+        {
+            containedFunc(parameter1, parameter2);
+        }
+
+        public ParamAction(Action<T1, T2> func, T1 par1, T2 par2)
+        {
+            containedFunc = func;
+            parameter1 = par1;
+            parameter2 = par2;
+        }
+    }
+
+    public class ParamAction<T1, T2, T3> : IParamAction
+    {
+        T1 parameter1;
+        T2 parameter2;
+        T3 parameter3;
+        Action<T1, T2, T3> containedFunc;
+
+        public void Call()
+        {
+            containedFunc(parameter1, parameter2, parameter3);
+        }
+
+        public ParamAction(Action<T1, T2, T3> func, T1 par1, T2 par2, T3 par3)
+        {
+            containedFunc = func;
+            parameter1 = par1;
+            parameter2 = par2;
+            parameter3 = par3;
+        }
+    }
+
+    public class ParamAction<T1, T2, T3, T4> : IParamAction
+    {
+        T1 parameter1;
+        T2 parameter2;
+        T3 parameter3;
+        T4 parameter4;
+        Action<T1, T2, T3, T4> containedFunc;
+
+        public void Call()
+        {
+            containedFunc(parameter1, parameter2, parameter3, parameter4);
+        }
+
+        public ParamAction(Action<T1, T2, T3, T4> func, T1 par1, T2 par2, T3 par3, T4 par4)
+        {
+            containedFunc = func;
+            parameter1 = par1;
+            parameter2 = par2;
+            parameter3 = par3;
+            parameter4 = par4;
+        }
+    }
+    #endregion
 }

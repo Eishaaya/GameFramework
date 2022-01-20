@@ -29,17 +29,17 @@ namespace BaseGameLibrary
             {
                 return;
             }
-            if (Unlimited.Check(mousy.Position.ToVector2(), nou))
+            if (Unlimited.Check(mousy.Position.ToVector2(), mouseRightClick))
             {
                 manny.next(1, true);
                 return;
             }
-            else if (chrisIsAPoopyHead.Check(mousy.Position.ToVector2(), nou))
+            else if (chrisIsAPoopyHead.Check(mousy.Position.ToVector2(), mouseRightClick))
             {
                 manny.next(2, true);
                 return;
             }
-            else if (setting.Check(mousy.Position.ToVector2(), nou))
+            else if (setting.Check(mousy.Position.ToVector2(), mouseRightClick))
             {
                 manny.next(5, true);
                 return;

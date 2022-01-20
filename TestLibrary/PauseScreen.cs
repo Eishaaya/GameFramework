@@ -31,7 +31,7 @@ namespace BaseGameLibrary
             {
                 return;
             }
-            if (menu.Check(mousy.Position.ToVector2(), nou))
+            if (menu.Check(mousy.Position.ToVector2(), mouseRightClick))
             {
                 manny.next(0, true);
                 manny.PreviousScreens.Pop();
@@ -39,13 +39,13 @@ namespace BaseGameLibrary
                 manny.clearMemory();
                 return;
             }
-            if (restart.Check(mousy.Position.ToVector2(), nou))
+            if (restart.Check(mousy.Position.ToVector2(), mouseRightClick))
             {
                 manny.back();
                 manny.peek().Reset();
                 return;
             }
-            if (back.Check(mousy.Position.ToVector2(), nou) || Maryland.IsKeyDown(exit) || nou)
+            if (back.Check(mousy.Position.ToVector2(), mouseRightClick) || Maryland.IsKeyDown(exit) || mouseRightClick)
             {
                 manny.back();
                 return;

@@ -11,17 +11,27 @@ namespace BaseGameLibrary
 {
     class Screen
     {
-        public SoundEffectInstance introMusic;
-        public SoundEffectInstance music;
-        protected MouseState mousy;
-        public List<Keys> binds;
-        protected bool nou;
-        protected bool uno;
-        public bool heldMouse;
+        //Music management
+        public SoundEffectInstance IntroMusic { get; set; }
         bool introDone;
+        public SoundEffectInstance Music { get; set; }
+        protected bool playMusic;
+        
+        //internal binds
+        public List<Keys> binds { get; set; }
+
+        //Mouse detection
+        protected MouseState mousy;        
+        protected bool mouseRightClick;
+        protected bool mouseLeftClick;
+        public bool heldMouse;
+
+        //Key detection
         protected bool keysDown = false;
         protected KeyboardState Maryland;
-        protected bool playMusic;
+
+
+        //ctors
         public Screen()
             : this(null, null) { }
         public Screen(SoundEffect m)
@@ -31,18 +41,18 @@ namespace BaseGameLibrary
             playMusic = true;
             Maryland = new KeyboardState();
             mousy = new MouseState();
-            nou = false;
-            uno = false;
-            music = null;
-            introMusic = null;
-            nou = false;
+            mouseRightClick = false;
+            mouseLeftClick = false;
+            Music = null;
+            IntroMusic = null;
+            mouseRightClick = false;
             if (m != null)
             {
-                music = m.CreateInstance();
-                music.IsLooped = true;
+                Music = m.CreateInstance();
+                Music.IsLooped = true;
                 if (im != null)
                 {
-                    introMusic = im.CreateInstance();
+                    IntroMusic = im.CreateInstance();
                     introDone = false;
                 }
                 else
@@ -55,6 +65,8 @@ namespace BaseGameLibrary
                 introDone = true;
             }
         }
+
+
         public virtual void changeBinds(List<Keys> newBinds, List<bool> bools)
         {
             playMusic = bools[0];
@@ -63,19 +75,20 @@ namespace BaseGameLibrary
                 StopMusic();
             }
         }
+
         public virtual List<bool> GetBools()
         {
             return new List<bool>();
         }
         public void StopMusic()
         {
-            if (music != null)
+            if (Music != null)
             {
                 introDone = false;
-                music.Stop();
-                if (introMusic != null)
+                Music.Stop();
+                if (IntroMusic != null)
                 {
-                    introMusic.Stop();
+                    IntroMusic.Stop();
                 }
             }
         }
@@ -85,62 +98,76 @@ namespace BaseGameLibrary
             heldMouse = true;
             if (playMusic)
             {
-                if (introMusic == null)
+                if (IntroMusic == null)
                 {
-                    if (music != null && music.State != SoundState.Playing)
+                    if (Music != null && Music.State != SoundState.Playing)
                     {
-                        music.Play();
+                        Music.Play();
                     }
                     return;
                 }
-                if (music.State == SoundState.Playing)
+                if (Music.State == SoundState.Playing)
                 {
                     return;
                 }
-                introMusic.Play();
+                IntroMusic.Play();
             }
             introDone = false;
         }
         public virtual void Update(GameTime time, Screenmanager manny)
         {
             Play(time);
+            CheckKeys();
+            CheckMouse();
+        }
+
+        protected void CheckKeys()
+        {
             Maryland = Keyboard.GetState();
             if (Maryland.GetPressedKeyCount() == 0)
             {
                 keysDown = false;
             }
+        }
+
+        protected void CheckMouse()
+        {
             if (mousy.LeftButton == ButtonState.Pressed || mousy.RightButton == ButtonState.Pressed)
             {
                 heldMouse = true;
-            }
-            mousy = Mouse.GetState();
-            nou = false;
-            if (mousy.LeftButton == ButtonState.Pressed)
-            {
-                nou = true;
             }
             else
             {
                 heldMouse = false;
             }
-            uno = false;
+
+            mousy = Mouse.GetState();
+            mouseRightClick = false;
+            mouseLeftClick = false;
+
+
             if (mousy.RightButton == ButtonState.Pressed)
             {
-                uno = true;
+                mouseRightClick = true;
+            }
+            
+            if (mousy.LeftButton == ButtonState.Pressed)
+            {
+                mouseLeftClick = true;
             }
         }
 
         public void PlayMusic()
         {
-            if (!introDone && playMusic && (introMusic == null || introMusic.State == SoundState.Stopped))
+            if (!introDone && playMusic && (IntroMusic == null || IntroMusic.State == SoundState.Stopped))
             {
-                music.Play();
+                Music.Play();
                 introDone = true;
             }
         }
         public virtual void Play(GameTime time)
         {
-            if (music != null)
+            if (Music != null)
             {
                 PlayMusic();
             }
