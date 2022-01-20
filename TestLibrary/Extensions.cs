@@ -23,10 +23,9 @@ namespace BaseGameLibrary
         public static bool Rotate(VisualObject me, float target, float sped, bool rando) => me.Rotate(target, sped, rando);
         public static bool Fade(VisualObject me, int speed) => me.Fade(speed);
         public static bool Fade(VisualObject me, Color tint, int speed) => me.Fade(tint, speed);
-        public static bool Wait(Timer timer, GameTime time)
+        public static bool Wait(Sequence waiter, int time)
         {
-            timer.Tick(time);
-            return timer.Ready();
+            return waiter.Wait(time);
         }
 
         public static Vector2 GetDimensions(this Label label) => label.Font.MeasureString(label.Text());
@@ -114,15 +113,7 @@ namespace BaseGameLibrary
             return result;
         }
 
-        public static int RunSequence(ref int current, params IParamFunc<bool>[] funcs)
-        {
-            if (current >= funcs.Length)
-            {
-                current = 0;
-            }
-            current += funcs[current].Call() ? 1 : 0;
-            return current;
-        }
+
 
         public static double[] AllAddBy(this double[] numbers, double addend)
         {

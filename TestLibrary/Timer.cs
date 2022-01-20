@@ -1,14 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BaseGameLibrary
 {
     public class Timer
     {
-        TimeSpan Wait;
+        TimeSpan wait;
         TimeSpan until;
 
         public static implicit operator TimeSpan (Timer timer) => timer.until;
@@ -18,16 +15,20 @@ namespace BaseGameLibrary
         public Timer(TimeSpan until)
         {
             this.until = until;
-            this.Wait = TimeSpan.Zero;
+            wait = TimeSpan.Zero;
         }
 
+        public void SetLength(int length)
+        {
+            until = TimeSpan.FromMilliseconds(length);
+        }
 
         public Timer(int length)
             : this(TimeSpan.FromMilliseconds(length)) { }
 
         public void Tick(GameTime time)
         {
-            Wait += time.ElapsedGameTime;
+            wait += time.ElapsedGameTime;
         }
         
         public int GetMillies()
@@ -37,11 +38,11 @@ namespace BaseGameLibrary
 
         public bool Ready(bool reset = true)
         {
-            if(Wait >= until)
+            if(wait >= until)
             {
                 if (reset)
                 {
-                    Wait = TimeSpan.Zero;
+                    wait = TimeSpan.Zero;
                 }
                 return true;
             }
@@ -50,7 +51,7 @@ namespace BaseGameLibrary
 
         public void Reset()
         {
-            Wait = TimeSpan.Zero;
+            wait = TimeSpan.Zero;
         }
     }
 }

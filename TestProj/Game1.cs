@@ -3,7 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using BaseGameLibrary;
 using static BaseGameLibrary.Extensions;
+using static BaseGameLibrary.Sequence;
 using static BaseGameLibrary.VisualObject;
+using System;
 
 namespace TestProj
 {
@@ -14,6 +16,9 @@ namespace TestProj
         Label test;
         Timer timer;
         int runner = 0;
+
+        Sequence sequence;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -24,6 +29,7 @@ namespace TestProj
         protected override void Initialize()
         {
             base.Initialize();
+            
         }
 
         protected override void LoadContent()
@@ -32,21 +38,24 @@ namespace TestProj
             timer = new Timer(5000);
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
-        }
-
-        protected override void Update(GameTime gameTime)
-        {
-            RunSequence(ref runner,
+            sequence = new Sequence();
+            sequence.AttachSequence(
                 new ParamFunc<Label, ColorNums, bool>(FadeTo, test, ColorNums.Red),
                 new ParamFunc<Label, Color, float, bool>(ChangeColor, test, Color.White, .1f),
                 new ParamFunc<Label, ColorNums, bool>(FadeTo, test, ColorNums.Green),
                 new ParamFunc<Label, int, float, bool, bool>(Pulsate, test, 150, .1f, false),
                 new ParamFunc<Label, Color, float, bool>(ChangeColor, test, Color.White, .1f),
                 new ParamFunc<Label, int, float, bool, bool>(Vibrate, test, 50, .1f, true),
-                new ParamFunc<Timer, GameTime, bool>(Wait, timer, gameTime),
+                new ParamFunc<Sequence, int, bool>(Wait, sequence, 5000),
                 new ParamFunc<Label, float, float, bool, bool>(Rotate, test, MathHelper.ToRadians(90), .1f, false),
                 new ParamFunc<Label, Color, int, bool>(Fade, test, test.Color, 3));
+
+            // TODO: use this.Content to load your game content here
+        }
+
+        protected override void Update(GameTime gameTime)
+        {
+            sequence.RunSequence(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
