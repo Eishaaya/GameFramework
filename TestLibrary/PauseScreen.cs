@@ -33,21 +33,21 @@ namespace BaseGameLibrary
             }
             if (menu.Check(mousy.Position.ToVector2(), mouseRightClick))
             {
-                manny.next(0, true);
+                manny.Next(0, true);
                 manny.PreviousScreens.Pop();
                 manny.PreviousScreens.Pop().Reset();
-                manny.clearMemory();
+                manny.ClearMemory();
                 return;
             }
             if (restart.Check(mousy.Position.ToVector2(), mouseRightClick))
             {
-                manny.back();
-                manny.peek().Reset();
+                manny.Back();
+                manny.CurrentScreen.Reset();
                 return;
             }
             if (back.Check(mousy.Position.ToVector2(), mouseRightClick) || Maryland.IsKeyDown(exit) || mouseRightClick)
             {
-                manny.back();
+                manny.Back();
                 return;
             }
         }

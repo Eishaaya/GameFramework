@@ -124,13 +124,13 @@ namespace BaseGameLibrary
                     {
                         toggles[i].On = !toggles[i].On;
                     }
-                    manny.back();
+                    manny.Back();
                     return;
                 }
                 else if (menuButt.Check(mousy.Position.ToVector2(), mouseRightClick))
                 {
                     binds = oldBinds;
-                    manny.back();
+                    manny.Back();
                     for (int i = 0; i < toggles.Count; i++)
                     {
                         toggles[i].On = !toggOns[i];

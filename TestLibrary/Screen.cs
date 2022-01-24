@@ -9,7 +9,7 @@ using System.Text;
 
 namespace BaseGameLibrary
 {
-    class Screen
+    public class Screen
     {
         //Music management
         public SoundEffectInstance IntroMusic { get; set; }

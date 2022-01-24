@@ -7,9 +7,11 @@ using System.Text;
 
 namespace BaseGameLibrary
 {
-    class Screenmanager
+    public class Screenmanager
     {
-        Stack<Screen> activeScreens;
+        public Screen CurrentScreen => activeScreens.Peek();
+
+        Stack<Screen> activeScreens; 
         List<Screen> allScreens;
         public Stack<Screen> PreviousScreens { get; private set; }
         public bool BindsChanged { get; set; }
@@ -19,63 +21,63 @@ namespace BaseGameLibrary
             allScreens = screens;
             activeScreens.Push(allScreens[0]);
             PreviousScreens = new Stack<Screen>();
-            activeScreens.Peek().Start();
+            CurrentScreen.Start();
         }
-        public Screen peek()
-        {
-            return activeScreens.Peek();
-        }
-        public void back()
+        //public Screen Peek()
+        //{
+        //    return CurrentScreen;
+        //}
+        public void Back()
         {
             if (BindsChanged)
             {
                 for (int i = 0; i < allScreens.Count; i++)
                 {
-                    allScreens[i].changeBinds(activeScreens.Peek().binds, activeScreens.Peek().GetBools());
+                    allScreens[i].changeBinds(CurrentScreen.binds, CurrentScreen.GetBools());
                     BindsChanged = false;
                 }
             }
             activeScreens.Pop().StopMusic();
             if (activeScreens.Count > 0)
             {
-                if (activeScreens.Peek() != PreviousScreens.Peek())
+                if (CurrentScreen != PreviousScreens.Peek())
                 {
                     activeScreens.Pop().StopMusic();
                 }
                 else
                 {
                     PreviousScreens.Pop();
-                    activeScreens.Peek().heldMouse = true;
-                    activeScreens.Peek().Start();
+                    CurrentScreen.heldMouse = true;
+                    CurrentScreen.Start();
                     return;
                 }
             }
             activeScreens.Push(PreviousScreens.Pop());
-            activeScreens.Peek().heldMouse = true;
-            activeScreens.Peek().Start();
+            CurrentScreen.heldMouse = true;
+            CurrentScreen.Start();
         }
-        public void next(int index, bool replace)
+        public void Next(int index, bool replace)
         {
             if (replace)
             {
-                activeScreens.Peek().StopMusic();
+                CurrentScreen.StopMusic();
                 PreviousScreens.Push(activeScreens.Pop());
                 if (activeScreens.Count > 0)
                 {
-                    activeScreens.Peek().StopMusic();
+                    CurrentScreen.StopMusic();
                     activeScreens.Clear();
                 }
                 activeScreens.Push(allScreens[index]);
             }
             else
             {
-                PreviousScreens.Push(activeScreens.Peek());
+                PreviousScreens.Push(CurrentScreen);
                 activeScreens.Push(allScreens[index]);
             }
-            activeScreens.Peek().heldMouse = true;
-            activeScreens.Peek().Start();
+            CurrentScreen.heldMouse = true;
+            CurrentScreen.Start();
         }
-        public void clearMemory()
+        public void ClearMemory()
         {
             PreviousScreens.Clear();
         }
@@ -91,7 +93,7 @@ namespace BaseGameLibrary
             {
                 activeScreens.Push(drawScreens.Pop());
             }
-            activeScreens.Peek().Update(time, this);
+            CurrentScreen.Update(time, this);
         }
 
         public void Draw(SpriteBatch batch)
