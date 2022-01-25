@@ -10,9 +10,9 @@ using System.Text;
 
 namespace BaseGameLibrary
 {
-    class GameScreen : Screen
+    class GameScreen<TEnum> : Screen where TEnum : Enum 
     {
-        GameRunner main;
+        GameRunner<TEnum> main;
         Random random;
         Label[] labels;
         Sprite[] sprites;

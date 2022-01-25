@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BaseGameLibrary
 {
-    class Impact
+    public class Impact
     {
         bool happening;
         Impact (bool happened = false)

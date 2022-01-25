@@ -113,7 +113,38 @@ namespace BaseGameLibrary
             }
         }
 
-        public static void 
+        public static void SendInput<TEnum> (GameRunner<TEnum> runner, TEnum input)
+            where TEnum: Enum
+        {
+            runner.ReceiveInput(input);
+        }
     }
 
+    public struct InputValue
+    {
+        public static InputValue<TData, TType> Create<TData, TType>(TData data, TType type)
+            where TType : Enum
+            => new InputValue<TData, TType>() { Data = data, ValueType = type };
+    }
+
+    public struct InputValue<TData, TType>
+        where TType : Enum
+    {
+
+        public TData Data { get; init; }
+        public TType ValueType { get; init; }
+    }
+
+
+    public enum InputValueTypes
+    {
+        Int,
+        Enum,
+    }
+}
+
+
+namespace System.Runtime.CompilerServices // CS0518 ErrorCode workaround
+{
+    internal static class IsExternalInit { }
 }
