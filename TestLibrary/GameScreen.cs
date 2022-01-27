@@ -37,9 +37,9 @@ namespace BaseGameLibrary
             Lost = false;
             this.random = random;
         }
-        public override void changeBinds(List<Keys> newBinds, List<bool> bools)
+        public override void ChangeSetting(List<Keys> newBinds, List<bool> bools)
         {
-            base.changeBinds(newBinds, bools);
+            base.ChangeSetting(newBinds, bools);
             //    grid.downKey = newBinds[0];
             //    grid.turnKey = newBinds[1];
             //    grid.leftKey = newBinds[2];

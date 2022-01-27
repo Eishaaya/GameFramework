@@ -5,10 +5,39 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace BaseGameLibrary
 {
+    //Magic stan APPROVED
+    [StructLayout(LayoutKind.Explicit)]
+    public class Setting
+    {
+        public enum Types : byte
+        {
+            BoolValue,
+            FloatValue,
+            KeyValue,
+            IntValue
+        }
+
+        [FieldOffset(0)]
+        Types Type;
+
+        [FieldOffset(1)]
+        bool BoolValue;
+
+        [FieldOffset(1)]
+        float FloatValue;
+
+        [FieldOffset(1)]
+        Keys KeyValue;
+
+        [FieldOffset(1)]
+        int IntValue;
+    }
+
     public class Screen
     {
         //Music management
@@ -18,7 +47,7 @@ namespace BaseGameLibrary
         protected bool playMusic;
         
         //internal binds
-        public List<Keys> binds { get; set; }
+        public HashSet<Setting> Settings { get; set; }
 
         //Mouse detection
         protected MouseState mousy;        
@@ -67,9 +96,8 @@ namespace BaseGameLibrary
         }
 
 
-        public virtual void changeBinds(List<Keys> newBinds, List<bool> bools)
-        {
-            playMusic = bools[0];
+        public virtual void ChangeSetting(Setting setting)
+        {            
             if (!playMusic)
             {
                 StopMusic();

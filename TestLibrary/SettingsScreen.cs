@@ -35,22 +35,22 @@ namespace BaseGameLibrary
             defaults = dk;
             arrows = ak;
             menuButt = menuButton;
-            binds = defaults;
+            Settings = defaults;
             defaltButt = d;
             arrowButt = a;
             keyTypes = kt;
-            oldBinds = binds;
+            oldBinds = Settings;
             index = -1;
             toggOns = togs;
 
             for (int i = 0; i < defaults.Count / 2; i++)
             {
-                bindLabels.Add(new Label(font, Color.White, new Vector2(150, i * 50 + 250), $"{keyTypes[i]} : {binds[i]}"));
+                bindLabels.Add(new Label(font, Color.White, new Vector2(150, i * 50 + 250), $"{keyTypes[i]} : {Settings[i]}"));
                 bindButtons.Add(new Button(b, new Vector2(150, i * 50 + 250), Color.Black, 0, SpriteEffects.None, new Vector2(0, 0), 1, .1f, Color.DarkGray, Color.Gray));
             }
             for (int i = defaults.Count / 2; i < defaults.Count; i++)
             {
-                bindLabels.Add(new Label(font, Color.White, new Vector2(350, (i - defaults.Count / 2) * 50 + 250), $"{keyTypes[i]} : {binds[i]}"));
+                bindLabels.Add(new Label(font, Color.White, new Vector2(350, (i - defaults.Count / 2) * 50 + 250), $"{keyTypes[i]} : {Settings[i]}"));
                 bindButtons.Add(new Button(b, new Vector2(350, (i - defaults.Count / 2) * 50 + 250), Color.Black, 0, SpriteEffects.None, new Vector2(0, 0), 1, .1f, Color.DarkGray, Color.Gray));
             }
             int finalRow = 0;
@@ -70,13 +70,13 @@ namespace BaseGameLibrary
                 toggles.Add(new Toggler(template.Image, template.Location + offSet, template.Color, template.Rotation, template.Effect, template.Origin, template.Scale, template.Depth, template.HoverColor, template.ClickedColor,
                     new Sprite(template.Ball.Image, template.Ball.Location + offSet, template.Ball.Color, template.Ball.Rotation, template.Ball.Effect, template.Ball.Origin, template.Ball.Scale, template.Ball.Depth),
                     new Sprite(template.BottomColor.Image, template.BottomColor.Location + offSet, template.BottomColor.Color, template.BottomColor.Rotation, template.BottomColor.Effect, template.BottomColor.Origin, template.BottomColor.Scale, template.BottomColor.Depth),
-                    new ScalableSprite(template.MovingColor.Image, template.MovingColor.Location + offSet, template.MovingColor.Color, template.MovingColor.Rotation, template.MovingColor.Effect, template.MovingColor.Origin, template.MovingColor.Scale2D, template.MovingColor.Depth, template.MovingColor.Scale), font, keyTypes[i + binds.Count], 50, 0, 0, togs[i]));
+                    new ScalableSprite(template.MovingColor.Image, template.MovingColor.Location + offSet, template.MovingColor.Color, template.MovingColor.Rotation, template.MovingColor.Effect, template.MovingColor.Origin, template.MovingColor.Scale2D, template.MovingColor.Depth, template.MovingColor.Scale), font, keyTypes[i + Settings.Count], 50, 0, 0, togs[i]));
             }
         }
         public override void Start()
         {
             base.Start();
-            oldBinds = binds;
+            oldBinds = Settings;
             for (int i = 0; i < toggles.Count; i++)
             {
                 toggOns[i] = !toggles[i].On;
@@ -103,18 +103,18 @@ namespace BaseGameLibrary
             {
                 if (defaltButt.Check(mousy.Position.ToVector2(), mouseRightClick))
                 {
-                    binds = defaults;
-                    for (int i = 0; i < binds.Count; i++)
+                    Settings = defaults;
+                    for (int i = 0; i < Settings.Count; i++)
                     {
-                        bindLabels[i].Text($"{keyTypes[i]} : {binds[i]}");
+                        bindLabels[i].Text($"{keyTypes[i]} : {Settings[i]}");
                     }
                 }
                 else if (arrowButt.Check(mousy.Position.ToVector2(), mouseRightClick))
                 {
-                    binds = arrows;
-                    for (int i = 0; i < binds.Count; i++)
+                    Settings = arrows;
+                    for (int i = 0; i < Settings.Count; i++)
                     {
-                        bindLabels[i].Text($"{keyTypes[i]} : {binds[i]}");
+                        bindLabels[i].Text($"{keyTypes[i]} : {Settings[i]}");
                     }
                 }
                 else if (applyButt.Check(mousy.Position.ToVector2(), mouseRightClick))
@@ -129,7 +129,7 @@ namespace BaseGameLibrary
                 }
                 else if (menuButt.Check(mousy.Position.ToVector2(), mouseRightClick))
                 {
-                    binds = oldBinds;
+                    Settings = oldBinds;
                     manny.Back();
                     for (int i = 0; i < toggles.Count; i++)
                     {
@@ -138,7 +138,7 @@ namespace BaseGameLibrary
                     return;
                 }
 
-                for (int i = 0; i < binds.Count; i++)
+                for (int i = 0; i < Settings.Count; i++)
                 {
                     if (bindButtons[i].Check(mousy.Position.ToVector2(), mouseRightClick))
                     {
@@ -170,14 +170,14 @@ namespace BaseGameLibrary
             {
                 if (!bindButtons[index].Check(mousy.Position.ToVector2(), mouseRightClick) && mouseRightClick)
                 {
-                    bindLabels[index].Text($"{keyTypes[index]} : {binds[index]}");
+                    bindLabels[index].Text($"{keyTypes[index]} : {Settings[index]}");
                     index = -1;
                     return;
                 }
                 if (Maryland.GetPressedKeyCount() > 0)
                 {
-                    binds[index] = Maryland.GetPressedKeys()[0];
-                    bindLabels[index].Text($"{keyTypes[index]} : {binds[index]}");
+                    Settings[index] = Maryland.GetPressedKeys()[0];
+                    bindLabels[index].Text($"{keyTypes[index]} : {Settings[index]}");
                     index = -1;
                     return;
                 }
@@ -191,7 +191,7 @@ namespace BaseGameLibrary
             arrowButt.Draw(batch);
             menuButt.Draw(batch);
             applyButt.Draw(batch);
-            for (int i = 0; i < binds.Count; i++)
+            for (int i = 0; i < Settings.Count; i++)
             {
                 bindButtons[i].Draw(batch);
                 bindLabels[i].Print(batch);

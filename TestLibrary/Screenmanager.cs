@@ -27,16 +27,18 @@ namespace BaseGameLibrary
         //{
         //    return CurrentScreen;
         //}
+
+        public void ChangeBinds(Setting changedSetting)
+        {
+            for (int i = 0; i < allScreens.Count; i++)
+            {
+                allScreens[i].ChangeBinds(changedSetting);
+                BindsChanged = false;
+            }
+        }
+
         public void Back()
         {
-            if (BindsChanged)
-            {
-                for (int i = 0; i < allScreens.Count; i++)
-                {
-                    allScreens[i].changeBinds(CurrentScreen.binds, CurrentScreen.GetBools());
-                    BindsChanged = false;
-                }
-            }
             activeScreens.Pop().StopMusic();
             if (activeScreens.Count > 0)
             {
