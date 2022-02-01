@@ -35,7 +35,7 @@ namespace BaseGameLibrary
         public void Draw(SpriteBatch SevenUpBatch)
         {
             Button.Draw(SevenUpBatch);
-            Label.Print(SevenUpBatch);
+            Label.Draw(SevenUpBatch);
         }
     }
 }

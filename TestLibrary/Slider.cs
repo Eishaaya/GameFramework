@@ -152,7 +152,7 @@ namespace BaseGameLibrary
 
             if (laby != null)
             {
-                laby.Print(batch);
+                laby.Draw(batch);
             }
         }
     }

@@ -121,7 +121,7 @@ namespace BaseGameLibrary
             Ball.Draw(batch);
             if (laby != null)
             {
-                laby.Print(batch);
+                laby.Draw(batch);
             }
         }
     }

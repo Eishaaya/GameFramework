@@ -1,10 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
 using System.Collections.Generic;
 using System.Text;
 
 namespace BaseGameLibrary
 {
-    public class Sequence
+    public class Sequence : IRunnable
     {
         public List<IParamFunc<bool>> sequence { get; private set; }
         int current;
@@ -15,6 +17,7 @@ namespace BaseGameLibrary
         {
             current = 0;
         }
+
         public Sequence(params IParamFunc<bool>[] funcs)
         {
             current = 0;
@@ -50,5 +53,12 @@ namespace BaseGameLibrary
             current += sequence[current].Call() ? 1 : 0;
             return current;
         }
+
+        public void Update(GameTime gameTime)
+        {
+            RunSequence(gameTime);
+        }
+
+        public void Draw(SpriteBatch spriteBatch) { }
     }
 }

@@ -92,10 +92,10 @@ namespace BaseGameLibrary
             lose.Draw(batch);
             back.Draw(batch);
             menu.Draw(batch);
-            score.Print(batch);
+            score.Draw(batch);
             for (int i = 0; i < topScores.Count; i++)
             {
-                topScores[i].Print(batch);
+                topScores[i].Draw(batch);
             }    
         }
     }

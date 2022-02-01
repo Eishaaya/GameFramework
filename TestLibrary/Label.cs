@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BaseGameLibrary
 {
-    public class FadingLabel : Label
+    public class FadingLabel : Label, IRunnable
     {
         Timer lifeTimer;
         bool fading;
@@ -28,7 +28,7 @@ namespace BaseGameLibrary
             fading = false;
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             if (!fading)
             {
@@ -44,7 +44,7 @@ namespace BaseGameLibrary
             }
         }
     }
-    public class Label : VisualObject
+    public class Label : VisualObject, IRunnable
     {
         protected string text;
         public SpriteFont Font { get; }
@@ -64,23 +64,23 @@ namespace BaseGameLibrary
         }
 
 
-        public void Text(string text)
+        public virtual void Text(string text)
         {
             this.text = text;
         }
         public void Text(double number, int maxDigits = 0)
         {
-            text = Math.Round(number, maxDigits).ToString();
+            Text(Math.Round(number, maxDigits).ToString());
         }
 
         public void Text(Vector2 coordinate, int maxDigits = 0)
         {
-            text = $"({Math.Round(coordinate.X, maxDigits)}, {Math.Round(coordinate.Y, maxDigits)})";
+            Text($"({Math.Round(coordinate.X, maxDigits)}, {Math.Round(coordinate.Y, maxDigits)})");
         }
 
         public void Text(Rectangle box)
         {
-            text = $"({box.X}, {box.Y}, {box.Width}, {box.Height})";
+            Text($"({box.X}, {box.Y}, {box.Width}, {box.Height})");
         }
 
         public string Text()
@@ -94,9 +94,33 @@ namespace BaseGameLibrary
             return me;
         }
 
-        public void Print(SpriteBatch batch)
+        public virtual void Update(GameTime gameTime) { }
+
+        public void Draw(SpriteBatch batch)
         {
             batch.DrawString(Font, text, Location + offset, Color, Rotation, Origin, Scale, Effect, Depth);
+        }
+    }
+
+    public class ValueLabel : Label, IRunnable
+    {
+        string infoText;
+
+        public ValueLabel(SpriteFont font, Color color, Vector2 location, string text, string infoText, bool middle = false)
+            : this(font, color, location, text, infoText, middle ? font.MeasureString(text) / 2 : Vector2.Zero) { }
+        public ValueLabel(SpriteFont font, Color color, Vector2 location, string text, string infoText, Vector2 Origin)
+            : this(font, color, location, text, infoText, Origin, 1) { }
+        public ValueLabel(SpriteFont font, Color color, Vector2 location, string text, string infoText, Vector2 Origin, float Scale)
+            : this(font, color, location, text, infoText, Origin, 0, SpriteEffects.None, Scale, 1) { }
+        public ValueLabel(SpriteFont font, Color color, Vector2 location, string text, string infoText, Vector2 Origin, float Rotation, SpriteEffects Effect, float Scale, float Depth)
+        : base(font, color, location, text, Origin, Rotation, Effect, Scale, Depth)
+        {
+            this.infoText = infoText;
+        }
+
+        public override void Text(string text)
+        {
+            text = infoText += text;
         }
     }
 }

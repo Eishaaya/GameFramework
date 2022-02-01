@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using static BaseGameLibrary.VisualObject;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace BaseGameLibrary
 {
@@ -87,7 +88,59 @@ namespace BaseGameLibrary
         {
             return number + (float)(int)((endCondition - number) / amount + .99f) * amount;
         }
+        #region there has to be better
+        public static IEnumerable<Setting> Set(this IEnumerable<Setting> settings, IEnumerable<int> newSettings)
+        {
+            var useful = newSettings.ToArray();
+            var returner = (Setting[])settings.ToArray().Clone();
 
+            for (int i = 0; i < useful.Length; i++)
+            {
+                returner[i] = new Setting(returner[i].ID, Setting.Types.IntValue, useful[i]);
+            }
+
+            return returner;
+        }
+
+        public static IEnumerable<Setting> Set(this IEnumerable<Setting> settings, IEnumerable<bool> newSettings)
+        {
+            var useful = newSettings.ToArray();
+            var returner = (Setting[])settings.ToArray().Clone();
+
+            for (int i = 0; i < useful.Length; i++)
+            {
+                returner[i] = new Setting(returner[i].ID, Setting.Types.BoolValue, useful[i]);
+            }
+
+            return returner;
+        }
+
+        public static IEnumerable<Setting> Set(this IEnumerable<Setting> settings, IEnumerable<float> newSettings)
+        {
+            var useful = newSettings.ToArray();
+            var returner = (Setting[])settings.ToArray().Clone();
+
+            for (int i = 0; i < useful.Length; i++)
+            {
+                returner[i] = new Setting(returner[i].ID, Setting.Types.FloatValue, useful[i]);
+            }
+
+            return returner;
+        }
+
+        public static IEnumerable<Setting> Set(this IEnumerable<Setting> settings, IEnumerable<Keys> newSettings)
+        {
+            var useful = newSettings.ToArray();
+            var returner = (Setting[])settings.ToArray().Clone();
+
+            for (int i = 0; i < useful.Length; i++)
+            {
+                returner[i] = new Setting(returner[i].ID, Setting.Types.KeyValue, useful[i]);
+            }
+
+            return returner;
+        }
+    #endregion
         public static float LoopCalc(this float current, float target, float max, float min = 0)
         {
             current %= max - min;

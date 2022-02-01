@@ -17,6 +17,8 @@ namespace TestProj
         Timer timer;
         int runner = 0;
 
+        Screenmanager manny;
+
         Sequence sequence;
 
         public Game1()
@@ -34,6 +36,9 @@ namespace TestProj
 
         protected override void LoadContent()
         {
+
+            Screen testScreen = new Screen();
+
             test = new Label(Content.Load<SpriteFont>("File"), Color.Wheat, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), "Shid & fard", true);
             timer = new Timer(5000);
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -50,6 +55,8 @@ namespace TestProj
                 new ParamFunc<Label, float, float, bool, bool>(Rotate, test, MathHelper.ToRadians(90), .1f, false),
                 new ParamFunc<Label, Color, int, bool>(Fade, test, test.Color, 3));
 
+
+            var eight = gIMMEeIGHT();
             // TODO: use this.Content to load your game content here
         }
 
@@ -58,12 +65,17 @@ namespace TestProj
             sequence.RunSequence(gameTime);
         }
 
+        int gIMMEeIGHT()
+        {
+            return 3 + 5;
+        }
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
 
-            test.Print(spriteBatch);
+            test.Draw(spriteBatch);
 
             spriteBatch.End();
             base.Draw(gameTime);

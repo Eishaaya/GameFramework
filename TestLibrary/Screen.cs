@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -12,7 +13,7 @@ namespace BaseGameLibrary
 {
     //Magic stan APPROVED
     [StructLayout(LayoutKind.Explicit)]
-    public class Setting
+    public struct Setting
     {
         public enum Types : byte
         {
@@ -23,34 +24,97 @@ namespace BaseGameLibrary
         }
 
         [FieldOffset(0)]
-        Types Type;
+        public int ID;
 
         [FieldOffset(1)]
-        bool BoolValue;
+        public Types Type;
 
-        [FieldOffset(1)]
-        float FloatValue;
+        [FieldOffset(2)]
+        public bool BoolValue;
 
-        [FieldOffset(1)]
-        Keys KeyValue;
+        [FieldOffset(2)]
+        public float FloatValue;
 
-        [FieldOffset(1)]
-        int IntValue;
+        [FieldOffset(2)]
+        public Keys KeyValue;
+
+        [FieldOffset(2)]
+        public int IntValue;
+
+        [FieldOffset(3)]
+        public int oldValue;
+
+
+        #region bob the builder
+        public Setting(int ID, Types myType, int value)
+            : this(ID, myType)
+        {
+            IntValue = value;
+            oldValue = IntValue;
+        }
+
+        public Setting(int ID, Types myType, float value)
+            : this(ID, myType)
+        {
+            FloatValue = value;
+            oldValue = IntValue;
+        }
+
+        public Setting(int ID, Types myType, bool value)
+            : this(ID, myType)
+        {
+            BoolValue = value;
+            oldValue = IntValue;
+        }
+
+        public Setting(int ID, Types myType, Keys value)
+            : this(ID, myType)
+        {
+            KeyValue = value;
+            oldValue = IntValue;
+        }
+
+        public Setting(int ID, Types myType)
+        {
+            this.ID = ID;
+            Type = myType;
+
+            KeyValue = Keys.None;
+            BoolValue = false;
+            FloatValue = 0;
+            IntValue = 0;
+            oldValue = 0;
+        }
+        #endregion
+
+        public void Revert()
+        {
+            IntValue = oldValue;
+        }
+        public void UpdateValue()
+        {
+            oldValue = IntValue;
+        }
+
+        public static explicit operator bool (Setting setting) => setting.BoolValue;
+        public static explicit operator float(Setting setting) => setting.FloatValue;
+        public static explicit operator Keys(Setting setting) => setting.KeyValue;
+        public static explicit operator int(Setting setting) => setting.IntValue;
     }
 
-    public class Screen
+    public class Screen //: IRunnable
     {
+        public Dictionary<int, Setting> Settings { get; } = new Dictionary<int, Setting>();
         //Music management
         public SoundEffectInstance IntroMusic { get; set; }
         bool introDone;
         public SoundEffectInstance Music { get; set; }
         protected bool playMusic;
-        
+
         //internal binds
-        public HashSet<Setting> Settings { get; set; }
 
         //Mouse detection
-        protected MouseState mousy;        
+        protected MouseState mousy;
         protected bool mouseRightClick;
         protected bool mouseLeftClick;
         public bool heldMouse;
@@ -97,7 +161,8 @@ namespace BaseGameLibrary
 
 
         public virtual void ChangeSetting(Setting setting)
-        {            
+        {
+            Settings[setting.ID] = setting;
             if (!playMusic)
             {
                 StopMusic();
@@ -178,7 +243,7 @@ namespace BaseGameLibrary
             {
                 mouseRightClick = true;
             }
-            
+
             if (mousy.LeftButton == ButtonState.Pressed)
             {
                 mouseLeftClick = true;
@@ -212,6 +277,11 @@ namespace BaseGameLibrary
         public virtual void Draw(SpriteBatch batch)
         {
 
+        }
+
+        internal void AddSetting(Setting setting)
+        {
+            Settings[setting.ID] = setting;
         }
     }
 }

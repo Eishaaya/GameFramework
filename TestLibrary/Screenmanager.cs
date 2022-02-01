@@ -9,6 +9,11 @@ namespace BaseGameLibrary
 {
     public class Screenmanager
     {
+
+        public Dictionary<Setting, HashSet<Screen>> screenSettings { get; } = new Dictionary<Setting, HashSet<Screen>>();
+
+
+
         public Screen CurrentScreen => activeScreens.Peek();
 
         Stack<Screen> activeScreens; 
@@ -28,12 +33,29 @@ namespace BaseGameLibrary
         //    return CurrentScreen;
         //}
 
-        public void ChangeBinds(Setting changedSetting)
+        public void GiveSettings(HashSet<Setting> settings, Screen screen)
         {
-            for (int i = 0; i < allScreens.Count; i++)
+            foreach (var setting in settings)
             {
-                allScreens[i].ChangeBinds(changedSetting);
-                BindsChanged = false;
+                if (screenSettings.ContainsKey(setting))
+                {
+                    screenSettings[setting].Add(screen);
+                }
+                else
+                {
+                    screenSettings.Add(setting, new HashSet<Screen>() { screen });
+                }
+
+                screen.AddSetting(setting);
+            }
+        }
+
+        public void ChangeSetting(Setting changedSetting)
+        {
+            var changingScreens = screenSettings[changedSetting];
+            foreach (var screen in changingScreens)
+            {
+                screen.ChangeSetting(changedSetting);
             }
         }
 

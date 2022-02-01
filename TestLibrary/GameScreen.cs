@@ -37,25 +37,25 @@ namespace BaseGameLibrary
             Lost = false;
             this.random = random;
         }
-        public override void ChangeSetting(List<Keys> newBinds, List<bool> bools)
-        {
-            base.ChangeSetting(newBinds, bools);
-            //    grid.downKey = newBinds[0];
-            //    grid.turnKey = newBinds[1];
-            //    grid.leftKey = newBinds[2];
-            //    grid.rightKey = newBinds[3];
-            //    grid.TeleKey = newBinds[4];
-            //    grid.switchKeys[0] = newBinds[5];
-            //    grid.switchKeys[1] = newBinds[6];
-            //    grid.switchKeys[2] = newBinds[7];
-            //    grid.switchKeys[3] = newBinds[8];
-            //    pauseKey = newBinds[9];
-            //    grid.playSounds = bools[1];
-            //    grid.holdTurn = bools[2];
-            //    grid.holdDown = bools[3];
-            //    grid.holdSide = bools[4];
-            //    grid.willProject = bools[5];
-        }        
+        //public override void ChangeSetting(List<Keys> newBinds, List<bool> bools)
+        //{
+        //    base.ChangeSetting(newBinds, bools);
+        //    //    grid.downKey = newBinds[0];
+        //    //    grid.turnKey = newBinds[1];
+        //    //    grid.leftKey = newBinds[2];
+        //    //    grid.rightKey = newBinds[3];
+        //    //    grid.TeleKey = newBinds[4];
+        //    //    grid.switchKeys[0] = newBinds[5];
+        //    //    grid.switchKeys[1] = newBinds[6];
+        //    //    grid.switchKeys[2] = newBinds[7];
+        //    //    grid.switchKeys[3] = newBinds[8];
+        //    //    pauseKey = newBinds[9];
+        //    //    grid.playSounds = bools[1];
+        //    //    grid.holdTurn = bools[2];
+        //    //    grid.holdDown = bools[3];
+        //    //    grid.holdSide = bools[4];
+        //    //    grid.willProject = bools[5];
+        //}        
         public override void Reset()
         {
             main.Reset();
