@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
+using static BaseGameLibrary.ActionButton;
+
 namespace BaseGameLibrary
 {
     //Magic stan APPROVED
@@ -103,8 +105,12 @@ namespace BaseGameLibrary
     }
 
     public class Screen //: IRunnable
-    {
-        public Dictionary<int, Setting> Settings { get; } = new Dictionary<int, Setting>();
+    {        
+
+        public Indextionary<int, Setting> Settings { get; } = new Indextionary<int, Setting>();
+        ButtonManager buttonManager;
+        AestheticsManager aesthetics;
+
         //Music management
         public SoundEffectInstance IntroMusic { get; set; }
         bool introDone;
@@ -113,11 +119,11 @@ namespace BaseGameLibrary
 
         //internal binds
 
-        //Mouse detection
+        //Mouse detection        
         protected MouseState mousy;
-        protected bool mouseRightClick;
-        protected bool mouseLeftClick;
+        protected bool[] mouseClicks;
         public bool heldMouse;
+        protected Vector2 mousePos;
 
         //Key detection
         protected bool keysDown = false;
@@ -134,11 +140,8 @@ namespace BaseGameLibrary
             playMusic = true;
             Maryland = new KeyboardState();
             mousy = new MouseState();
-            mouseRightClick = false;
-            mouseLeftClick = false;
             Music = null;
             IntroMusic = null;
-            mouseRightClick = false;
             if (m != null)
             {
                 Music = m.CreateInstance();
@@ -212,6 +215,7 @@ namespace BaseGameLibrary
             Play(time);
             CheckKeys();
             CheckMouse();
+            buttonManager.Update(mousePos, mouseClicks);
         }
 
         protected void CheckKeys()
@@ -225,28 +229,27 @@ namespace BaseGameLibrary
 
         protected void CheckMouse()
         {
-            if (mousy.LeftButton == ButtonState.Pressed || mousy.RightButton == ButtonState.Pressed)
-            {
-                heldMouse = true;
-            }
-            else
-            {
-                heldMouse = false;
-            }
-
             mousy = Mouse.GetState();
-            mouseRightClick = false;
-            mouseLeftClick = false;
-
-
-            if (mousy.RightButton == ButtonState.Pressed)
+            for (int i = 0; i < mouseClicks.Length; i++)
             {
-                mouseRightClick = true;
+                mouseClicks[i] = false;
             }
 
+            heldMouse = false;
             if (mousy.LeftButton == ButtonState.Pressed)
             {
-                mouseLeftClick = true;
+                heldMouse = true;
+                mouseClicks[(int)ClickType.Left] = true;
+            }
+            if (mousy.RightButton == ButtonState.Pressed)
+            {
+                heldMouse = true;
+                mouseClicks[(int)ClickType.Right] = true;
+            }
+            if (mousy.MiddleButton == ButtonState.Pressed)
+            {
+                heldMouse = true;
+                mouseClicks[(int)ClickType.Middle] = true;
             }
         }
 
@@ -264,19 +267,21 @@ namespace BaseGameLibrary
             {
                 PlayMusic();
             }
+            aesthetics.Update(time);
         }
 
         public virtual void Transfer(int transfer)
         {
-
+            //do shit here
         }
         public virtual void Reset()
         {
-
+            Music.Stop();
         }
         public virtual void Draw(SpriteBatch batch)
         {
-
+            aesthetics.Draw(batch);
+            buttonManager.Draw(batch);
         }
 
         internal void AddSetting(Setting setting)

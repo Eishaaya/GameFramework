@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using static BaseGameLibrary.ActionButton;
+
 namespace BaseGameLibrary
 {
     class SettingsScreen : Screen
@@ -16,15 +18,15 @@ namespace BaseGameLibrary
         Button menuButt;
         List<Button> bindButtons;
         List<ValueLabel> bindLabels;
-        List<Keys> defaults;
-        List<Keys> arrows;
+        List<Setting> defaults;
+        List<Setting> arrows;
         //List<string> keyTypes;
         //List<Keys> oldBinds;
         int index;
         public List<Toggler> toggles;
-        List<bool> toggOns;
+        //List<bool> toggOns;
 
-        public SettingsScreen(Button d, Button a, Button ap, Button menuButton, Texture2D b, List<Keys> dk, List<Keys> ak, List<string> keyTypes, List<bool> togs, Toggler template, SpriteFont font, SoundEffect effect)
+        public SettingsScreen(Button d, Button a, Button ap, Button menuButton, Texture2D b, List<Setting> dk, List<Setting> ak, List<string> keyTypes, List<bool> togs, Toggler template, SpriteFont font, SoundEffect effect)
             : base(effect)
         {
             bindButtons = new List<Button>();
@@ -34,20 +36,20 @@ namespace BaseGameLibrary
             defaults = dk;
             arrows = ak;
             menuButt = menuButton;
-            Settings.Set(defaults);
+            Settings.AddRange(defaults.WithIDs());
             defaltButt = d;
             arrowButt = a;
             index = -1;
-            toggOns = togs;
+            //toggOns = togs;
 
             for (int i = 0; i < defaults.Count / 2; i++)
             {
-                bindLabels.Add(new Label(font, Color.White, new Vector2(150, i * 50 + 250), $"{keyTypes[i]} : {Settings[i]}"));
+                bindLabels.Add(new ValueLabel(font, Color.White, new Vector2(150, i * 50 + 250), $"{keyTypes[i]} : {Settings[i]}", $"{keyTypes[i]} : "));
                 bindButtons.Add(new Button(b, new Vector2(150, i * 50 + 250), Color.Black, 0, SpriteEffects.None, new Vector2(0, 0), 1, .1f, Color.DarkGray, Color.Gray));
             }
             for (int i = defaults.Count / 2; i < defaults.Count; i++)
             {
-                bindLabels.Add(new Label(font, Color.White, new Vector2(350, (i - defaults.Count / 2) * 50 + 250), $"{keyTypes[i]} : {Settings[i]}"));
+                bindLabels.Add(new ValueLabel(font, Color.White, new Vector2(350, (i - defaults.Count / 2) * 50 + 250), $"{keyTypes[i]} : {Settings[i]}", $"{keyTypes[i]} : "));
                 bindButtons.Add(new Button(b, new Vector2(350, (i - defaults.Count / 2) * 50 + 250), Color.Black, 0, SpriteEffects.None, new Vector2(0, 0), 1, .1f, Color.DarkGray, Color.Gray));
             }
             int finalRow = 0;
@@ -63,7 +65,7 @@ namespace BaseGameLibrary
                     }
                     offSet = new Vector2(offSet.X + finalRow, offSet.Y);
                 }
-                toggOns[i] = !toggOns[i];
+              //  toggOns[i] = !toggOns[i];
                 toggles.Add(new Toggler(template.Image, template.Location + offSet, template.Color, template.Rotation, template.Effect, template.Origin, template.Scale, template.Depth, template.HoverColor, template.ClickedColor,
                     new Sprite(template.Ball.Image, template.Ball.Location + offSet, template.Ball.Color, template.Ball.Rotation, template.Ball.Effect, template.Ball.Origin, template.Ball.Scale, template.Ball.Depth),
                     new Sprite(template.BottomColor.Image, template.BottomColor.Location + offSet, template.BottomColor.Color, template.BottomColor.Rotation, template.BottomColor.Effect, template.BottomColor.Origin, template.BottomColor.Scale, template.BottomColor.Depth),
@@ -76,7 +78,7 @@ namespace BaseGameLibrary
  //           oldBinds = Settings;
             for (int i = 0; i < toggles.Count; i++)
             {
-                toggOns[i] = !toggles[i].On;
+                //toggOns[i] = !toggles[i].On;
                 toggles[i].Done = false;
             }
         }
@@ -98,23 +100,23 @@ namespace BaseGameLibrary
             }
             if (index < 0)
             {
-                if (defaltButt.Check(mousy.Position.ToVector2(), mouseRightClick))
+                if (defaltButt.Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]))
                 {
-                    Settings.Set(defaults);
+                    Settings.Switch(defaults.WithIDs());
                     for (int i = 0; i < Settings.Count; i++)
                     {
-                        bindLabels[i].Text(Settings[i]);
+                        bindLabels[i].Text(Settings[(Index)i].KeyValue);
                     }
                 }
-                else if (arrowButt.Check(mousy.Position.ToVector2(), mouseRightClick))
+                else if (arrowButt.Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]))
                 {
-                    Settings.Set(arrows);
+                    Settings.Switch(arrows.WithIDs());
                     for (int i = 0; i < Settings.Count; i++)
                     {
-                        bindLabels[i].Text(Settings[i]);
+                        bindLabels[i].Text(Settings[(Index)i].KeyValue);
                     }
                 }
-                else if (applyButt.Check(mousy.Position.ToVector2(), mouseRightClick))
+                else if (applyButt.Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]))
                 {
                     manny.BindsChanged = true;
                     for (int i = 0; i < toggles.Count; i++)
@@ -124,23 +126,23 @@ namespace BaseGameLibrary
                     manny.Back();
                     return;
                 }
-                else if (menuButt.Check(mousy.Position.ToVector2(), mouseRightClick))
+                else if (menuButt.Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]))
                 {
-                    foreach (var setting in Settings)
+                    for (int i = 0; i < Settings.Count; i++)
                     {
-                        setting.Revert();
+                        Settings[(Index)i].Revert();
                     }
                     manny.Back();
                     for (int i = 0; i < toggles.Count; i++)
                     {
-                        toggles[i].On = !toggOns[i];
+                        //toggles[i].On = !toggOns[i];
                     }
                     return;
                 }
 
                 for (int i = 0; i < Settings.Count; i++)
                 {
-                    if (bindButtons[i].Check(mousy.Position.ToVector2(), mouseRightClick))
+                    if (bindButtons[i].Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]))
                     {
                         bindLabels[i].Text("");
                         index = i;
@@ -148,7 +150,7 @@ namespace BaseGameLibrary
                 }
                 for (int i = 0; i < toggles.Count; i++)
                 {
-                    if (toggles[i].Check(mousy.Position.ToVector2(), mouseRightClick))
+                    if (toggles[i].Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]))
                     {
                         if (i == 0)
                         {
@@ -168,16 +170,17 @@ namespace BaseGameLibrary
             }
             else
             {
-                if (!bindButtons[index].Check(mousy.Position.ToVector2(), mouseRightClick) && mouseRightClick)
+                if (!bindButtons[index].Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]))
                 {
-                    bindLabels[index].Text(Settings[index]);
+                    bindLabels[index].Text(Settings[(Index)index].KeyValue);
                     index = -1;
                     return;
                 }
                 if (Maryland.GetPressedKeyCount() > 0)
                 {
-                    Settings[index].KeyValue = Maryland.GetPressedKeys()[0];
-                    bindLabels[index].Text(Settings[index]);
+                    var temp = Settings[(Index)index]; //i is confuzzed
+                    temp.KeyValue = Maryland.GetPressedKeys()[0];
+                    bindLabels[index].Text(Settings[(Index)index].KeyValue);
                     index = -1;
                     return;
                 }

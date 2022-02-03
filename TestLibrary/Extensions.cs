@@ -89,6 +89,25 @@ namespace BaseGameLibrary
             return number + (float)(int)((endCondition - number) / amount + .99f) * amount;
         }
         #region there has to be better
+
+        public static KeyValuePair<int, Setting> WithID(this Setting setting)
+        {
+            return new KeyValuePair<int, Setting>(setting.ID, setting);
+        }
+
+        public static KeyValuePair<int, Setting>[] WithIDs(this IEnumerable<Setting> settings)
+        {
+            var usefulSettings = settings.ToArray();
+            var returner = new KeyValuePair<int, Setting>[usefulSettings.Length];
+
+            for (int i = 0; i < usefulSettings.Length; i++)
+            {
+                returner[i] = usefulSettings[i].WithID();
+            }
+
+            return returner;
+        }
+
         public static IEnumerable<Setting> Set(this IEnumerable<Setting> settings, IEnumerable<int> newSettings)
         {
             var useful = newSettings.ToArray();

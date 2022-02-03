@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 using System;
 using System.Collections.Generic;
@@ -83,6 +84,11 @@ namespace BaseGameLibrary
             Text($"({box.X}, {box.Y}, {box.Width}, {box.Height})");
         }
 
+        public void Text(Keys key)
+        {
+            Text($"{key}");
+        }
+
         public string Text()
         {
             return text;
@@ -118,9 +124,9 @@ namespace BaseGameLibrary
             this.infoText = infoText;
         }
 
-        public override void Text(string text)
+        public override void Text(string newText)
         {
-            text = infoText += text;
+            text = infoText + newText;
         }
     }
 }

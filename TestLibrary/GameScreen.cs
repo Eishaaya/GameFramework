@@ -22,7 +22,7 @@ namespace BaseGameLibrary
         public Impact[] Effects { get; set; }
 
         public bool Lost {get; set;}
-        Keys pauseKey;
+      //  Keys pauseKey;
 
         public GameScreen(SoundEffect mus, SoundEffect intro, Label[] labels, Sprite[] sprites, AnimatingSprite[] animatingSprites, Keys[] keys, Button[] buttons, Impact[] effects, Random random)
             : base(mus, intro)

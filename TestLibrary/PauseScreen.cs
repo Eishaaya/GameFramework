@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using static BaseGameLibrary.ActionButton;
+
 namespace BaseGameLibrary
 {
     class PauseScreen : Screen
@@ -31,7 +33,7 @@ namespace BaseGameLibrary
             {
                 return;
             }
-            if (menu.Check(mousy.Position.ToVector2(), mouseRightClick))
+            if (menu.Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]))
             {
                 manny.Next(0, true);
                 manny.PreviousScreens.Pop();
@@ -39,13 +41,13 @@ namespace BaseGameLibrary
                 manny.ClearMemory();
                 return;
             }
-            if (restart.Check(mousy.Position.ToVector2(), mouseRightClick))
+            if (restart.Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]))
             {
                 manny.Back();
                 manny.CurrentScreen.Reset();
                 return;
             }
-            if (back.Check(mousy.Position.ToVector2(), mouseRightClick) || Maryland.IsKeyDown(exit) || mouseRightClick)
+            if (back.Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]) || Maryland.IsKeyDown(exit) || mouseClicks[(int)ClickType.Left])
             {
                 manny.Back();
                 return;

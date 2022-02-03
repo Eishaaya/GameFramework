@@ -91,7 +91,7 @@ namespace BaseGameLibrary
                 Scale = Scale / 50;
             }
         }
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             Rotation += rotationSpeed;
             if (!going)

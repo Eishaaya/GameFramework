@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using static BaseGameLibrary.ActionButton;
+
 namespace BaseGameLibrary
 {
     class MenuScreen : Screen
@@ -29,17 +31,17 @@ namespace BaseGameLibrary
             {
                 return;
             }
-            if (Unlimited.Check(mousy.Position.ToVector2(), mouseRightClick))
+            if (Unlimited.Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]))
             {
                 manny.Next(1, true);
                 return;
             }
-            else if (chrisIsAPoopyHead.Check(mousy.Position.ToVector2(), mouseRightClick))
+            else if (chrisIsAPoopyHead.Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]))
             {
                 manny.Next(2, true);
                 return;
             }
-            else if (setting.Check(mousy.Position.ToVector2(), mouseRightClick))
+            else if (setting.Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]))
             {
                 manny.Next(5, true);
                 return;

@@ -38,7 +38,7 @@ namespace BaseGameLibrary
 
     class ActionButton
     {
-        public enum ClickType
+        public enum ClickType : int
         {
             Left,
             Right,

@@ -14,9 +14,10 @@ namespace TestProj
         private GraphicsDeviceManager _graphics;
         private SpriteBatch spriteBatch;
         Label test;
-        Timer timer;
-        int runner = 0;
+        //Timer timer;
+        //int runner = 0;
 
+        Indextionary<int, string> indextionary = new Indextionary<int, string>();
         Screenmanager manny;
 
         Sequence sequence;
@@ -39,8 +40,11 @@ namespace TestProj
 
             Screen testScreen = new Screen();
 
+            //indextionary.Add(0, "hello");
+            indextionary[0] = "amogus";
+
             test = new Label(Content.Load<SpriteFont>("File"), Color.Wheat, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), "Shid & fard", true);
-            timer = new Timer(5000);
+           // timer = new Timer(5000);
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             sequence = new Sequence();

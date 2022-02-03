@@ -7,6 +7,8 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 
+using static BaseGameLibrary.ActionButton;
+
 namespace BaseGameLibrary
 {
     class LoseScreen : Screen
@@ -72,7 +74,7 @@ namespace BaseGameLibrary
             {
                 return;
             }
-            if (menu.Check(mousy.Position.ToVector2(), mouseRightClick))
+            if (menu.Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]))
             {
                 manny.Next(0, true);
                 manny.PreviousScreens.Pop();
@@ -80,7 +82,7 @@ namespace BaseGameLibrary
                 manny.ClearMemory();
                 return;
             }
-            if (back.Check(mousy.Position.ToVector2(), mouseRightClick))
+            if (back.Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]))
             {
                 manny.Back();
             }
