@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BaseGameLibrary
 {
-    public class VisualObject : IPoolable
+    public abstract class VisualObject : IPoolable, IRunnable
     {
         public enum ColorNums
         {
@@ -72,13 +72,6 @@ namespace BaseGameLibrary
         }
 
         #region clone
-
-        public VisualObject Clone()
-        {
-            var copy = new VisualObject(Location, Color, Origin, Rotation, Effect, Scale, Depth);
-            CloneLogic(copy);
-            return copy;
-        }
         protected void CloneLogic<T>(T copy) where T : VisualObject
         {
             copy.bigger = bigger;
@@ -332,7 +325,8 @@ namespace BaseGameLibrary
             return false;
         }
 
-
+        public abstract void Update(GameTime gameTime);
+        public abstract void Draw(SpriteBatch spriteBatch);
         #endregion
     }
 }

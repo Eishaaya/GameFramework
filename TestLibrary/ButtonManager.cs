@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BaseGameLibrary
 {
-    class ButtonManager
+    public class ButtonManager
     {
         List<ActionButton> buttons;
         Screen parent;

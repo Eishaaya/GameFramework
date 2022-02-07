@@ -7,13 +7,13 @@ using System.Text;
 
 namespace BaseGameLibrary
 {
-    class AestheticsManager : IRunnable
+    public class AestheticsManager : ICloneable<AestheticsManager>
     {
         List<IRunnable> prettyStuff;
 
-        public AestheticsManager(params IRunnable[] items)
+        public AestheticsManager(params IRunnable<VisualObject>[] items)
         {
-            prettyStuff = new List<IRunnable>();
+            prettyStuff = new List<IRunnable<VisualObject>>();
 
             foreach (var item in items)
             {
@@ -36,5 +36,9 @@ namespace BaseGameLibrary
                 item.Draw(spriteBatch);
             }
         }
+
+        public AestheticsManager Clone()
+            => new AestheticsManager(prettyStuff.ToArray());
+
     }
 }

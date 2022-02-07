@@ -210,6 +210,47 @@ namespace BaseGameLibrary
             return (location - offset) / scale;
         }
 
+        //make generic cloning
+        public static IEnumerable<Button> SpawnInGrid (Vector2 startLocation, float xDist, float yDist, int xCount, int yCount, Button template)
+        {
+            var bindButtons = new Button[xCount * yCount];
+            for (int x = 0; x < xCount; x++)
+            {
+                for (int y = 0; y < yCount; y++)
+                {
+                    var temp = template.Clone();
+                    bindButtons[x * y] = temp;
+                    temp.Location = new Vector2(xDist * x, yDist * y) + startLocation;
+                }
+            }
+            //for (int i = count / 2; i < count; i++)
+            //{
+            //    //bindLabels.Add(new ValueLabel(font, Color.White, new Vector2(350, (i - defaults.Count / 2) * 50 + 250), $"{keyTypes[i]} : {Settings[i]}", $"{keyTypes[i]} : "));
+            //    bindButtons.Add(new Button(b, new Vector2(350, (i - defaults.Count / 2) * 50 + 250), Color.Black, 0, SpriteEffects.None, new Vector2(0, 0), 1, .1f, Color.DarkGray, Color.Gray));
+            //}
+
+            return bindButtons.AsEnumerable();
+        }
+
+        public static IEnumerable<Button> SpawnInGrid(Vector2 startLocation, float xDist, float yDist, int xCount, int yCount, IEnumerable<Button> buttons)
+        {
+            var arrayButtons = buttons.ToArray();
+            for (int x = 0; x < xCount; x++)
+            {
+                for (int y = 0; y < yCount; y++)
+                {
+                    arrayButtons[x * y].Location = new Vector2(xDist * x, yDist * y) + startLocation;
+                }
+            }
+            //for (int i = count / 2; i < count; i++)
+            //{
+            //    //bindLabels.Add(new ValueLabel(font, Color.White, new Vector2(350, (i - defaults.Count / 2) * 50 + 250), $"{keyTypes[i]} : {Settings[i]}", $"{keyTypes[i]} : "));
+            //    bindButtons.Add(new Button(b, new Vector2(350, (i - defaults.Count / 2) * 50 + 250), Color.Black, 0, SpriteEffects.None, new Vector2(0, 0), 1, .1f, Color.DarkGray, Color.Gray));
+            //}
+
+            return arrayButtons.AsEnumerable();
+        }
+
         #region behaviors
 
         public static Vector2 Bounds(this Game game)

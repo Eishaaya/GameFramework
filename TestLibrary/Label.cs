@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BaseGameLibrary
 {
-    public class FadingLabel : Label, IRunnable
+    public class FadingLabel : Label, IRunnable, ICopyable<FadingLabel>
     {
         Timer lifeTimer;
         bool fading;
@@ -29,6 +29,9 @@ namespace BaseGameLibrary
             fading = false;
         }
 
+        public FadingLabel Clone()
+         => new FadingLabel(Font, Color, Location, text, Origin, Rotation, Effect, Scale, Depth, lifeTimer.GetMillies());
+
         public override void Update(GameTime gameTime)
         {
             if (!fading)
@@ -44,8 +47,13 @@ namespace BaseGameLibrary
                 Fade();
             }
         }
+
+        FadingLabel ICopyable<FadingLabel>.Clone()
+        {
+            throw new NotImplementedException();
+        }
     }
-    public class Label : VisualObject, IRunnable
+    public class Label : VisualObject, IRunnable, ICopyable<Label>
     {
         protected string text;
         public SpriteFont Font { get; }
@@ -100,15 +108,18 @@ namespace BaseGameLibrary
             return me;
         }
 
-        public virtual void Update(GameTime gameTime) { }
+        public override void Update(GameTime gameTime) { }
 
-        public void Draw(SpriteBatch batch)
+        public override void Draw(SpriteBatch batch)
         {
             batch.DrawString(Font, text, Location + offset, Color, Rotation, Origin, Scale, Effect, Depth);
         }
+
+        public Label Clone()
+            => new Label(Font, Color, Location, text, Origin, Rotation, Effect, Scale, Depth);
     }
 
-    public class ValueLabel : Label, IRunnable
+    public class ValueLabel : Label, IRunnable, ICopyable<ValueLabel>
     {
         string infoText;
 
@@ -128,5 +139,8 @@ namespace BaseGameLibrary
         {
             text = infoText + newText;
         }
+
+        ValueLabel ICopyable<ValueLabel>.Clone()
+            => new ValueLabel(Font, Color, Location, text, infoText, Origin, Rotation, Effect, Scale, Depth);
     }
 }

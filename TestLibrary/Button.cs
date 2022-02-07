@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BaseGameLibrary
 {
-    class Button : Sprite
+    public class Button : Sprite
     {
         public Color NormalColor { get; set; }
         public Color HoverColor { get; set; }

@@ -108,8 +108,8 @@ namespace BaseGameLibrary
     {        
 
         public Indextionary<int, Setting> Settings { get; } = new Indextionary<int, Setting>();
-        ButtonManager buttonManager;
-        AestheticsManager aesthetics;
+        protected ButtonManager buttonManager;
+        protected AestheticsManager aesthetics;
 
         //Music management
         public SoundEffectInstance IntroMusic { get; set; }
@@ -131,12 +131,14 @@ namespace BaseGameLibrary
 
 
         //ctors
-        public Screen()
-            : this(null, null) { }
-        public Screen(SoundEffect m)
-            : this(m, null) { }
-        public Screen(SoundEffect m, SoundEffect im)
+        public Screen(List<ActionButton> buttons = null)
+            : this(null, null, buttons) { }
+        public Screen(SoundEffect m, List<ActionButton> buttons = null)
+            : this(m, null, buttons) { }
+        public Screen(SoundEffect m, SoundEffect im, List<ActionButton> buttons)
         {
+            buttonManager = new ButtonManager(this, buttons);
+            aesthetics = new AestheticsManager();
             playMusic = true;
             Maryland = new KeyboardState();
             mousy = new MouseState();

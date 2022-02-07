@@ -16,7 +16,7 @@ namespace BaseGameLibrary
         Button arrowButt;
         Button applyButt;
         Button menuButt;
-        List<Button> bindButtons;
+        //List<Button> bindButtons;
         List<ValueLabel> bindLabels;
         List<Setting> defaults;
         List<Setting> arrows;
@@ -29,7 +29,6 @@ namespace BaseGameLibrary
         public SettingsScreen(Button d, Button a, Button ap, Button menuButton, Texture2D b, List<Setting> dk, List<Setting> ak, List<string> keyTypes, List<bool> togs, Toggler template, SpriteFont font, SoundEffect effect)
             : base(effect)
         {
-            bindButtons = new List<Button>();
             toggles = new List<Toggler>();
             bindLabels = new List<ValueLabel>();            
             applyButt = ap;
@@ -42,16 +41,7 @@ namespace BaseGameLibrary
             index = -1;
             //toggOns = togs;
 
-            for (int i = 0; i < defaults.Count / 2; i++)
-            {
-                bindLabels.Add(new ValueLabel(font, Color.White, new Vector2(150, i * 50 + 250), $"{keyTypes[i]} : {Settings[i]}", $"{keyTypes[i]} : "));
-                bindButtons.Add(new Button(b, new Vector2(150, i * 50 + 250), Color.Black, 0, SpriteEffects.None, new Vector2(0, 0), 1, .1f, Color.DarkGray, Color.Gray));
-            }
-            for (int i = defaults.Count / 2; i < defaults.Count; i++)
-            {
-                bindLabels.Add(new ValueLabel(font, Color.White, new Vector2(350, (i - defaults.Count / 2) * 50 + 250), $"{keyTypes[i]} : {Settings[i]}", $"{keyTypes[i]} : "));
-                bindButtons.Add(new Button(b, new Vector2(350, (i - defaults.Count / 2) * 50 + 250), Color.Black, 0, SpriteEffects.None, new Vector2(0, 0), 1, .1f, Color.DarkGray, Color.Gray));
-            }
+
             int finalRow = 0;
             for (int i = 0; i < togs.Count; i++)
             {
@@ -140,14 +130,8 @@ namespace BaseGameLibrary
                     return;
                 }
 
-                for (int i = 0; i < Settings.Count; i++)
-                {
-                    if (bindButtons[i].Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]))
-                    {
-                        bindLabels[i].Text("");
-                        index = i;
-                    }
-                }
+                buttonManager.Update(mousePos, mouseClicks);
+
                 for (int i = 0; i < toggles.Count; i++)
                 {
                     if (toggles[i].Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]))
@@ -170,12 +154,6 @@ namespace BaseGameLibrary
             }
             else
             {
-                if (!bindButtons[index].Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]))
-                {
-                    bindLabels[index].Text(Settings[(Index)index].KeyValue);
-                    index = -1;
-                    return;
-                }
                 if (Maryland.GetPressedKeyCount() > 0)
                 {
                     var temp = Settings[(Index)index]; //i is confuzzed
@@ -195,8 +173,7 @@ namespace BaseGameLibrary
             menuButt.Draw(batch);
             applyButt.Draw(batch);
             for (int i = 0; i < Settings.Count; i++)
-            {
-                bindButtons[i].Draw(batch);
+            {                
                 bindLabels[i].Draw(batch);
             }
             for (int i = 0; i < toggles.Count; i++)

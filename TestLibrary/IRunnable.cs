@@ -7,9 +7,17 @@ using System.Text;
 
 namespace BaseGameLibrary
 {
-    interface IRunnable
+    public interface IRunnable
     {
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
+        
     }
+
+    public interface ICopyable<out T> where T : ICopyable<T>
+    {
+        T Clone();
+    }
+
+    public interface IGameObject : IRunnable, ICopyable<IGameObject> { }
 }

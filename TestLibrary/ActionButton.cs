@@ -36,7 +36,7 @@ namespace BaseGameLibrary
         void Call();
     }
 
-    class ActionButton
+    public class ActionButton
     {
         public enum ClickType : int
         {
