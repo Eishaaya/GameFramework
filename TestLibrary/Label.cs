@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BaseGameLibrary
 {
-    public class FadingLabel : Label, IRunnable, ICopyable<FadingLabel>
+    public class FadingLabel : Label, IGameObject<FadingLabel>
     {
         Timer lifeTimer;
         bool fading;
@@ -29,7 +29,7 @@ namespace BaseGameLibrary
             fading = false;
         }
 
-        public FadingLabel Clone()
+        public new FadingLabel Clone()
          => new FadingLabel(Font, Color, Location, text, Origin, Rotation, Effect, Scale, Depth, lifeTimer.GetMillies());
 
         public override void Update(GameTime gameTime)
@@ -47,13 +47,8 @@ namespace BaseGameLibrary
                 Fade();
             }
         }
-
-        FadingLabel ICopyable<FadingLabel>.Clone()
-        {
-            throw new NotImplementedException();
-        }
     }
-    public class Label : VisualObject, IRunnable, ICopyable<Label>
+    public class Label : VisualObject, IGameObject<Label>
     {
         protected string text;
         public SpriteFont Font { get; }
@@ -119,7 +114,7 @@ namespace BaseGameLibrary
             => new Label(Font, Color, Location, text, Origin, Rotation, Effect, Scale, Depth);
     }
 
-    public class ValueLabel : Label, IRunnable, ICopyable<ValueLabel>
+    public class ValueLabel : Label, IGameObject<ValueLabel>
     {
         string infoText;
 

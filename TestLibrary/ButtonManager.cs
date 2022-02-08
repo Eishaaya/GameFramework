@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BaseGameLibrary
@@ -12,10 +13,10 @@ namespace BaseGameLibrary
         List<ActionButton> buttons;
         Screen parent;
 
-        public ButtonManager(Screen parent, List<ActionButton> buttons)
+        public ButtonManager(Screen parent, IEnumerable<ActionButton> buttons)
         {
             this.parent = parent;
-            this.buttons = buttons;
+            this.buttons = buttons == null? new List<ActionButton>() : buttons.ToList();           
         }
 
         public void Update(Vector2 mousePos, params bool[] clicks)

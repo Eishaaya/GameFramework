@@ -19,5 +19,5 @@ namespace BaseGameLibrary
         T Clone();
     }
 
-    public interface IGameObject : IRunnable, ICopyable<IGameObject> { }
+    public interface IGameObject<out T> : IRunnable, ICopyable<T> where T : IGameObject<T> { }
 }

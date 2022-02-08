@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BaseGameLibrary
 {
-    public class Sprite : VisualObject, IRunnable
+    public class Sprite : VisualObject, IGameObject<Sprite>
     {
         public Texture2D Image { get; set; }
         public virtual Rectangle Hitbox
@@ -48,11 +48,11 @@ namespace BaseGameLibrary
 
         #endregion
 
-        public virtual void Draw(SpriteBatch batch)
+        public override void Draw(SpriteBatch batch)
         {
             batch.Draw(Image, Location + offset, null, Color, Rotation, Origin, Scale, Effect, Depth);
         }
 
-        public virtual void Update(GameTime gameTime) { }
+        public override void Update(GameTime gameTime) { }
     }
 }

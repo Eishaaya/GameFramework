@@ -20,6 +20,9 @@ namespace TestProj
         Indextionary<int, string> indextionary = new Indextionary<int, string>();
         Screenmanager manny;
 
+        Screen screen;
+        Screen horseyScreen;
+
         Sequence sequence;
 
         public Game1()

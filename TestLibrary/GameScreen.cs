@@ -16,22 +16,20 @@ namespace BaseGameLibrary
         Random random;
         Label[] labels;
         Sprite[] sprites;
-        AnimatingSprite[] animatingSprites;
-        Button[] buttons;
+        AnimatingSprite[] animatingSprites;        
         Keys[] keys;
-        public Impact[] Effects { get; set; }
+        public Impact[] Effects { get; set; } // empty atm, do stuff here
 
         public bool Lost {get; set;}
       //  Keys pauseKey;
 
-        public GameScreen(SoundEffect mus, SoundEffect intro, Label[] labels, Sprite[] sprites, AnimatingSprite[] animatingSprites, Keys[] keys, Button[] buttons, Impact[] effects, Random random)
-            : base(mus, intro)
+        public GameScreen(SoundEffect mus, SoundEffect intro, Label[] labels, Sprite[] sprites, AnimatingSprite[] animatingSprites, Keys[] keys, ActionButton[] buttons, Impact[] effects, Random random)
+            : base(mus, intro, buttons)
         {
             this.labels = labels;
             this.sprites = sprites;
             this.animatingSprites = animatingSprites;
             this.keys = keys;
-            this.buttons = buttons;
             this.Effects = effects;
 
             Lost = false;

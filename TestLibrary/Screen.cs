@@ -135,7 +135,7 @@ namespace BaseGameLibrary
             : this(null, null, buttons) { }
         public Screen(SoundEffect m, List<ActionButton> buttons = null)
             : this(m, null, buttons) { }
-        public Screen(SoundEffect m, SoundEffect im, List<ActionButton> buttons)
+        public Screen(SoundEffect m, SoundEffect im, IEnumerable<ActionButton> buttons)
         {
             buttonManager = new ButtonManager(this, buttons);
             aesthetics = new AestheticsManager();
