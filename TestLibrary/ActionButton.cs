@@ -36,6 +36,24 @@ namespace BaseGameLibrary
         void Call();
     }
 
+    public struct Click
+    {
+        public bool IsClicked
+        {
+            get => IsClicked;
+            set
+            {
+                wasClicked = IsClicked;
+                IsClicked = value;
+                Held = wasClicked && IsClicked;
+            }
+        }
+        bool wasClicked;
+        public bool Held { get; private set; }
+
+        public static implicit operator bool (Click click) => click.IsClicked;
+    }
+
     public class ActionButton
     {
         public enum ClickType : int
@@ -51,15 +69,15 @@ namespace BaseGameLibrary
         public ActionButton(Button button, IParamAction leftAction = null, IParamAction rightAction = null, IParamAction middleAction = null)
             : this(button, new Dictionary<ClickType, IParamAction>())
         {
-            if (leftAction == null)
+            if (leftAction != null)
             {
                 clickActions.Add(ClickType.Left, leftAction);
             }
-            if (rightAction == null)
+            if (rightAction != null)
             {
                 clickActions.Add(ClickType.Right, rightAction);
             }
-            if (middleAction == null)
+            if (middleAction != null)
             {
                 clickActions.Add(ClickType.Middle, middleAction);
             }
@@ -71,14 +89,17 @@ namespace BaseGameLibrary
             this.clickActions = clickActions;
         }
 
-        public void Click(bool[] presses, Vector2 mousePos)
+        public void Click(Click[] presses, bool heldMouse, Vector2 mousePos)
         {
             for (int i = 0; i < presses.Length; i++)
             {
                 var checkedClick = (ClickType)i;
-                if (clickActions.ContainsKey(checkedClick) && button.Check(mousePos, presses[i]))
+                if (clickActions.ContainsKey(checkedClick) && !heldMouse)
                 {
-                    clickActions[checkedClick].Call();
+                    if (button.Check(mousePos, presses[i]))
+                    {
+                        clickActions[checkedClick].Call();
+                    }
                 }
             }
         }

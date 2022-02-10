@@ -47,7 +47,7 @@ namespace BaseGameLibrary
                 manny.CurrentScreen.Reset();
                 return;
             }
-            if (back.Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]) || Maryland.IsKeyDown(exit) || mouseClicks[(int)ClickType.Left])
+            if (back.Check(mousy.Position.ToVector2(), mouseClicks[(int)ClickType.Left]) || Idaho.IsKeyDown(exit) || mouseClicks[(int)ClickType.Left])
             {
                 manny.Back();
                 return;

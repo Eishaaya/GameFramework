@@ -13,7 +13,7 @@ namespace BaseGameLibrary
         public abstract void Draw(SpriteBatch batch, Texture2D Image, Vector2 Location, Color Color, float rotation, Vector2[] origins, Vector2 Origin, float Scale, SpriteEffects effect, float Depth, int currentframe);
     }
 
-    class RectangleFrame : AnimationFrame
+    public class RectangleFrame : AnimationFrame
     {
         RectangleFrame(Rectangle rectangle)
         {
@@ -30,7 +30,7 @@ namespace BaseGameLibrary
         }
     }
 
-    class TextureFrame : AnimationFrame
+    public class TextureFrame : AnimationFrame
     {
         TextureFrame(Texture2D txtr)
         {
@@ -49,7 +49,7 @@ namespace BaseGameLibrary
     }
 
 
-    public class AnimatingSprite : Sprite
+    public class AnimatingSprite : Sprite, IGameObject<AnimatingSprite>
     {
         //public struct Animation
         //{
@@ -138,10 +138,22 @@ namespace BaseGameLibrary
                 currentframe = 0;
                 LastFrame = true;
             }
-        }   
+        }
+        public override void Update(GameTime gameTime)
+        {
+            Animate(gameTime);
+            base.Update(gameTime);
+        }
         public override void Draw(SpriteBatch batch)
         {
             Frames[currentframe].Draw(batch, Image, Location, Color, Rotation, origins, Origin, Scale, Effect, Depth, currentframe);
+        }
+
+        AnimatingSprite ICopyable<AnimatingSprite>.Clone()
+        {
+            var newSprite = new AnimatingSprite(Image, Location, Color, Rotation, Effect, Hitbox, Origin, Scale, Depth, Frames, FrameTime.GetMillies(), origins);
+            newSprite.currentframe = currentframe;
+            return newSprite;
         }
     }
 }

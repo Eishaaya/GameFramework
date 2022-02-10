@@ -5,13 +5,6 @@
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
-    <NestedTypes>
-      <Enum Name="BaseGameLibrary.ActionButton.ClickType" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>ActionButton.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAAAAABAAAAAAgAAAAAAAAAAAAAAAACAAAAAAAAAAgA=</HashCode>
       <FileName>ActionButton.cs</FileName>
@@ -79,23 +72,6 @@
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
-    <NestedTypes>
-      <Enum Name="BaseGameLibrary.Enemy.AttackType" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Enemy.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-      <Enum Name="BaseGameLibrary.Enemy.EnemyState" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Enemy.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-      <Enum Name="BaseGameLibrary.Enemy.MoveType" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Enemy.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAQACAAAAAAACAAAAAgAACAAAJAAAAAAFAAAAAAAAAg=</HashCode>
       <FileName>Enemy.cs</FileName>
@@ -171,13 +147,6 @@
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
-    <NestedTypes>
-      <Enum Name="BaseGameLibrary.Laser.LaserTypes" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Projectile.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAACAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Projectile.cs</FileName>
@@ -216,13 +185,6 @@
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
-    <NestedTypes>
-      <Enum Name="BaseGameLibrary.MoveComponent.MoveState" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>MoveComponent.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAIAAAADABAAAAAAAAAAAAAAAIAAA=</HashCode>
       <FileName>MoveComponent.cs</FileName>
@@ -318,13 +280,6 @@
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
-    <NestedTypes>
-      <Enum Name="BaseGameLibrary.ParticleEffect.EffectType" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>ParticleEffect.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAwAAAAwAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
       <FileName>ParticleEffect.cs</FileName>
@@ -401,13 +356,6 @@
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
-    <NestedTypes>
-      <Enum Name="BaseGameLibrary.Spaceship.TurnState" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Spaceship.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
     <TypeIdentifier>
       <HashCode>gAQiDAwAIAQwDwAkHEAAgAiHAAAgABIAEEAQAGhAAAA=</HashCode>
       <FileName>Spaceship.cs</FileName>
@@ -456,13 +404,6 @@
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
-    <NestedTypes>
-      <Enum Name="BaseGameLibrary.VisualObject.ColorNums" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>VisualObject.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AESICAEAAAgBApABBAJABAAAEAEAKABggAQAgCggAAA=</HashCode>
       <FileName>VisualObject.cs</FileName>
@@ -495,13 +436,6 @@
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
-    <NestedTypes>
-      <Enum Name="BaseGameLibrary.Setting.Types" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Screen.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
     <TypeIdentifier>
       <HashCode>IAgAgAAEAAACiAAEAAIAAAAgAAAAAAAAAQAAAAAQAAA=</HashCode>
       <FileName>Screen.cs</FileName>

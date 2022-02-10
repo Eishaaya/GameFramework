@@ -104,6 +104,74 @@ namespace BaseGameLibrary
         public static explicit operator int(Setting setting) => setting.IntValue;
     }
 
+
+    enum MyGameInputs
+    {
+        MoveLeft,
+        MoveRight,
+        Jump,
+        Fire,
+        Horsey
+    }
+
+    class InputManager<T> where T: Enum
+    {
+        private Dictionary<T, List<(Func<KeyboardState, object[], bool> predicate, object[] parameters)>> keyMappings = new Dictionary<T, List<(Func<KeyboardState, object[], bool> predicate, object[] parameters)>>();
+
+        public bool UseKeyboard { get; private set; } = false;
+        public bool UseMouse { get; private set; } = false;
+        public bool UseJoystick { get; private set; } = false;
+
+        private KeyboardState ks;
+
+        public void AddMapping(T input, Func<KeyboardState, object[], bool> mapping, params object[] parameters)
+        {
+            UseKeyboard = true;
+
+            if(!keyMappings.ContainsKey(input))
+            {
+                keyMappings[input] = new List<(Func<KeyboardState, object[], bool> predicate, object[] parameters)>();
+            }
+
+            keyMappings[input].Add((mapping, parameters));
+        }
+
+        public void Update()
+        {
+            if(UseKeyboard)
+            {
+                // update KeyboardState
+            }
+        }
+
+        public bool this[T index]
+        {
+            get
+            {
+                foreach (var (predicate, parameters) in keyMappings[index])
+                {
+                    if (predicate(ks, parameters)) return true;
+                }
+
+                return false;
+            }
+        }
+    }
+
+    class MyGame
+    {
+        void Init()
+        {
+            InputManager<MyGameInputs> inputManager = new InputManager<MyGameInputs>();
+
+            inputManager.AddMapping(MyGameInputs.MoveLeft, (ks, key) => ks.IsKeyDown((Keys)key[0]), Keys.Left);
+            inputManager.AddMapping(MyGameInputs.Horsey, (ks, keys) => ks.IsKeyDown((Keys)keys[0]) && ks.IsKeyDown((Keys)keys[1]), Keys.H, Keys.LeftControl);
+
+            bool isHorsey = inputManager[MyGameInputs.Horsey];
+        }
+    }
+
+
     public class Screen //: IRunnable
     {        
 
@@ -121,27 +189,30 @@ namespace BaseGameLibrary
 
         //Mouse detection        
         protected MouseState mousy;
-        protected bool[] mouseClicks;
+        protected Click[] mouseClicks;
         public bool heldMouse;
         protected Vector2 mousePos;
 
         //Key detection
         protected bool keysDown = false;
-        protected KeyboardState Maryland;
+        protected KeyboardState Idaho;
 
 
         //ctors
-        public Screen(List<ActionButton> buttons = null)
-            : this(null, null, buttons) { }
-        public Screen(SoundEffect m, List<ActionButton> buttons = null)
-            : this(m, null, buttons) { }
-        public Screen(SoundEffect m, SoundEffect im, IEnumerable<ActionButton> buttons)
+        public Screen(IEnumerable<ActionButton> buttons = null, IEnumerable<IRunnable> pretties = null)
+            : this(null, null, buttons, pretties) { }
+        public Screen(SoundEffect m, IEnumerable<ActionButton> buttons = null, IEnumerable<IRunnable>pretties = null)
+            : this(m, null, buttons, pretties) { }
+        public Screen(SoundEffect m, SoundEffect im, IEnumerable<ActionButton> buttons = null, IEnumerable<IRunnable> pretties = null)
+            : this(m, im, new ButtonManager(buttons), new AestheticsManager(pretties)) { }
+        public Screen(SoundEffect m, SoundEffect im, ButtonManager buttons, AestheticsManager pretties)
         {
-            buttonManager = new ButtonManager(this, buttons);
-            aesthetics = new AestheticsManager();
+            buttonManager = buttons == null? new ButtonManager() : buttons;
+            aesthetics = pretties == null? new AestheticsManager() : pretties;
             playMusic = true;
-            Maryland = new KeyboardState();
+            Idaho = new KeyboardState();
             mousy = new MouseState();
+            mouseClicks = new Click[3];
             Music = null;
             IntroMusic = null;
             if (m != null)
@@ -216,14 +287,15 @@ namespace BaseGameLibrary
         {
             Play(time);
             CheckKeys();
+            heldMouse = false;
+            buttonManager.Update(mousePos, heldMouse, mouseClicks);
             CheckMouse();
-            buttonManager.Update(mousePos, mouseClicks);
         }
 
         protected void CheckKeys()
         {
-            Maryland = Keyboard.GetState();
-            if (Maryland.GetPressedKeyCount() == 0)
+            Idaho = Keyboard.GetState();
+            if (Idaho.GetPressedKeyCount() == 0)
             {
                 keysDown = false;
             }
@@ -232,26 +304,24 @@ namespace BaseGameLibrary
         protected void CheckMouse()
         {
             mousy = Mouse.GetState();
-            for (int i = 0; i < mouseClicks.Length; i++)
-            {
-                mouseClicks[i] = false;
-            }
+            mousePos = mousy.Position.ToVector2();
 
             heldMouse = false;
+
             if (mousy.LeftButton == ButtonState.Pressed)
             {
                 heldMouse = true;
-                mouseClicks[(int)ClickType.Left] = true;
+                mouseClicks[(int)ClickType.Left].IsClicked = true;
             }
             if (mousy.RightButton == ButtonState.Pressed)
             {
                 heldMouse = true;
-                mouseClicks[(int)ClickType.Right] = true;
+                mouseClicks[(int)ClickType.Right].IsClicked = true;
             }
             if (mousy.MiddleButton == ButtonState.Pressed)
             {
                 heldMouse = true;
-                mouseClicks[(int)ClickType.Middle] = true;
+                mouseClicks[(int)ClickType.Middle].IsClicked = true;
             }
         }
 

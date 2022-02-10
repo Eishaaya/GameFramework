@@ -130,7 +130,7 @@ namespace BaseGameLibrary
                     return;
                 }
 
-                buttonManager.Update(mousePos, mouseClicks);
+                buttonManager.Update(mousePos, heldMouse, mouseClicks);
 
                 for (int i = 0; i < toggles.Count; i++)
                 {
@@ -154,10 +154,10 @@ namespace BaseGameLibrary
             }
             else
             {
-                if (Maryland.GetPressedKeyCount() > 0)
+                if (Idaho.GetPressedKeyCount() > 0)
                 {
                     var temp = Settings[(Index)index]; //i is confuzzed
-                    temp.KeyValue = Maryland.GetPressedKeys()[0];
+                    temp.KeyValue = Idaho.GetPressedKeys()[0];
                     bindLabels[index].Text(Settings[(Index)index].KeyValue);
                     index = -1;
                     return;
