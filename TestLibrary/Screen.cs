@@ -114,62 +114,62 @@ namespace BaseGameLibrary
         Horsey
     }
 
-    class InputManager<T> where T: Enum
-    {
-        private Dictionary<T, List<(Func<KeyboardState, object[], bool> predicate, object[] parameters)>> keyMappings = new Dictionary<T, List<(Func<KeyboardState, object[], bool> predicate, object[] parameters)>>();
+    //class InputManager<T> where T: Enum
+    //{
+    //    private Dictionary<T, List<(Func<KeyboardState, object[], bool> predicate, object[] parameters)>> keyMappings = new Dictionary<T, List<(Func<KeyboardState, object[], bool> predicate, object[] parameters)>>();
 
-        public bool UseKeyboard { get; private set; } = false;
-        public bool UseMouse { get; private set; } = false;
-        public bool UseJoystick { get; private set; } = false;
+    //    public bool UseKeyboard { get; private set; } = false;
+    //    public bool UseMouse { get; private set; } = false;
+    //    public bool UseJoystick { get; private set; } = false;
 
-        private KeyboardState ks;
+    //    private KeyboardState ks;
 
-        public void AddMapping(T input, Func<KeyboardState, object[], bool> mapping, params object[] parameters)
-        {
-            UseKeyboard = true;
+    //    public void AddMapping(T input, Func<KeyboardState, object[], bool> mapping, params object[] parameters)
+    //    {
+    //        UseKeyboard = true;
 
-            if(!keyMappings.ContainsKey(input))
-            {
-                keyMappings[input] = new List<(Func<KeyboardState, object[], bool> predicate, object[] parameters)>();
-            }
+    //        if(!keyMappings.ContainsKey(input))
+    //        {
+    //            keyMappings[input] = new List<(Func<KeyboardState, object[], bool> predicate, object[] parameters)>();
+    //        }
 
-            keyMappings[input].Add((mapping, parameters));
-        }
+    //        keyMappings[input].Add((mapping, parameters));
+    //    }
 
-        public void Update()
-        {
-            if(UseKeyboard)
-            {
-                // update KeyboardState
-            }
-        }
+    //    public void Update()
+    //    {
+    //        if(UseKeyboard)
+    //        {
+    //            // update KeyboardState
+    //        }
+    //    }
 
-        public bool this[T index]
-        {
-            get
-            {
-                foreach (var (predicate, parameters) in keyMappings[index])
-                {
-                    if (predicate(ks, parameters)) return true;
-                }
+    //    public bool this[T index]
+    //    {
+    //        get
+    //        {
+    //            foreach (var (predicate, parameters) in keyMappings[index])
+    //            {
+    //                if (predicate(ks, parameters)) return true;
+    //            }
 
-                return false;
-            }
-        }
-    }
+    //            return false;
+    //        }
+    //    }
+    //}
 
-    class MyGame
-    {
-        void Init()
-        {
-            InputManager<MyGameInputs> inputManager = new InputManager<MyGameInputs>();
+    //class MyGame
+    //{
+    //    void Init()
+    //    {
+    //        InputManager<MyGameInputs> inputManager = new InputManager<MyGameInputs>();
 
-            inputManager.AddMapping(MyGameInputs.MoveLeft, (ks, key) => ks.IsKeyDown((Keys)key[0]), Keys.Left);
-            inputManager.AddMapping(MyGameInputs.Horsey, (ks, keys) => ks.IsKeyDown((Keys)keys[0]) && ks.IsKeyDown((Keys)keys[1]), Keys.H, Keys.LeftControl);
+    //        inputManager.AddMapping(MyGameInputs.MoveLeft, (ks, key) => ks.IsKeyDown((Keys)key[0]), Keys.Left);
+    //        inputManager.AddMapping(MyGameInputs.Horsey, (ks, keys) => ks.IsKeyDown((Keys)keys[0]) && ks.IsKeyDown((Keys)keys[1]), Keys.H, Keys.LeftControl);
 
-            bool isHorsey = inputManager[MyGameInputs.Horsey];
-        }
-    }
+    //        bool isHorsey = inputManager[MyGameInputs.Horsey];
+    //    }
+    //}
 
 
     public class Screen //: IRunnable

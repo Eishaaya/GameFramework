@@ -32,18 +32,19 @@ namespace BaseGameLibrary
     #region funcs
     public class ParamFunc<T1, TReturn> : IParamFunc<TReturn>
     {
-        T1 parameter1;
+        public T1 Parameter1 { get; set; }
+
         Func<T1, TReturn> containedFunc;
 
         public TReturn Call()
         {
-            return containedFunc(parameter1);
+            return containedFunc(Parameter1);
         }
 
         public ParamFunc(Func<T1, TReturn> func, T1 parameter)
         {
             containedFunc = func;
-            parameter1 = parameter;
+            Parameter1 = parameter;
         }
     }
 

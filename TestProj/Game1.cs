@@ -7,6 +7,7 @@ using static BaseGameLibrary.Sequence;
 using static BaseGameLibrary.VisualObject;
 using System;
 using Microsoft.Xna.Framework.Audio;
+using System.Collections.Generic;
 
 namespace TestProj
 {
@@ -23,6 +24,24 @@ namespace TestProj
 
         Screen screen;
         Screen horseyScreen;
+
+        enum Binds
+        {
+            Left,
+            Right,
+            Horsey,
+            Help
+        }
+
+        Dictionary<Binds, iPressable> idkName = new Dictionary<Binds, iPressable>()
+        {
+            [Binds.Left] = new KeyControl(Keys.A),
+            [Binds.Right] = new KeyControl(Keys.D),
+            [Binds.Horsey] = new MouseControl(new ParamFunc<MouseState, bool>(m => m.LeftButton == ButtonState.Pressed, Mouse.GetState())),
+            [Binds.Help] = new StickControl(0)
+        };
+
+        
 
         Sequence sequence;
 
@@ -46,6 +65,8 @@ namespace TestProj
 
             //indextionary.Add(0, "hello");
             indextionary[0] = "amogus";
+
+            InputManager<Binds> manager = new InputManager<Binds>(idkName);
 
             test = new Label(Content.Load<SpriteFont>("File"), Color.Wheat, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), "Shid & fard", true);
            // timer = new Timer(5000);
