@@ -33,7 +33,7 @@ namespace BaseGameLibrary
 
         #region clone
 
-        public new Sprite Clone()
+        public Sprite Clone()
         {
             var copy = new Sprite(Image, Location, Color, Rotation, Effect, Origin, Scale, Depth);
             CloneLogic(copy);

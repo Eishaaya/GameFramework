@@ -6,54 +6,95 @@ using System.Text;
 
 namespace BaseGameLibrary
 {
-    public class InputManager <T> where T : Enum
+    public class InputManager<T> where T : Enum
     {
+        Action GetState;
+
         [Flags]
-        enum InputSources
+        public enum InputSources
         {
             Keyboard = 1,
             Mouse = 2,
-            HappyShaft = 4
+            HappyShaft = 4,
+            All = Keyboard | Mouse | HappyShaft
         }
+        InputSources sources;
 
-        int sources;  
+        KeyboardState ks;
+        MouseState ms;
+        JoystickState js;
 
-        Dictionary<T, iPressable> buttons;
+
+
+        public Dictionary<T, IPressable> Buttons { get; private set; }
 
         public InputManager()
-            : this(new Dictionary<T, iPressable>()) { }
-        public InputManager(Dictionary<T, iPressable> buttons)
-            : this(buttons, 0) 
+            : this(new Dictionary<T, IPressable>()) { }
+        public InputManager(Dictionary<T, IPressable> buttons)
+            : this(buttons, GetSources(buttons)) { }
+        public InputManager(Dictionary<T, IPressable> buttons, InputSources sources)
         {
+            this.Buttons = buttons;
+            this.sources = sources;
+
+            ks = new KeyboardState();
+            ms = new MouseState();
+            js = new JoystickState();
+        }
+
+        private static Dictionary<Type, InputSources> defaultMap = new Dictionary<Type, InputSources>()
+        {
+            [typeof(KeyControl)] = InputSources.Keyboard,
+            [typeof(MouseControl)] = InputSources.Mouse,
+            [typeof(StickControl)] = InputSources.HappyShaft
+        };
+
+        public static InputSources GetSources(Dictionary<T, IPressable> buttons)
+        {
+            InputSources sources = 0;
             foreach (var butt in buttons)
             {
-                if (butt.Value is KeyControl)
-                {
-                    sources |= (int)InputSources.Keyboard;
-                }
-                else if (butt.Value is MouseControl)
-                {
-                    sources |= (int)InputSources.Mouse;
-                }
-                else if (butt.Value is JoystickState)
-                {
-                    sources |= (int)InputSources.HappyShaft;
-                }
+                sources |= defaultMap[butt.GetType()];
+            }
+            return sources;
+        }
+
+        //private static Dictionary<InputSources, Action<> defaultMap = new Dictionary<Type, InputSources>()
+        //{
+        //    [InputSources.Keyboard] = 
+        //};
+
+        void PrepareStates()
+        {
+            Action myAction = () => ks = Keyboard.GetState();
+            myAction();
+
+            if (sources.HasFlag(InputSources.Keyboard))
+            {
+                GetState += () => ks = Keyboard.GetState();
             }
         }
-        public InputManager(Dictionary<T, iPressable> buttons, int sources)
+
+
+        public void Update()
         {
-            this.buttons = buttons;
-            this.sources = sources;
+            GetState();
         }
     }
 
-    public interface iPressable
+
+
+
+    //subclasses below
+
+
+
+    public interface IPressable
     {
         public bool Pressed(KeyboardState ks, MouseState ms, JoystickState js, ref bool held);
     }
 
-    public struct KeyControl : iPressable
+    public struct KeyControl : IPressable
     {
         Keys myKey;
         bool prevState;
@@ -65,16 +106,16 @@ namespace BaseGameLibrary
         }
 
         public bool Pressed(KeyboardState ks, MouseState ms, JoystickState js, ref bool held)
-        {            
+        {
             var isDown = ks.IsKeyDown(myKey);
-             
+
             held = isDown && prevState;
             prevState = isDown;
             return isDown;
         }
     }
 
-    public struct MouseControl : iPressable
+    public struct MouseControl : IPressable
     {
         ParamFunc<MouseState, bool> myClick;
         bool prevState;
@@ -96,7 +137,7 @@ namespace BaseGameLibrary
         }
     }
 
-    public struct StickControl : iPressable
+    public struct StickControl : IPressable
     {
         int buttonIndex;
         bool prevState;

@@ -33,7 +33,7 @@ namespace TestProj
             Help
         }
 
-        Dictionary<Binds, iPressable> idkName = new Dictionary<Binds, iPressable>()
+        Dictionary<Binds, IPressable> idkName = new Dictionary<Binds, IPressable>()
         {
             [Binds.Left] = new KeyControl(Keys.A),
             [Binds.Right] = new KeyControl(Keys.D),

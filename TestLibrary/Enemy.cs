@@ -65,7 +65,7 @@ namespace BaseGameLibrary
             totalFrames = totalframes;
         }
 
-        public void Update(GameTime time)
+        public override void Update(GameTime time)
         {
             if (CurrentState == EnemyState.Idle)
             {
