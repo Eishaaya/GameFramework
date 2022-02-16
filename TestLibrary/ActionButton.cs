@@ -40,18 +40,20 @@ namespace BaseGameLibrary
     {
         public bool IsClicked
         {
-            get => IsClicked;
+            get => isClicked;
             set
             {
-                wasClicked = IsClicked;
-                IsClicked = value;
-                Held = wasClicked && IsClicked;
+                wasClicked = isClicked;
+                isClicked = value;
+                Held = wasClicked && isClicked;
             }
         }
+
+        bool isClicked;
         bool wasClicked;
         public bool Held { get; private set; }
 
-        public static implicit operator bool (Click click) => click.IsClicked;
+        public static implicit operator bool (Click click) => click.isClicked;
     }
 
     public class ActionButton

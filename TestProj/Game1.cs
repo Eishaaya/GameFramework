@@ -13,6 +13,7 @@ namespace TestProj
 {
     public class Game1 : Game
     {
+        InputManager<Binds> manager;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch spriteBatch;
         Label test;
@@ -66,7 +67,7 @@ namespace TestProj
             //indextionary.Add(0, "hello");
             indextionary[0] = "amogus";
 
-            InputManager<Binds> manager = new InputManager<Binds>(idkName);
+           manager  = new InputManager<Binds>(idkName);
 
             test = new Label(Content.Load<SpriteFont>("File"), Color.Wheat, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), "Shid & fard", true);
            // timer = new Timer(5000);
@@ -125,6 +126,7 @@ namespace TestProj
         {
            // sequence.RunSequence(gameTime);
             screen.Update(gameTime, manny);
+            manager.Update();
         }
 
         //int gIMMEeIGHT()

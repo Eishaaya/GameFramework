@@ -8,7 +8,7 @@ namespace BaseGameLibrary
 {
     public class InputManager<T> where T : Enum
     {
-        Action GetState;
+        Action<InputManager<T>> GetState;
 
         [Flags]
         public enum InputSources
@@ -34,12 +34,14 @@ namespace BaseGameLibrary
             : this(buttons, GetSources(buttons)) { }
         public InputManager(Dictionary<T, IPressable> buttons, InputSources sources)
         {
-            this.Buttons = buttons;
+            Buttons = buttons;
             this.sources = sources;
 
             ks = new KeyboardState();
             ms = new MouseState();
             js = new JoystickState();
+
+            PrepareStates();
         }
 
         private static Dictionary<Type, InputSources> defaultMap = new Dictionary<Type, InputSources>()
@@ -54,31 +56,34 @@ namespace BaseGameLibrary
             InputSources sources = 0;
             foreach (var butt in buttons)
             {
-                sources |= defaultMap[butt.GetType()];
+                sources |= defaultMap[butt.Value.GetType()];
             }
             return sources;
         }
 
-        //private static Dictionary<InputSources, Action<> defaultMap = new Dictionary<Type, InputSources>()
-        //{
-        //    [InputSources.Keyboard] = 
-        //};
+        private static Dictionary<InputSources, Action<InputManager<T>>> defaultStates = new Dictionary<InputSources, Action<InputManager<T>>>()
+        {
+            [InputSources.Keyboard] = m => m.ks = Keyboard.GetState(),
+            [InputSources.Mouse] = m => m.ms = Mouse.GetState(),
+            [InputSources.HappyShaft] = m => m.js = Joystick.GetState(0) //TODO: figure out what exactly this index really means
+        };
 
         void PrepareStates()
         {
-            Action myAction = () => ks = Keyboard.GetState();
-            myAction();
 
-            if (sources.HasFlag(InputSources.Keyboard))
+            foreach (var state in defaultStates)
             {
-                GetState += () => ks = Keyboard.GetState();
+                if (sources.HasFlag(state.Key))
+                {
+                    GetState += state.Value;
+                }
             }
         }
 
 
         public void Update()
         {
-            GetState();
+            GetState(this);
         }
     }
 
