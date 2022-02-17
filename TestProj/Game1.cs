@@ -34,7 +34,7 @@ namespace TestProj
             Help
         }
 
-        Dictionary<Binds, IPressable> idkName = new Dictionary<Binds, IPressable>()
+        Dictionary<Binds, IInput> idkName = new Dictionary<Binds, IInput>()
         {
             [Binds.Left] = new KeyControl(Keys.A),
             [Binds.Right] = new KeyControl(Keys.D),
@@ -125,8 +125,20 @@ namespace TestProj
         protected override void Update(GameTime gameTime)
         {
            // sequence.RunSequence(gameTime);
-            screen.Update(gameTime, manny);
-            manager.Update();
+            
+            manager.Update(gameTime);
+
+            var isLeft = manager[Binds.Left] == true;
+            var isRight = manager[Binds.Right] == true;
+            var isHeld = manager[Binds.Horsey] > 500;
+
+            test.Text($"Left: {isLeft}, Right: {isRight}, Held: {isHeld}");
+
+            if (isLeft && isRight || isHeld)
+            {
+                screen.Update(gameTime, manny);
+            }
+
         }
 
         //int gIMMEeIGHT()

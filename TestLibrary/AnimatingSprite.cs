@@ -151,7 +151,7 @@ namespace BaseGameLibrary
 
         AnimatingSprite ICopyable<AnimatingSprite>.Clone()
         {
-            var newSprite = new AnimatingSprite(Image, Location, Color, Rotation, Effect, Hitbox, Origin, Scale, Depth, Frames, FrameTime.GetMillies(), origins);
+            var newSprite = new AnimatingSprite(Image, Location, Color, Rotation, Effect, Hitbox, Origin, Scale, Depth, Frames, FrameTime.TotalMillies, origins);
             newSprite.currentframe = currentframe;
             return newSprite;
         }

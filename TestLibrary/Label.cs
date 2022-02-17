@@ -30,7 +30,7 @@ namespace BaseGameLibrary
         }
 
         public new FadingLabel Clone()
-         => new FadingLabel(Font, Color, Location, text, Origin, Rotation, Effect, Scale, Depth, lifeTimer.GetMillies());
+         => new FadingLabel(Font, Color, Location, text, Origin, Rotation, Effect, Scale, Depth, lifeTimer.TotalMillies);
 
         public override void Update(GameTime gameTime)
         {

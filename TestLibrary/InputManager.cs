@@ -1,13 +1,16 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace BaseGameLibrary
 {
     public class InputManager<T> where T : Enum
     {
+
         Action<InputManager<T>> GetState;
 
         [Flags]
@@ -24,17 +27,26 @@ namespace BaseGameLibrary
         MouseState ms;
         JoystickState js;
 
+        public InputStateComponent this[T wantedInput]
+        {
+            get
+            {
+                // maybe make the T enum use flags?
+                buttons[wantedInput].Pressed(ks, ms, js);
+                    // : buttons[wantedInput].GetValue(ks, ms, js); //if statement probably can die
+                return buttons[wantedInput].StateComponent;
+            }
+        }
 
-
-        public Dictionary<T, IPressable> Buttons { get; private set; }
+        public Dictionary<T, IInput> buttons; //{ get; private set; }
 
         public InputManager()
-            : this(new Dictionary<T, IPressable>()) { }
-        public InputManager(Dictionary<T, IPressable> buttons)
+            : this(new Dictionary<T, IInput>()) { }
+        public InputManager(Dictionary<T, IInput> buttons)
             : this(buttons, GetSources(buttons)) { }
-        public InputManager(Dictionary<T, IPressable> buttons, InputSources sources)
+        public InputManager(Dictionary<T, IInput> buttons, InputSources sources)
         {
-            Buttons = buttons;
+            this.buttons = buttons;
             this.sources = sources;
 
             ks = new KeyboardState();
@@ -51,7 +63,7 @@ namespace BaseGameLibrary
             [typeof(StickControl)] = InputSources.HappyShaft
         };
 
-        public static InputSources GetSources(Dictionary<T, IPressable> buttons)
+        public static InputSources GetSources(Dictionary<T, IInput> buttons)
         {
             InputSources sources = 0;
             foreach (var butt in buttons)
@@ -81,9 +93,13 @@ namespace BaseGameLibrary
         }
 
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             GetState(this);
+            foreach (var input in buttons)
+            {
+                input.Value.Update(gameTime);
+            }
         }
     }
 
@@ -91,75 +107,169 @@ namespace BaseGameLibrary
 
 
     //subclasses below
+    #region subclasses
 
+    [StructLayout(LayoutKind.Explicit)]
+    public struct BoolInt
+    {
+        [FieldOffset(0)]
+        bool digital;
+        [FieldOffset(0)]
+        int analog;
 
+        public BoolInt(bool digital)
+        {
+            analog = 0;
+            this.digital = digital;
+        }
+        public BoolInt(int analog)
+        {
+            digital = false;
+            this.analog = analog;
+        }
+
+        public static implicit operator bool(BoolInt me) => me.digital;
+        public static implicit operator BoolInt(bool mine) => new BoolInt(mine);
+
+        public static implicit operator int(BoolInt me) => me.analog;
+        public static implicit operator BoolInt(int mine) => new BoolInt(mine);
+    }
 
     public interface IPressable
     {
-        public bool Pressed(KeyboardState ks, MouseState ms, JoystickState js, ref bool held);
+        public bool Pressed(KeyboardState ks, MouseState ms, JoystickState js);
+    }
+    public interface IAnalog
+    {
+        public int GetValue(KeyboardState ks, MouseState ms, JoystickState js);
+    }
+    public interface IInput : IPressable, IAnalog
+    {
+        public InputStateComponent StateComponent { get; }
+        public void Update(GameTime gameTime);
     }
 
-    public struct KeyControl : IPressable
+    public class InputStateComponent
     {
-        Keys myKey;
-        bool prevState;
+        bool state;
+        Timer heldTimer;
+
+        public static InputStateComponent Start
+        {
+            get
+                => new InputStateComponent()
+                {
+                    state = false,
+                    heldTimer = new Timer(0)
+                };
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            heldTimer.Tick(gameTime);
+        }
+        public bool Press(bool isDown)
+        {
+            var held = isDown && state;
+            if (!held)
+            {
+                heldTimer.Reset();
+            }
+            state = isDown;
+            return isDown;
+        }
+        public int GetValue()
+            => heldTimer.TotalMillies;
+
+        public static implicit operator bool(InputStateComponent me) => me.state;
+        public static explicit operator int(InputStateComponent me) => me.heldTimer.TotalMillies;
+        public static bool operator >(InputStateComponent me, int other)
+        { return me.heldTimer.Millies > other; }
+        public static bool operator <(InputStateComponent me, int other)
+            => me.heldTimer.TotalMillies > other;
+    }
+
+    public struct KeyControl : IInput
+    {
+        public Keys myKey;
+        public InputStateComponent StateComponent { get; }
 
         public KeyControl(Keys key, bool pressed = false)
         {
             myKey = key;
-            prevState = pressed;
+            StateComponent = InputStateComponent.Start;
         }
 
-        public bool Pressed(KeyboardState ks, MouseState ms, JoystickState js, ref bool held)
+        public int GetValue(KeyboardState ks, MouseState ms, JoystickState js)
+            => StateComponent.GetValue();
+
+        public bool Pressed(KeyboardState ks, MouseState ms, JoystickState js)
         {
             var isDown = ks.IsKeyDown(myKey);
+            return StateComponent.Press(isDown);
+        }
 
-            held = isDown && prevState;
-            prevState = isDown;
-            return isDown;
+        public void Update(GameTime gameTime)
+        {
+            StateComponent.Update(gameTime);
         }
     }
 
-    public struct MouseControl : IPressable
+    public struct MouseControl : IInput
     {
         ParamFunc<MouseState, bool> myClick;
-        bool prevState;
+        public InputStateComponent StateComponent { get; }
 
         public MouseControl(ParamFunc<MouseState, bool> click, bool pressed = false)
         {
             myClick = click;
-            prevState = pressed;
+            StateComponent = InputStateComponent.Start;
         }
 
-        public bool Pressed(KeyboardState ks, MouseState ms, JoystickState js, ref bool held)
+        public int GetValue(KeyboardState ks, MouseState ms, JoystickState js)
+        {
+            return StateComponent.GetValue();
+        }
+
+        public bool Pressed(KeyboardState ks, MouseState ms, JoystickState js)
         {
             myClick.Parameter1 = ms;
             var isDown = myClick.Call();
+            return StateComponent.Press(isDown);
+        }
 
-            held = isDown && prevState;
-            prevState = isDown;
-            return isDown;
+        public void Update(GameTime gameTime)
+        {
+            StateComponent.Update(gameTime);
         }
     }
 
-    public struct StickControl : IPressable
+    public struct StickControl : IInput
     {
         int buttonIndex;
-        bool prevState;
+        public InputStateComponent StateComponent { get; }
 
         public StickControl(int index, bool pressed = false)
         {
             buttonIndex = index;
-            prevState = pressed;
+            StateComponent = InputStateComponent.Start;
         }
 
-        public bool Pressed(KeyboardState ks, MouseState ms, JoystickState js, ref bool held)
+        public int GetValue(KeyboardState ks, MouseState ms, JoystickState js)
+        {
+            return StateComponent.GetValue();
+        }
+
+        public bool Pressed(KeyboardState ks, MouseState ms, JoystickState js)
         {
             var isDown = js.Buttons[buttonIndex] == ButtonState.Pressed;
+            return StateComponent.Press(isDown);
+        }
 
-            held = isDown && prevState;
-            prevState = isDown;
-            return isDown;
+        public void Update(GameTime gameTime)
+        {
+            StateComponent.Update(gameTime);
         }
     }
 }
+#endregion

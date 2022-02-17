@@ -116,9 +116,9 @@ namespace BaseGameLibrary
                     {
                         faded = true;
                     }
-                    if (fadeTime.GetMillies() < 0)
+                    if (fadeTime.TotalMillies < 0)
                     {
-                        for (int i = 0; i < -fadeTime.GetMillies(); i++)
+                        for (int i = 0; i < -fadeTime.TotalMillies; i++)
                         {
                             Fade();
                         }

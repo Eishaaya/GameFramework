@@ -5,6 +5,9 @@ namespace BaseGameLibrary
 {
     public class Timer
     {
+        public int Millies { get => (int)wait.TotalMilliseconds; }
+        public int TotalMillies { get => (int)until.TotalMilliseconds; }
+
         TimeSpan wait;
         TimeSpan until;
 
@@ -29,11 +32,6 @@ namespace BaseGameLibrary
         public void Tick(GameTime time)
         {
             wait += time.ElapsedGameTime;
-        }
-        
-        public int GetMillies()
-        {
-            return (int)until.TotalMilliseconds;
         }
 
         public bool Ready(bool reset = true)

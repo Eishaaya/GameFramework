@@ -31,7 +31,7 @@ namespace BaseGameLibrary
         public bool Wait (int time)
         {
             ticking = true;
-            if (delay.GetMillies() != time)
+            if (delay.TotalMillies != time)
             {                
                 delay.SetLength(time);
             }
