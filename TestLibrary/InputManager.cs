@@ -33,7 +33,7 @@ namespace BaseGameLibrary
             {
                 // maybe make the T enum use flags?
                 buttons[wantedInput].Pressed(ks, ms, js);
-                    // : buttons[wantedInput].GetValue(ks, ms, js); //if statement probably can die
+                // : buttons[wantedInput].GetValue(ks, ms, js); //if statement probably can die
                 return buttons[wantedInput].StateComponent;
             }
         }
@@ -149,44 +149,77 @@ namespace BaseGameLibrary
         public void Update(GameTime gameTime);
     }
 
-    public class InputStateComponent
+    public abstract class InputStateComponent
     {
-        bool state;
-        Timer heldTimer;
+        protected bool state;
 
-        public static InputStateComponent Start
+        public abstract void Update(GameTime gameTime);
+        public abstract bool Press(BoolInt newInfo);
+        public abstract int GetValue { get; }
+
+        public static implicit operator bool(InputStateComponent me) => me.state;
+        public static explicit operator int(InputStateComponent me) => me.GetValue;
+
+        public static bool operator >(InputStateComponent me, int other)
+            => me.GetValue > other;
+        public static bool operator <(InputStateComponent me, int other)
+            => me.GetValue < other;
+        public static bool operator >=(InputStateComponent me, int other)
+            => me.GetValue >= other;
+        public static bool operator <=(InputStateComponent me, int other)
+            => me.GetValue <= other;
+
+    }
+
+    public class DigitalStateComponent : InputStateComponent
+    {
+        Ticker heldTicker;
+        public override int GetValue
         {
-            get
-                => new InputStateComponent()
-                {
-                    state = false,
-                    heldTimer = new Timer(0)
-                };
+            get => heldTicker.Millies;
         }
 
-        public void Update(GameTime gameTime)
+        public DigitalStateComponent()
         {
-            heldTimer.Tick(gameTime);
+            heldTicker = new Ticker();
         }
-        public bool Press(bool isDown)
+
+        public override void Update(GameTime gameTime)
+        {
+            heldTicker.Tick(gameTime);
+        }
+        public override bool Press(BoolInt isDown)
         {
             var held = isDown && state;
             if (!held)
             {
-                heldTimer.Reset();
+                heldTicker.Reset();
             }
             state = isDown;
             return isDown;
         }
-        public int GetValue()
-            => heldTimer.TotalMillies;
+    }
 
-        public static implicit operator bool(InputStateComponent me) => me.state;
-        public static explicit operator int(InputStateComponent me) => me.heldTimer.TotalMillies;
-        public static bool operator >(InputStateComponent me, int other)
-        { return me.heldTimer.Millies > other; }
-        public static bool operator <(InputStateComponent me, int other)
-            => me.heldTimer.TotalMillies > other;
+    public class AnalogStateComponent : InputStateComponent
+    {
+        int location;
+        public override int GetValue
+        {
+            get => location;
+        }
+
+        public override bool Press(BoolInt newInfo)
+        {
+            if (newInfo != location)
+            {
+
+            }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public struct KeyControl : IInput
@@ -194,14 +227,14 @@ namespace BaseGameLibrary
         public Keys myKey;
         public InputStateComponent StateComponent { get; }
 
-        public KeyControl(Keys key, bool pressed = false)
+        public KeyControl(Keys key, InputStateComponent inputStateComponent)
         {
             myKey = key;
-            StateComponent = InputStateComponent.Start;
+            StateComponent = inputStateComponent;
         }
 
         public int GetValue(KeyboardState ks, MouseState ms, JoystickState js)
-            => StateComponent.GetValue();
+            => StateComponent.GetValue;
 
         public bool Pressed(KeyboardState ks, MouseState ms, JoystickState js)
         {
@@ -217,18 +250,18 @@ namespace BaseGameLibrary
 
     public struct MouseControl : IInput
     {
-        ParamFunc<MouseState, bool> myClick;
+        ParamFunc<MouseState, BoolInt> myClick;
         public InputStateComponent StateComponent { get; }
 
-        public MouseControl(ParamFunc<MouseState, bool> click, bool pressed = false)
+        public MouseControl(ParamFunc<MouseState, BoolInt> click, InputStateComponent inputStateComponent)
         {
             myClick = click;
-            StateComponent = InputStateComponent.Start;
+            StateComponent = inputStateComponent;
         }
 
         public int GetValue(KeyboardState ks, MouseState ms, JoystickState js)
         {
-            return StateComponent.GetValue();
+            return StateComponent.GetValue;
         }
 
         public bool Pressed(KeyboardState ks, MouseState ms, JoystickState js)
@@ -249,15 +282,15 @@ namespace BaseGameLibrary
         int buttonIndex;
         public InputStateComponent StateComponent { get; }
 
-        public StickControl(int index, bool pressed = false)
+        public StickControl(int index, InputStateComponent inputStateComponent, bool pressed = false)
         {
             buttonIndex = index;
-            StateComponent = InputStateComponent.Start;
+            StateComponent = inputStateComponent;
         }
 
         public int GetValue(KeyboardState ks, MouseState ms, JoystickState js)
         {
-            return StateComponent.GetValue();
+            return StateComponent.GetValue;
         }
 
         public bool Pressed(KeyboardState ks, MouseState ms, JoystickState js)

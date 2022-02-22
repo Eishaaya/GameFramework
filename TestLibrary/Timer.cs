@@ -1,20 +1,46 @@
 ﻿using Microsoft.Xna.Framework;
+
 using System;
 
 namespace BaseGameLibrary
 {
-    public class Timer
+
+    public abstract class TickerBase
     {
+        protected TimeSpan wait;
         public int Millies { get => (int)wait.TotalMilliseconds; }
+        public void Tick(GameTime time)
+        {
+            wait += time.ElapsedGameTime;
+        }
+        public void Reset()
+        {
+            wait = TimeSpan.Zero;
+        }
+    }
+
+    public class Ticker : TickerBase
+    {
+        public Ticker(int waitMillies = 0)
+            : this(new TimeSpan(0, 0, 0, 0, waitMillies)) { }
+        public Ticker(TimeSpan wait)
+        {
+            this.wait = wait;
+        }
+    }
+
+    public class Timer : TickerBase
+    {
         public int TotalMillies { get => (int)until.TotalMilliseconds; }
 
-        TimeSpan wait;
         TimeSpan until;
 
-        public static implicit operator TimeSpan (Timer timer) => timer.until;
-        public static implicit operator Timer (TimeSpan span) => new Timer(span);
-        public static implicit operator Timer (int time) => new Timer(time);
+        public static implicit operator TimeSpan(Timer timer) => timer.until;
+        public static implicit operator Timer(TimeSpan span) => new Timer(span);
+        public static implicit operator Timer(int time) => new Timer(time);
 
+        public Timer(int length = 0)
+            : this(TimeSpan.FromMilliseconds(length)) { }
         public Timer(TimeSpan until)
         {
             this.until = until;
@@ -26,17 +52,11 @@ namespace BaseGameLibrary
             until = TimeSpan.FromMilliseconds(length);
         }
 
-        public Timer(int length)
-            : this(TimeSpan.FromMilliseconds(length)) { }
 
-        public void Tick(GameTime time)
-        {
-            wait += time.ElapsedGameTime;
-        }
 
         public bool Ready(bool reset = true)
         {
-            if(wait >= until)
+            if (wait >= until)
             {
                 if (reset)
                 {
@@ -45,11 +65,6 @@ namespace BaseGameLibrary
                 return true;
             }
             return false;
-        }
-
-        public void Reset()
-        {
-            wait = TimeSpan.Zero;
         }
     }
 }

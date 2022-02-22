@@ -36,13 +36,13 @@ namespace TestProj
 
         Dictionary<Binds, IInput> idkName = new Dictionary<Binds, IInput>()
         {
-            [Binds.Left] = new KeyControl(Keys.A),
-            [Binds.Right] = new KeyControl(Keys.D),
-            [Binds.Horsey] = new MouseControl(new ParamFunc<MouseState, bool>(m => m.LeftButton == ButtonState.Pressed, Mouse.GetState())),
-            [Binds.Help] = new StickControl(0)
+            [Binds.Left] = new KeyControl(Keys.A, new DigitalStateComponent()),
+            [Binds.Right] = new KeyControl(Keys.D, new DigitalStateComponent()),
+            [Binds.Horsey] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.LeftButton == ButtonState.Pressed, Mouse.GetState()), new DigitalStateComponent()),
+            [Binds.Help] = new StickControl(0, new DigitalStateComponent())
         };
 
-        
+
 
         Sequence sequence;
 
@@ -56,24 +56,25 @@ namespace TestProj
         protected override void Initialize()
         {
             base.Initialize();
-            
+
         }
 
         protected override void LoadContent()
         {
+            var ticky = new Ticker();
 
             Screen testScreen = new Screen();
 
             //indextionary.Add(0, "hello");
             indextionary[0] = "amogus";
 
-           manager  = new InputManager<Binds>(idkName);
+            manager = new InputManager<Binds>(idkName);
 
             test = new Label(Content.Load<SpriteFont>("File"), Color.Wheat, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), "Shid & fard", true);
-           // timer = new Timer(5000);
+            // timer = new Timer(5000);
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            var karan = new Sprite(Content.Load<Texture2D>("BiggestTile"), new Vector2(100), new Vector2(100), .5f);
+            var karan = new Sprite(Content.Load<Texture2D>("unknown"), new Vector2(100), new Vector2(100), .5f);
 
             sequence = new Sequence();
             sequence.AttachSequence(
@@ -88,7 +89,7 @@ namespace TestProj
                 new ParamFunc<Label, Color, int, bool>(Fade, test, test.Color, 3));
 
 
-          //  var eight = gIMMEeIGHT();
+            //  var eight = gIMMEeIGHT();
 
             var bottomScroll = new AnimatingSprite(Content.Load<Texture2D>("bottom"), new Vector2(0, 50), Color.White, 0, SpriteEffects.None, new Rectangle(0, 0, 0, 0), new Vector2(0, 0), 1, .025f,
             new RectangleFrame[]
@@ -110,13 +111,13 @@ namespace TestProj
                 new Rectangle(0, 1274, 600, 90)
             }, 80);
 
-            
+
             var pretty = new AestheticsManager(bottomScroll, karan, sequence, test);
 
-            ActionButton button = new ActionButton(new Button(Content.Load<Texture2D>("BiggestTile"), new Vector2(200)), new ParamAction<AestheticsManager>(m => m.Running = !m.Running, pretty));
+            ActionButton button = new ActionButton(new Button(Content.Load<Texture2D>("Toggle Ball"), new Vector2(200)), new ParamAction<AestheticsManager>(m => m.Running = !m.Running, pretty));
 
 
-            
+
             ButtonManager buttons = new ButtonManager(button);
 
             screen = new Screen(Content.Load<SoundEffect>("UnlimitedIntro"), Content.Load<SoundEffect>("UnlimitedMusic"), buttons, pretty);
@@ -124,13 +125,13 @@ namespace TestProj
 
         protected override void Update(GameTime gameTime)
         {
-           // sequence.RunSequence(gameTime);
-            
+            // sequence.RunSequence(gameTime);
+
             manager.Update(gameTime);
 
             var isLeft = manager[Binds.Left] == true;
             var isRight = manager[Binds.Right] == true;
-            var isHeld = manager[Binds.Horsey] > 500;
+            var isHeld = manager[Binds.Horsey] > 0;
 
             test.Text($"Left: {isLeft}, Right: {isRight}, Held: {isHeld}");
 
@@ -151,7 +152,7 @@ namespace TestProj
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
 
-           // test.Draw(spriteBatch);
+            // test.Draw(spriteBatch);
             screen.Draw(spriteBatch);
 
             spriteBatch.End();
