@@ -8,6 +8,7 @@ using static BaseGameLibrary.VisualObject;
 using System;
 using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
+using BaseGameLibrary.Inputs;
 
 namespace TestProj
 {
@@ -31,14 +32,18 @@ namespace TestProj
             Left,
             Right,
             Horsey,
+            MouseX,
+            MouseY,
             Help
         }
 
-        Dictionary<Binds, IInput> idkName = new Dictionary<Binds, IInput>()
+        Dictionary<Binds, InputControl> idkName = new Dictionary<Binds, InputControl>()
         {
             [Binds.Left] = new KeyControl(Keys.A, new DigitalStateComponent()),
             [Binds.Right] = new KeyControl(Keys.D, new DigitalStateComponent()),
             [Binds.Horsey] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.LeftButton == ButtonState.Pressed, Mouse.GetState()), new DigitalStateComponent()),
+            [Binds.MouseX] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.Position.X, Mouse.GetState()), new AnalogStateComponent()),
+            [Binds.MouseY] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.Position.Y, Mouse.GetState()), new AnalogStateComponent()),
             [Binds.Help] = new StickControl(0, new DigitalStateComponent())
         };
 
@@ -132,10 +137,12 @@ namespace TestProj
             var isLeft = manager[Binds.Left] == true;
             var isRight = manager[Binds.Right] == true;
             var isHeld = manager[Binds.Horsey] > 0;
+            var mouseX = manager[Binds.MouseX];
+            var mouseY = manager[Binds.MouseY];
 
-            test.Text($"Left: {isLeft}, Right: {isRight}, Held: {isHeld}");
+            test.Text($"Left: {isLeft}, Right: {isRight}, Held: {isHeld}\nMouse Moved: {mouseX || mouseY}, ({(int)mouseX}, {(int)mouseY})");
 
-            if (isLeft && isRight || isHeld)
+            if (isLeft && isRight || isHeld && (mouseX || mouseY))
             {
                 screen.Update(gameTime, manny);
             }

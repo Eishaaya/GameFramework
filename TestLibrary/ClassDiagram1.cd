@@ -1,515 +1,67 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="BaseGameLibrary.ActionButton" Collapsed="true">
-    <Position X="27.25" Y="0.5" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
+  <Class Name="BaseGameLibrary.Inputs.InputStateComponent" Collapsed="true">
+    <Position X="24.25" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAABAAAAAAgAAAAAAAAAAAAAAAACAAAAAAAAAAgA=</HashCode>
-      <FileName>ActionButton.cs</FileName>
+      <HashCode>AAQAgAAAIAAAAAAAAACAAgAAAAAAQAAEQAAAAAAABQA=</HashCode>
+      <FileName>Inputs\StateComponents.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.AestheticsManager" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="29" Y="0.5" Width="1.5" />
+  <Class Name="BaseGameLibrary.Inputs.DigitalStateComponent" Collapsed="true">
+    <Position X="25.25" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAgAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>AestheticsManager.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="BaseGameLibrary.AnimatingSprite" Collapsed="true">
-    <Position X="8.75" Y="11.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAQAAAAIAAAAgAAAAAAAAQAgAAEAABAAAAAAAAAAAM=</HashCode>
-      <FileName>AnimatingSprite.cs</FileName>
+      <HashCode>AAQAAAAAIAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAgAAA=</HashCode>
+      <FileName>Inputs\StateComponents.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.AnimationFrame" Collapsed="true">
-    <Position X="4.75" Y="3.5" Width="1.5" />
+  <Class Name="BaseGameLibrary.Inputs.AnalogStateComponent" Collapsed="true">
+    <Position X="23" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>AnimatingSprite.cs</FileName>
+      <HashCode>AAQAAAAAIAAAAAAAAAAAAAACAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Inputs\StateComponents.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.Button" Collapsed="true">
-    <Position X="12" Y="11.75" Width="1.5" />
+  <Class Name="BaseGameLibrary.Inputs.InputControl" Collapsed="true">
+    <Position X="28" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACQgAAAAAAIAAACAAAAAAAAgAAAAIAAAAAAAAABI=</HashCode>
-      <FileName>Button.cs</FileName>
+      <HashCode>AAQACAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Inputs\InputControls.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.ButtonLabel" Collapsed="true">
-    <Position X="30.75" Y="0.5" Width="1.5" />
+  <Class Name="BaseGameLibrary.Inputs.KeyControl" Collapsed="true">
+    <Position X="28" Y="10.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEAAAAgAEAAAAgAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
-      <FileName>ButtonLabel.cs</FileName>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Inputs\InputControls.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.ButtonManager" Collapsed="true">
-    <Position X="32.5" Y="0.5" Width="1.5" />
+  <Class Name="BaseGameLibrary.Inputs.MouseControl" Collapsed="true">
+    <Position X="30.25" Y="10.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAgBAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ButtonManager.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAEAAA=</HashCode>
+      <FileName>Inputs\InputControls.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.Camera" Collapsed="true">
-    <Position X="34.25" Y="0.5" Width="1.5" />
+  <Class Name="BaseGameLibrary.Inputs.StickControl" Collapsed="true">
+    <Position X="25.75" Y="10.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAgAAAAAAAAAABAAAAAAAAAAAAAAAAAgAAA=</HashCode>
-      <FileName>Camera.cs</FileName>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Inputs\InputControls.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.Class1" Collapsed="true">
-    <Position X="36" Y="0.5" Width="1.5" />
+  <Class Name="BaseGameLibrary.InputManager&lt;T&gt;" Collapsed="true">
+    <Position X="22.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Class1.cs</FileName>
+      <HashCode>AQQAAEAAAAAAEAAAKAAAAJAAAAAAAAAAGAQAAAAAAAA=</HashCode>
+      <FileName>Inputs\InputManager.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.Enemy" Collapsed="true">
-    <Position X="8.75" Y="13.25" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
+  <Struct Name="BaseGameLibrary.BoolInt" Collapsed="true">
+    <Position X="26.25" Y="8.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQACAAAAAAACAAAAAgAACAAAJAAAAAAFAAAAAAAAAg=</HashCode>
-      <FileName>Enemy.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.Extensions" Collapsed="true">
-    <Position X="27.25" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAASgAAAVgABiAAAEBABAAAECUAIAAAAAQAACAAAtA=</HashCode>
-      <FileName>Extensions.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.FadingLabel" Collapsed="true">
-    <Position X="6.5" Y="11.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAABAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
-      <FileName>Label.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="BaseGameLibrary.FrameObject" Collapsed="true">
-    <Position X="29" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAEEAAAAAAAAAAAAAAAAAAAAAgAAAAAAQAAAAA=</HashCode>
-      <FileName>FrameObject.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.GameRunner&lt;TInputEnum&gt;" Collapsed="true">
-    <Position X="30.75" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAABgAAAAAAEAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
-      <FileName>GameRunner.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.GameScreen&lt;TEnum&gt;" Collapsed="true">
-    <Position X="22.5" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AASAAACAAAAIBhAAAAQAAAAAAAAAAAAAgAQAAACAAAQ=</HashCode>
-      <FileName>GameScreen.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.Impact" Collapsed="true">
-    <Position X="32.5" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAgAAAAAAAAAACAAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Impact.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.Impacter" Collapsed="true">
-    <Position X="34.25" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAgCAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAQAAAAAgA=</HashCode>
-      <FileName>Impacter.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.Indextionary&lt;T, TValue&gt;" Collapsed="true">
-    <Position X="36" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAAIAACAAAAAQEAAAAAAAAAAAAIAAEAAA=</HashCode>
-      <FileName>Indextionary.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.Label" Collapsed="true">
-    <Position X="5.25" Y="10.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAgAAQAAAAAAAAAAAAAAIAAAACAACABA=</HashCode>
-      <FileName>Label.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="BaseGameLibrary.Laser" Collapsed="true">
-    <Position X="15.5" Y="13.25" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAACAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Projectile.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.LerpData" Collapsed="true">
-    <Position X="27.25" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>LerpData.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.LoseScreen" Collapsed="true">
-    <Position X="24.75" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AgYAAAEAAEAAAhAAAAAIAQgAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>LoseScreen.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.ManagementActions" Collapsed="true">
-    <Position X="29" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AwAAAABAAAAgBAAAAAAAAAAAAAAAAAAAIAAAAAAAACA=</HashCode>
-      <FileName>ActionButton.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.MenuScreen" Collapsed="true">
-    <Position X="15.75" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AESAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
-      <FileName>MenuScreen.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.MoveComponent" Collapsed="true">
-    <Position X="30.75" Y="2.5" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAAAAIAAAADABAAAAAAAAAAAAAAAIAAA=</HashCode>
-      <FileName>MoveComponent.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.NotMyObjectException" Collapsed="true">
-    <Position X="32.5" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
-      <FileName>ObjectPool.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.ObjectPool&lt;T&gt;" Collapsed="true">
-    <Position X="34.25" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>CAACAAAAAAAAAAAAIAAEAAAAAAAAEAAAQAAAEAAAAAA=</HashCode>
-      <FileName>ObjectPool.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.ParamAction&lt;T1, T2, T3, T4&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="36" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAQADgAQAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParamFuncs.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="BaseGameLibrary.ParamAction&lt;T1, T2, T3&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="27.25" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAQADgAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParamFuncs.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="BaseGameLibrary.ParamAction&lt;T1, T2&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="29" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAQABgAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParamFuncs.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="BaseGameLibrary.ParamAction&lt;T1&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="30.75" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAQAAgAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParamFuncs.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="BaseGameLibrary.ParamFunc&lt;T1, T2, T3, T4, TReturn&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="32.5" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAQADgAQAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParamFuncs.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="BaseGameLibrary.ParamFunc&lt;T1, T2, T3, TReturn&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="34.25" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAQADgAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParamFuncs.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="BaseGameLibrary.ParamFunc&lt;T1, T2, TReturn&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="36" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAQABgAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParamFuncs.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="BaseGameLibrary.ParamFunc&lt;T1, TReturn&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="27.25" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAQAAgAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParamFuncs.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="BaseGameLibrary.Particle" Collapsed="true">
-    <Position X="20" Y="13.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>CAQAAAAAAAACAACAAAAgAAAAGBAAEQAAAABAAUAAAAA=</HashCode>
-      <FileName>Particle.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.ParticleEffect" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="29" Y="4.5" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAwAAAAwAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
-      <FileName>ParticleEffect.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="BaseGameLibrary.PauseScreen" Collapsed="true">
-    <Position X="20.25" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AgQAABEAAAAAAgAAAAAAAAgAAAAAAAAAAAAAACAAAAA=</HashCode>
-      <FileName>PauseScreen.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.Projectile" Collapsed="true">
-    <Position X="15.5" Y="11.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAADACAAAAACAAAAAAAAAAAAAAQQAAAAAAAAAAAA=</HashCode>
-      <FileName>Projectile.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="BaseGameLibrary.RectangleFrame" Collapsed="true">
-    <Position X="3.5" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAQAAAgBAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>AnimatingSprite.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.ScalableSprite" Collapsed="true">
-    <Position X="20" Y="11.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAACAAAAAAEAgAAAAAAAAAAAAAAAAAAAAAAAAAgABA=</HashCode>
-      <FileName>ScalableSprite.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.Screen" Collapsed="true">
-    <Position X="20.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AARAAAEABCBQBgAgAQAAAQVBAAggAAAAgAAAGEEAAAg=</HashCode>
-      <FileName>Screen.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.Screenmanager" Collapsed="true">
-    <Position X="30.75" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AwRAAgAAAABAAhAAAgAAAAAACAAAACAAAAAACAAAAAg=</HashCode>
-      <FileName>Screenmanager.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.Sequence" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="32.5" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAkAAAAAAACgAiAQAAAAAAQAAAAAAAAA=</HashCode>
-      <FileName>Sequence.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="BaseGameLibrary.SettingsScreen" Collapsed="true">
-    <Position X="18" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAICAAAgAACCAAAAABAAAAAAAAAAAAAAAJhEA=</HashCode>
-      <FileName>SettingsScreen.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.Slider" Collapsed="true">
-    <Position X="13.25" Y="13.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AABACBiAAKAAAgAAAAAAAIAAAAAAAAAAAAAgABAABAA=</HashCode>
-      <FileName>Slider.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.Spaceship" Collapsed="true">
-    <Position X="17.75" Y="11.75" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>gAQiDAwAIAQwDwAkHEAAgAiHAAAgABIAEEAQAGhAAAA=</HashCode>
-      <FileName>Spaceship.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="BaseGameLibrary.Sprite" Collapsed="true">
-    <Position X="14.25" Y="10.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQACAAAAAAEAgAAAAAAAAAAAAAAABAAAAAAAAAAABA=</HashCode>
-      <FileName>Sprite.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="BaseGameLibrary.TextureFrame" Collapsed="true">
-    <Position X="5.75" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAABAgAAAAAAAAAAAAAEAgAAAAAAAAAAAAA=</HashCode>
-      <FileName>AnimatingSprite.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.Timer" Collapsed="true">
-    <Position X="34.25" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAABAAAAAAAQRAEAAAgAAAAAAAAAACAEAAAAAAAAQAA=</HashCode>
-      <FileName>Timer.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.Toggler" Collapsed="true">
-    <Position X="11" Y="13.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AABAAAgAAIAABkAAAAAAAAACAAAAAgAIAAAAABAAAIA=</HashCode>
-      <FileName>Toggler.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.ValueLabel" Collapsed="true">
-    <Position X="4.25" Y="11.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAABAA=</HashCode>
-      <FileName>Label.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="BaseGameLibrary.VisualObject" Collapsed="true">
-    <Position X="12" Y="7.5" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AESICAEAAAgBApABBAJABAAAEAEAKABggAQAgCggAAA=</HashCode>
-      <FileName>VisualObject.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Struct Name="BaseGameLibrary.InputValue" Collapsed="true">
-    <Position X="27.25" Y="5.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
-      <FileName>ActionButton.cs</FileName>
+      <HashCode>EAAAAAAAAAAAAAAAAAACAAAAAAAAQAAAAABAAAAAABA=</HashCode>
+      <FileName>Inputs\InputManager.cs</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="BaseGameLibrary.InputValue&lt;TData, TType&gt;" Collapsed="true">
-    <Position X="29" Y="5.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAEAA=</HashCode>
-      <FileName>ActionButton.cs</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="BaseGameLibrary.LoopedFloat" Collapsed="true">
-    <Position X="30.75" Y="5.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>ABAAAAAgABAAAAAAUAAAIAAAAEAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>LoopedFloat.cs</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="BaseGameLibrary.Setting" Collapsed="true">
-    <Position X="32.5" Y="5.75" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>IAgAgAAEAAACiAAEAAIAAAAgAAAAAAAAAQAAAAAQAAA=</HashCode>
-      <FileName>Screen.cs</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Interface Name="BaseGameLibrary.ButtonEffect" Collapsed="true">
-    <Position X="27.25" Y="7" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ActionButton.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="BaseGameLibrary.ICopyable&lt;T&gt;" Collapsed="true">
-    <Position X="3.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
-      <FileName>IRunnable.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="BaseGameLibrary.IFollowable" Collapsed="true">
-    <Position X="29" Y="7" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Camera.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="BaseGameLibrary.IGameObject&lt;T&gt;" Collapsed="true">
-    <Position X="3.5" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IRunnable.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="BaseGameLibrary.IMovable" Collapsed="true">
-    <Position X="30.75" Y="7" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IMovable.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="BaseGameLibrary.IParamAction" Collapsed="true">
-    <Position X="32.5" Y="7" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParamFuncs.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="BaseGameLibrary.IParamFunc&lt;TReturn&gt;" Collapsed="true">
-    <Position X="34.25" Y="7" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ParamFuncs.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="BaseGameLibrary.IPoolable" Collapsed="true">
-    <Position X="36" Y="7" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ObjectPool.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="BaseGameLibrary.IRunnable" Collapsed="true">
-    <Position X="6.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IRunnable.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Enum Name="BaseGameLibrary.InputValueTypes" Collapsed="true">
-    <Position X="27.25" Y="8" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
-      <FileName>ActionButton.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

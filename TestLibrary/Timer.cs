@@ -5,6 +5,9 @@ using System;
 namespace BaseGameLibrary
 {
 
+    class Stan
+    { }
+
     public abstract class TickerBase
     {
         protected TimeSpan wait;
