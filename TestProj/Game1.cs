@@ -14,7 +14,7 @@ namespace TestProj
 {
     public class Game1 : Game
     {
-        InputManager<Binds> manager;
+        //InputManager<Binds> manager;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch spriteBatch;
         Label test;
@@ -34,18 +34,13 @@ namespace TestProj
             Horsey,
             MouseX,
             MouseY,
-            Help
+            Help,
+            Group
         }
+        KeyControl left = new KeyControl(Keys.A, new DigitalStateComponent());
+        KeyControl right = new KeyControl(Keys.D, new DigitalStateComponent());
 
-        Dictionary<Binds, InputControl> idkName = new Dictionary<Binds, InputControl>()
-        {
-            [Binds.Left] = new KeyControl(Keys.A, new DigitalStateComponent()),
-            [Binds.Right] = new KeyControl(Keys.D, new DigitalStateComponent()),
-            [Binds.Horsey] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.LeftButton == ButtonState.Pressed, Mouse.GetState()), new DigitalStateComponent()),
-            [Binds.MouseX] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.Position.X, Mouse.GetState()), new AnalogStateComponent()),
-            [Binds.MouseY] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.Position.Y, Mouse.GetState()), new AnalogStateComponent()),
-            [Binds.Help] = new StickControl(0, new DigitalStateComponent())
-        };
+        MouseControl clicked = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.LeftButton == ButtonState.Pressed, Mouse.GetState()), new DigitalStateComponent());
 
 
 
@@ -73,7 +68,19 @@ namespace TestProj
             //indextionary.Add(0, "hello");
             indextionary[0] = "amogus";
 
-            manager = new InputManager<Binds>(idkName);
+
+
+            Dictionary<Binds, InputControl> idkName = new Dictionary<Binds, InputControl>()
+            {
+                [Binds.Left] = left,
+                [Binds.Right] = right,
+                [Binds.Horsey] = clicked,
+                [Binds.MouseX] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.Position.X, Mouse.GetState()), new AnalogStateComponent()),
+                [Binds.MouseY] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.Position.Y, Mouse.GetState()), new AnalogStateComponent()),
+                [Binds.Help] = new StickControl(0, new DigitalStateComponent()),
+                [Binds.Group] = new ComplexControl<Binds>(ComplexControl<Binds>.ControlType.NOR, new DigitalStateComponent(), Binds.Left, Binds.Right, Binds.Horsey)
+            };
+            InputManager<Binds>.Instance.Fill(idkName);
 
             test = new Label(Content.Load<SpriteFont>("File"), Color.Wheat, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), "Shid & fard", true);
             // timer = new Timer(5000);
@@ -120,9 +127,6 @@ namespace TestProj
             var pretty = new AestheticsManager(bottomScroll, karan, sequence, test);
 
             ActionButton button = new ActionButton(new Button(Content.Load<Texture2D>("Toggle Ball"), new Vector2(200)), new ParamAction<AestheticsManager>(m => m.Running = !m.Running, pretty));
-
-
-
             ButtonManager buttons = new ButtonManager(button);
 
             screen = new Screen(Content.Load<SoundEffect>("UnlimitedIntro"), Content.Load<SoundEffect>("UnlimitedMusic"), buttons, pretty);
@@ -131,18 +135,18 @@ namespace TestProj
         protected override void Update(GameTime gameTime)
         {
             // sequence.RunSequence(gameTime);
-
+            var manager = InputManager<Binds>.Instance;
             manager.Update(gameTime);
 
             var isLeft = manager[Binds.Left] == true;
             var isRight = manager[Binds.Right] == true;
-            var isHeld = manager[Binds.Horsey] > 0;
+            var isHeld = manager[Binds.Horsey] == true;
             var mouseX = manager[Binds.MouseX];
             var mouseY = manager[Binds.MouseY];
 
             test.Text($"Left: {isLeft}, Right: {isRight}, Held: {isHeld}\nMouse Moved: {mouseX || mouseY}, ({(int)mouseX}, {(int)mouseY})");
 
-            if (isLeft && isRight || isHeld && (mouseX || mouseY))
+            if (manager[Binds.Group])
             {
                 screen.Update(gameTime, manny);
             }

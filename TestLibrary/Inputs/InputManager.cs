@@ -10,8 +10,15 @@ using System.Text;
 
 namespace BaseGameLibrary
 {
-    public class InputManager<T> where T : Enum
+    public sealed class InputManager<T> where T : Enum
     {
+        private static Dictionary<InputSources, Action<InputManager<T>>> defaultStates = new Dictionary<InputSources, Action<InputManager<T>>>()
+        {
+            [InputSources.Keyboard] = m => m.ks = Keyboard.GetState(),
+            [InputSources.Mouse] = m => m.ms = Mouse.GetState(),
+            [InputSources.HappyShaft] = m => m.js = Joystick.GetState(0) //TODO: figure out what exactly this index really means
+        };
+
 
         Action<InputManager<T>> GetState;
 
@@ -40,13 +47,28 @@ namespace BaseGameLibrary
             }
         }
 
-        public Dictionary<T, InputControl> buttons; //{ get; private set; }
 
-        public InputManager()
+        public static InputManager<T> Instance { get; } = new InputManager<T>();
+        Dictionary<T, InputControl> buttons; //{ get; private set; }
+
+        public void Fill(Dictionary<T, InputControl> buttons) { Fill(buttons, GetSources(buttons)); }
+        public void Fill (Dictionary<T, InputControl> buttons, InputSources sources) 
+        {
+            this.buttons = buttons;
+            this.sources = sources;
+
+            ks = new KeyboardState();
+            ms = new MouseState();
+            js = new JoystickState();
+
+            PrepareStates();
+        }
+
+        private InputManager()
             : this(new Dictionary<T, InputControl>()) { }
-        public InputManager(Dictionary<T, InputControl> buttons)
+        private InputManager(Dictionary<T, InputControl> buttons)
             : this(buttons, GetSources(buttons)) { }
-        public InputManager(Dictionary<T, InputControl> buttons, InputSources sources)
+        private InputManager(Dictionary<T, InputControl> buttons, InputSources sources)
         {
             this.buttons = buttons;
             this.sources = sources;
@@ -62,7 +84,8 @@ namespace BaseGameLibrary
         {
             [typeof(KeyControl)] = InputSources.Keyboard,
             [typeof(MouseControl)] = InputSources.Mouse,
-            [typeof(StickControl)] = InputSources.HappyShaft
+            [typeof(StickControl)] = InputSources.HappyShaft,
+            [typeof(ComplexControl<T>)] = InputSources.All
         };
 
         public static InputSources GetSources(Dictionary<T, InputControl> buttons)
@@ -75,16 +98,8 @@ namespace BaseGameLibrary
             return sources;
         }
 
-        private static Dictionary<InputSources, Action<InputManager<T>>> defaultStates = new Dictionary<InputSources, Action<InputManager<T>>>()
-        {
-            [InputSources.Keyboard] = m => m.ks = Keyboard.GetState(),
-            [InputSources.Mouse] = m => m.ms = Mouse.GetState(),
-            [InputSources.HappyShaft] = m => m.js = Joystick.GetState(0) //TODO: figure out what exactly this index really means
-        };
-
         void PrepareStates()
         {
-
             foreach (var state in defaultStates)
             {
                 if (sources.HasFlag(state.Key))

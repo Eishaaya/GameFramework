@@ -15,7 +15,7 @@ namespace BaseGameLibrary.Inputs
         {
             StateComponent = inputStateComponent;
         }
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             StateComponent.Update(gameTime);
         }
@@ -73,5 +73,43 @@ namespace BaseGameLibrary.Inputs
             var isDown = js.Buttons[buttonIndex] == ButtonState.Pressed;
             return StateComponent.Press(isDown);
         }
+    }
+
+    public class ComplexControl<T> : InputControl where T: Enum
+    {
+        public enum ControlType
+        {
+            OR,
+            AND,
+            XOR,
+            NOR,
+            NAND,
+        }
+        ControlType myType;
+        public static Dictionary<ControlType, Func<T[], bool>> Combiners { get; }
+            = new Dictionary<ControlType, Func<T[], bool>>()
+            {
+                [ControlType.OR] = InputControlCombiners.OR,
+                [ControlType.AND] = InputControlCombiners.AND,
+                [ControlType.XOR] = InputControlCombiners.XOR,
+                [ControlType.NAND] = InputControlCombiners.NAND,
+                [ControlType.NOR] = InputControlCombiners.NOR,
+            };
+
+        T[] subComponents;
+
+        public ComplexControl(ControlType myType, InputStateComponent inputStateComponent, params T[] subComponents)
+            :base(inputStateComponent)
+        {
+            this.myType = myType;
+            this.subComponents = subComponents;
+        }
+
+        public override bool Pressed(KeyboardState ks, MouseState ms, JoystickState js)
+        {
+            var isDown = Combiners[myType](subComponents);
+            return StateComponent.Press(isDown);
+        }
+        public override void Update(GameTime gameTime) { }       
     }
 }
