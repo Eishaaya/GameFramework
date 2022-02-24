@@ -12,7 +12,7 @@ using BaseGameLibrary.Inputs;
 
 namespace TestProj
 {
-    public class Game1 : Game
+    public class Game1 : Game //COMMENT TO LET ME COMMIT
     {
         //InputManager<Binds> manager;
         private GraphicsDeviceManager _graphics;
