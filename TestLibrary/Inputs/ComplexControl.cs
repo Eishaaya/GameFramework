@@ -15,6 +15,7 @@ namespace BaseGameLibrary.Inputs
             XOR,
             NOR,
             NAND,
+            XNOR
         }
         public enum CompareType
         {
@@ -32,6 +33,7 @@ namespace BaseGameLibrary.Inputs
                 [ControlType.XOR] = InputExtensions.XOR,
                 [ControlType.NAND] = InputExtensions.NAND,
                 [ControlType.NOR] = InputExtensions.NOR,
+                [ControlType.XNOR] = InputExtensions.XNOR
             };
         public static Dictionary<CompareType, Func<T, BoolInt, bool>> Comparers { get; }
     = new Dictionary<CompareType, Func<T, BoolInt, bool>>()

@@ -6,6 +6,7 @@ namespace BaseGameLibrary.Inputs
 {
     public static class InputExtensions
     {
+        //Combiner Funcs
         public static bool OR<T> (ParamFunc<T, BoolInt, bool>[] inputControls) where T : Enum
         {
             bool result = false;
@@ -51,7 +52,18 @@ namespace BaseGameLibrary.Inputs
             }
             return !result;
         }
+        public static bool XNOR<T>(ParamFunc<T, BoolInt, bool>[] inputControls) where T : Enum
+        {
+            bool result = inputControls[0].Call();
+            for (int i = 1; i < inputControls.Length; i++)
+            {
+                result = result == inputControls[i].Call();
+            }
+            return !result;
+        }
+        
 
+        //Compare Funcs
         public static bool Digital<T>(T key, BoolInt invert) where T : Enum
             => !(InputManager<T>.Instance[key] ^ invert); //I have created equal
         public static bool Greater<T>(T key, BoolInt threshold) where T : Enum
