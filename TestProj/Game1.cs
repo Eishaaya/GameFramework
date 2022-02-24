@@ -78,7 +78,7 @@ namespace TestProj
                 [Binds.MouseX] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.Position.X, Mouse.GetState()), new AnalogStateComponent()),
                 [Binds.MouseY] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.Position.Y, Mouse.GetState()), new AnalogStateComponent()),
                 [Binds.Help] = new StickControl(0, new DigitalStateComponent()),
-                [Binds.Group] = new ComplexControl<Binds>(ComplexControl<Binds>.ControlType.NOR, new DigitalStateComponent(), Binds.Left, Binds.Right, Binds.Horsey)
+                [Binds.Group] = new ComplexControl<Binds>(ComplexControl<Binds>.ControlType.AND, new DigitalStateComponent(), Binds.Left, Binds.Right, Binds.Horsey)
             };
             InputManager<Binds>.Instance.Fill(idkName);
 

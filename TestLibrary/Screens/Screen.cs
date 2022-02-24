@@ -207,8 +207,8 @@ namespace BaseGameLibrary
             : this(m, im, new ButtonManager(buttons), new AestheticsManager(pretties)) { }
         public Screen(SoundEffect m, SoundEffect im, ButtonManager buttons, AestheticsManager pretties)
         {
-            buttonManager = buttons == null? new ButtonManager() : buttons;
-            aesthetics = pretties == null? new AestheticsManager() : pretties;
+            buttonManager = buttons ?? new ButtonManager();
+            aesthetics = pretties ?? new AestheticsManager();
             playMusic = true;
             Idaho = new KeyboardState();
             mousy = new MouseState();

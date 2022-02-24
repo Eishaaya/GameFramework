@@ -26,6 +26,10 @@ namespace BaseGameLibrary.Inputs
         public static bool operator <=(InputStateComponent me, int other)
             => me.GetValue <= other;
 
+        public static string operator +(InputStateComponent me, string other)
+            => $"{me.state}, {other}";
+        public static string operator +(string other, InputStateComponent me)
+            => $"{other}, {me.state}";
     }
 
     public class DigitalStateComponent : InputStateComponent
