@@ -21,7 +21,7 @@ namespace TestProj
         //Timer timer;
         //int runner = 0;
 
-        Indextionary<int, string> indextionary = new Indextionary<int, string>();
+        Indextionary<int, string> indextionary = new Indextionary<int, string>();        
         Screenmanager manny;
 
         Screen screen;
@@ -31,7 +31,10 @@ namespace TestProj
         {
             Left,
             Right,
-            Horsey,
+            LClick,
+            RClick,
+            MClick,
+            Scroll,
             MouseX,
             MouseY,
             Help,
@@ -74,13 +77,18 @@ namespace TestProj
             {
                 [Binds.Left] = left,
                 [Binds.Right] = right,
-                [Binds.Horsey] = clicked,
+                [Binds.LClick] = clicked,
+                [Binds.RClick] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.RightButton == ButtonState.Pressed, Mouse.GetState()), new DigitalStateComponent()),
+                [Binds.MClick] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.MiddleButton == ButtonState.Pressed, Mouse.GetState()), new DigitalStateComponent()),
+                [Binds.Scroll] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.ScrollWheelValue, Mouse.GetState()), new DigitalStateComponent()),
                 [Binds.MouseX] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.Position.X, Mouse.GetState()), new AnalogStateComponent()),
                 [Binds.MouseY] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.Position.Y, Mouse.GetState()), new AnalogStateComponent()),
                 [Binds.Help] = new StickControl(0, new DigitalStateComponent()),
-                [Binds.Group] = new ComplexControl<Binds>(ComplexControl<Binds>.ControlType.AND, new DigitalStateComponent(), Binds.Left, Binds.Right, Binds.Horsey)
+                [Binds.Group] = new ComplexControl<Binds>(ComplexControl<Binds>.ControlType.AND, new DigitalStateComponent(), Binds.Left, Binds.Right, Binds.LClick)
             };
             InputManager<Binds>.Instance.Fill(idkName);
+
+            Cursor<Binds>.Mouse.AttachClicks(Binds.LClick, Binds.RClick, Binds.MClick, Binds.Scroll, Binds.MouseX, Binds.MouseY);
 
             test = new Label(Content.Load<SpriteFont>("File"), Color.Wheat, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), "Shid & fard", true);
             // timer = new Timer(5000);
@@ -135,12 +143,13 @@ namespace TestProj
         protected override void Update(GameTime gameTime)
         {
             // sequence.RunSequence(gameTime);
+            Cursor<Binds>.Mouse.UpdateLocation();
             var manager = InputManager<Binds>.Instance;
             manager.Update(gameTime);
 
             var isLeft = manager[Binds.Left] == true;
             var isRight = manager[Binds.Right] == true;
-            var isHeld = manager[Binds.Horsey] == true;
+            var isHeld = manager[Binds.LClick] == true;
             var mouseX = manager[Binds.MouseX];
             var mouseY = manager[Binds.MouseY];
 

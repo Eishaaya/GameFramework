@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BaseGameLibrary.Inputs;
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using System;
@@ -11,6 +13,7 @@ namespace BaseGameLibrary
 {
     public class Button : Sprite
     {
+        public ICursor.Info ChosenClick; //Not a fan of this
         public Color NormalColor { get; set; }
         public Color HoverColor { get; set; }
         public Color ClickedColor { get; set; }
@@ -55,6 +58,16 @@ namespace BaseGameLibrary
         }
 
         #endregion
+
+        public virtual bool Check(ICursor cursor)
+        {
+            if (cursor.Clicked(this, ChosenClick))
+            {
+                Color
+            }
+        }
+
+
 
         public virtual bool Check(Vector2 cursor, bool isclicked)
         {

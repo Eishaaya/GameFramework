@@ -4,19 +4,95 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using static BaseGameLibrary.Inputs.ICursor;
+
 namespace BaseGameLibrary.Inputs
 {
-    sealed class Cursor<T> where T : Enum
-    {        
-        public static Cursor<T> Mouse { get; } = new Cursor<T>();
+    public abstract class ICursor 
+    {
+        public enum Info : int
+        {
+            Left,
+            Right,
+            Middle,
+            Scroll,
+            X,
+            Y
+        }//TEST X & Y
+        public enum ClickStatus : int
+        {
+            No,
+            Hovering,
+            Held,
+            Clicked
+        }
+
+        public Vector2 Location { get; private set; }
+        public bool Moved { get; private set; }
+
+        public bool Clicked(Sprite button, Info condition)
+        {
+            if (button.Hitbox.Contains(Location))
+            {
+                if () //Seems derpy, ask stan
+            }
+        }
+    }
+
+    public sealed class Cursor<TInput> where TInput : Enum
+    {
+
+        public static Cursor<TInput> Mouse { get; } = new Cursor<TInput>();
 
         private Cursor()
         {
-            Clicks = new Dictionary<T, bool>();
+            Inputs = new Dictionary<Info, TInput>();
         }
-        Dictionary<T, bool> Clicks;
-        public Point Location { get; private set; }
+        Dictionary<Info, TInput> Inputs;
 
-        public static explicit operator Vector2(Cursor<T> mouse) => mouse.Location.ToVector2();
+        public void AttachClicks(TInput left, TInput right, TInput middle, TInput scroll, TInput X, TInput Y)
+            => AttachClickArr(left, right, middle, scroll, X, Y);
+        private void AttachClickArr(params TInput[] inputs)
+        {
+            for (int i = 0; i < inputs.Length; i++)
+            {
+                Inputs[(Info)i] = inputs[i];
+            }
+        }
+
+
+
+        public Vector2 Location { get; private set; }
+        public bool Moved { get; private set; }
+
+        public void UpdateLocation()
+        {
+            var oldLocation = Location;
+            Location = new Vector2((int)InputManager<TInput>.Instance[Inputs[Info.X]], (int)InputManager<TInput>.Instance[Inputs[Info.Y]]);
+            Moved = oldLocation == Location;
+        }
+
+        public InputStateComponent LeftButton
+        {
+            get
+                => InputManager<TInput>.Instance[Inputs[Info.Left]];
+        }
+        public InputStateComponent RightButton
+        {
+            get
+                => InputManager<TInput>.Instance[Inputs[Info.Right]];
+        }
+        public InputStateComponent MiddleButton
+        {
+            get
+                => InputManager<TInput>.Instance[Inputs[Info.Middle]];
+        }
+        public InputStateComponent Scroll
+        {
+            get
+                => InputManager<TInput>.Instance[Inputs[Info.Scroll]];
+        }
+
+        public static explicit operator Vector2(Cursor<TInput> mouse) => mouse.Location;
     }
 }
