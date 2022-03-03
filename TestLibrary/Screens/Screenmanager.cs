@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BaseGameLibrary.Inputs;
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -9,19 +11,17 @@ namespace BaseGameLibrary
 {
     public class Screenmanager
     {
-
+        ICursor cursor;
         public Dictionary<Setting, HashSet<Screen>> screenSettings { get; } = new Dictionary<Setting, HashSet<Screen>>();
-
-
-
         public Screen CurrentScreen => activeScreens.Peek();
 
         Stack<Screen> activeScreens; 
         List<Screen> allScreens;
         public Stack<Screen> PreviousScreens { get; private set; }
         public bool BindsChanged { get; set; }
-        public Screenmanager(List<Screen> screens)
+        public Screenmanager(List<Screen> screens, ICursor mouse)
         {
+            cursor = mouse;
             activeScreens = new Stack<Screen>();
             allScreens = screens;
             activeScreens.Push(allScreens[0]);
@@ -117,7 +117,7 @@ namespace BaseGameLibrary
             {
                 activeScreens.Push(drawScreens.Pop());
             }
-            CurrentScreen.Update(time, this);
+            CurrentScreen.Update(time, this, cursor);
         }
 
         public void Draw(SpriteBatch batch)

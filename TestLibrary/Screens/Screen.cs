@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BaseGameLibrary.Inputs;
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -283,13 +285,13 @@ namespace BaseGameLibrary
             }
             introDone = false;
         }
-        public virtual void Update(GameTime time, Screenmanager manny)
+        public virtual void Update(GameTime time, Screenmanager manny, ICursor cursor)
         {
             Play(time);
-            CheckKeys();
+          //  CheckKeys();
             heldMouse = false;
-            buttonManager.Update(mousePos, heldMouse, mouseClicks);
-            CheckMouse();
+            buttonManager.Update(mousePos, heldMouse, cursor);
+           // CheckMouse();
         }
 
         protected void CheckKeys()

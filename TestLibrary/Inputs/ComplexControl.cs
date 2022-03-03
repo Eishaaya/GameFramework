@@ -78,11 +78,9 @@ namespace BaseGameLibrary.Inputs
             this.myType = myType;
         }
 
-        public override bool Pressed(KeyboardState ks, MouseState ms, JoystickState js)
+        public override bool PressLogic (KeyboardState ks, MouseState ms, JoystickState js)
         {
-            var isDown = Combiners[myType](subComponents);
-            return StateComponent.Press(isDown);
+            return Combiners[myType](subComponents);
         }
-        public override void Update(GameTime gameTime) { }
     }
 }

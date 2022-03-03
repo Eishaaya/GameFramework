@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BaseGameLibrary.Inputs;
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using System;
@@ -31,6 +33,17 @@ namespace BaseGameLibrary
                 var currentButton = buttons[i];
 
                 currentButton.Click(clicks, heldMouse, mousePos);
+            }
+        }
+        public void Update(Vector2 mousePos, bool heldMouse, ICursor cursor)
+        {
+            if (!Running || cursor.Held) return;
+
+            for (int i = 0; i < buttons.Count; i++)
+            {
+                var currentButton = buttons[i];
+
+                currentButton.Click(cursor);
             }
         }
 

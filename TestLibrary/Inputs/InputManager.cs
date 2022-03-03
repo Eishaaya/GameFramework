@@ -36,6 +36,8 @@ namespace BaseGameLibrary
         MouseState ms;
         JoystickState js;
 
+        public InputStateComponent InputState(T wantedInput)
+            => buttons[wantedInput].StateComponent;
         public InputStateComponent this[T wantedInput]
         {
             get

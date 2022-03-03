@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BaseGameLibrary.Inputs;
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -81,9 +83,9 @@ namespace BaseGameLibrary
             }
             return allBools;
         }
-        public override void Update(GameTime time, Screenmanager manny)
+        public override void Update(GameTime time, Screenmanager manny, ICursor cursor)
         {
-            base.Update(time, manny);
+            base.Update(time, manny, cursor);
             if (heldMouse)
             {
                 return;

@@ -7,6 +7,7 @@ namespace BaseGameLibrary.Inputs
 {
     public abstract class InputControl
     {
+        protected bool beenChecked;
         public InputStateComponent StateComponent { get; }
 
         public InputControl(InputStateComponent inputStateComponent)
@@ -16,10 +17,24 @@ namespace BaseGameLibrary.Inputs
         public virtual void Update(GameTime gameTime)
         {
             StateComponent.Update(gameTime);
+            beenChecked = false;
         }
         public int GetValue(KeyboardState ks, MouseState ms, JoystickState js)
             => StateComponent.GetValue;
-        public abstract bool Pressed(KeyboardState ks, MouseState ms, JoystickState js);
+        public bool Pressed(KeyboardState ks, MouseState ms, JoystickState js)
+        {
+            if (!beenChecked)
+            {
+                beenChecked = true;
+                var isDown = PressLogic(ks, ms, js);
+                if ()
+                return StateComponent.Press(isDown);
+                
+            }
+            return StateComponent;
+        }
+        public abstract bool PressLogic(KeyboardState ks, MouseState ms, JoystickState js);
+
     }
 
     public class KeyControl : InputControl
@@ -31,11 +46,8 @@ namespace BaseGameLibrary.Inputs
         {
             myKey = key;
         }
-        public override bool Pressed(KeyboardState ks, MouseState ms, JoystickState js)
-        {
-            var isDown = ks.IsKeyDown(myKey);
-            return StateComponent.Press(isDown);
-        }
+        public override bool PressLogic(KeyboardState ks, MouseState ms, JoystickState js)
+            => ks.IsKeyDown(myKey);
     }
 
     public class MouseControl : InputControl
@@ -48,11 +60,10 @@ namespace BaseGameLibrary.Inputs
             myClick = click;
         }
 
-        public override bool Pressed(KeyboardState ks, MouseState ms, JoystickState js)
+        public override bool PressLogic(KeyboardState ks, MouseState ms, JoystickState js)
         {
             myClick.Parameter1 = ms;
-            var isDown = myClick.Call();
-            return StateComponent.Press(isDown);
+            return myClick.Call();
         }
     }
 
@@ -66,10 +77,8 @@ namespace BaseGameLibrary.Inputs
             buttonIndex = index;
         }
 
-        public override bool Pressed(KeyboardState ks, MouseState ms, JoystickState js)
-        {
-            var isDown = js.Buttons[buttonIndex] == ButtonState.Pressed;
-            return StateComponent.Press(isDown);
-        }
+        public override bool PressLogic(KeyboardState ks, MouseState ms, JoystickState js)
+            => js.Buttons[buttonIndex] == ButtonState.Pressed;
+        
     }
 }

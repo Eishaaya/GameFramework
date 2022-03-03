@@ -142,8 +142,7 @@ namespace TestProj
 
         protected override void Update(GameTime gameTime)
         {
-            // sequence.RunSequence(gameTime);
-            Cursor<Binds>.Mouse.UpdateLocation();
+            // sequence.RunSequence(gameTime);            
             var manager = InputManager<Binds>.Instance;
             manager.Update(gameTime);
 
@@ -155,11 +154,16 @@ namespace TestProj
 
             test.Text($"Left: {isLeft}, Right: {isRight}, Held: {isHeld}\nMouse Moved: {mouseX || mouseY}, ({(int)mouseX}, {(int)mouseY})");
 
-            if (manager[Binds.Group])
+            if (true || manager[Binds.Group])
             {
-                screen.Update(gameTime, manny);
+                screen.Update(gameTime, manny, Cursor<Binds>.Mouse);
             }
-
+            Cursor<Binds>.Mouse.Update();
+            if (isHeld)
+            {
+                var no = Cursor<Binds>.Mouse[ICursor.Info.Left];
+                no = manager[Binds.LClick];
+            }
         }
 
         //int gIMMEeIGHT()

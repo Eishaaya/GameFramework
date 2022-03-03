@@ -8,7 +8,7 @@ using static BaseGameLibrary.Inputs.ICursor;
 
 namespace BaseGameLibrary.Inputs
 {
-    public abstract class ICursor 
+    public abstract class ICursor
     {
         public enum Info : int
         {
@@ -30,16 +30,58 @@ namespace BaseGameLibrary.Inputs
         public Vector2 Location { get; private set; }
         public bool Moved { get; private set; }
 
-        public bool Clicked(Sprite button, Info condition)
+        public ClickStatus Clicked(Sprite button, Info condition)
         {
+            if (this[Info.Left])
+            {
+                ; // this never hits
+            }
             if (button.Hitbox.Contains(Location))
             {
-                if () //Seems derpy, ask stan
+                var prev = this[condition];
+                if (this[condition])
+                {
+                    if (prev)
+                    {
+                        return ClickStatus.Held;
+                    }
+                    return ClickStatus.Clicked;
+                }
+                return ClickStatus.Hovering;
             }
+            return ClickStatus.No;
         }
+
+        public abstract InputStateComponent this[Info key] { get; }
+        public abstract InputStateComponent CurrentState(Info key);
+        public abstract bool Held { get; protected set; }
     }
 
-    public sealed class Cursor<TInput> where TInput : Enum
+    //Redundant after better inputs
+    #region MouseComponent
+    //public sealed class MouseComponent<TInput> where TInput : Enum
+    //{
+    //    public TInput key { get; }
+    //    public InputStateComponent value { get; private set; }
+    //    bool beenChecked;
+
+    //    public static implicit operator InputStateComponent(MouseComponent<TInput> me)
+    //    {
+    //        if (me.beenChecked)
+    //        {
+    //            me.value = InputManager<TInput>.Instance[me.key];
+    //        }
+    //        return me.value;
+    //    }
+
+    //    public void Update()
+    //    {
+    //        beenChecked = false;
+    //    }
+    //}
+    #endregion
+
+    public sealed class Cursor<TInput> : ICursor where TInput : Enum
     {
 
         public static Cursor<TInput> Mouse { get; } = new Cursor<TInput>();
@@ -65,11 +107,17 @@ namespace BaseGameLibrary.Inputs
         public Vector2 Location { get; private set; }
         public bool Moved { get; private set; }
 
-        public void UpdateLocation()
+        public void Update()
         {
             var oldLocation = Location;
             Location = new Vector2((int)InputManager<TInput>.Instance[Inputs[Info.X]], (int)InputManager<TInput>.Instance[Inputs[Info.Y]]);
             Moved = oldLocation == Location;
+            Held = LeftButton || RightButton || MiddleButton;
+        }
+
+        public override InputStateComponent CurrentState(Info key)
+        {
+            throw new NotImplementedException();
         }
 
         public InputStateComponent LeftButton
@@ -91,6 +139,21 @@ namespace BaseGameLibrary.Inputs
         {
             get
                 => InputManager<TInput>.Instance[Inputs[Info.Scroll]];
+        }
+
+        public override bool Held { get; protected set; }
+
+        public override InputStateComponent this[Info key]
+        {
+            get
+            {
+                var annoyed = InputManager<TInput>.Instance[Inputs[Info.Scroll]];
+                if (annoyed)
+                {
+                    ;
+                }
+                return annoyed;
+            }
         }
 
         public static explicit operator Vector2(Cursor<TInput> mouse) => mouse.Location;

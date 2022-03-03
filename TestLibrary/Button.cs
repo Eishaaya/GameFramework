@@ -13,13 +13,13 @@ namespace BaseGameLibrary
 {
     public class Button : Sprite
     {
-        public ICursor.Info ChosenClick; //Not a fan of this
+        public ICursor.Info ChosenClick; 
         public Color NormalColor { get; set; }
         public Color HoverColor { get; set; }
         public Color ClickedColor { get; set; }
-        public bool Hold { get; set; }
-        public bool Held { get; set; }
-        public bool PrevDown { get; set; }
+        public bool Hold { get; set; } //<-
+        public bool Held { get; set; } //<- Not a fan of this group, this data makes more sense in the mouse, or in another structure for a hotkey situation
+        public bool PrevDown { get; set; } 
 
         public Button(Texture2D image, Vector2 location)
             : this(image, location, Vector2.Zero) { }
@@ -59,12 +59,20 @@ namespace BaseGameLibrary
 
         #endregion
 
-        public virtual bool Check(ICursor cursor)
+        public virtual bool Check(ICursor cursor, int threshold = 2)
         {
-            if (cursor.Clicked(this, ChosenClick))
+            var click = (int)cursor.Clicked(this, ChosenClick);
+            if (click > 0)
             {
-                Color
+                if (click > threshold)
+                {
+                    Color = ClickedColor;
+                    return true;
+                }
+                Color = HoverColor;
             }
+            Color = NormalColor;
+            return false;
         }
 
 

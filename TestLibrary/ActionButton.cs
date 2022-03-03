@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BaseGameLibrary.Inputs;
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using System;
@@ -53,7 +55,7 @@ namespace BaseGameLibrary
         bool wasClicked;
         public bool Held { get; private set; }
 
-        public static implicit operator bool (Click click) => click.isClicked;
+        public static implicit operator bool(Click click) => click.isClicked;
     }
 
     public class ActionButton
@@ -106,6 +108,22 @@ namespace BaseGameLibrary
             }
         }
 
+        public void Click(ICursor cursor)
+        {
+            for (int i = 0; i < clickActions.Count; i++)
+            {
+                var checkedClick = (ClickType)i;
+                if (clickActions.ContainsKey(checkedClick))
+                {
+                    if (button.Check(cursor))
+                    {
+                        clickActions[checkedClick].Call();
+                    }
+                }
+            }
+        }
+
+
         public void Draw(SpriteBatch spriteBatch)
         {
             button.Draw(spriteBatch);
@@ -155,7 +173,7 @@ namespace BaseGameLibrary
                 manny.CurrentScreen.Reset();
             }
         }
-        
+
         public static void Next(Screenmanager manny, int destination, bool replace, bool clear, int clearLimit, bool reset)
         {
             manny.Next(destination, replace);
@@ -165,8 +183,8 @@ namespace BaseGameLibrary
             }
         }
 
-        public static void SendInput<TEnum> (GameRunner<TEnum> runner, TEnum input)
-            where TEnum: Enum
+        public static void SendInput<TEnum>(GameRunner<TEnum> runner, TEnum input)
+            where TEnum : Enum
         {
             runner.ReceiveInput(input);
         }
