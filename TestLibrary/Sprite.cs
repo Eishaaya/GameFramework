@@ -50,7 +50,12 @@ namespace BaseGameLibrary
 
         public override void Draw(SpriteBatch batch)
         {
-            batch.Draw(Image, Location + offset, null, Color, Rotation, Origin, Scale, Effect, Depth);
+            batch.Draw(Image, Location + offset, null, Color, Rotation, Origin, Scale, Effect, Depth);           
+        }
+
+        public void DrawHitBox(SpriteBatch batch)
+        {
+            batch.Draw(Image, Hitbox, Color.Lerp(Color.Red, Color.Transparent, .5f));
         }
 
         public override void Update(GameTime gameTime) { }

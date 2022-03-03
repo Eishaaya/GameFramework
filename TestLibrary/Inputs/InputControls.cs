@@ -27,13 +27,11 @@ namespace BaseGameLibrary.Inputs
             {
                 beenChecked = true;
                 var isDown = PressLogic(ks, ms, js);
-                if ()
                 return StateComponent.Press(isDown);
-                
             }
             return StateComponent;
         }
-        public abstract bool PressLogic(KeyboardState ks, MouseState ms, JoystickState js);
+        public abstract BoolInt PressLogic(KeyboardState ks, MouseState ms, JoystickState js);
 
     }
 
@@ -46,7 +44,7 @@ namespace BaseGameLibrary.Inputs
         {
             myKey = key;
         }
-        public override bool PressLogic(KeyboardState ks, MouseState ms, JoystickState js)
+        public override BoolInt PressLogic(KeyboardState ks, MouseState ms, JoystickState js)
             => ks.IsKeyDown(myKey);
     }
 
@@ -60,7 +58,7 @@ namespace BaseGameLibrary.Inputs
             myClick = click;
         }
 
-        public override bool PressLogic(KeyboardState ks, MouseState ms, JoystickState js)
+        public override BoolInt PressLogic(KeyboardState ks, MouseState ms, JoystickState js)
         {
             myClick.Parameter1 = ms;
             return myClick.Call();
@@ -77,7 +75,7 @@ namespace BaseGameLibrary.Inputs
             buttonIndex = index;
         }
 
-        public override bool PressLogic(KeyboardState ks, MouseState ms, JoystickState js)
+        public override BoolInt PressLogic(KeyboardState ks, MouseState ms, JoystickState js)
             => js.Buttons[buttonIndex] == ButtonState.Pressed;
         
     }

@@ -74,6 +74,18 @@
 /processorParam:TextureFormat=Compressed
 /build:File.spritefont
 
+#begin Mousesheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Mousesheet.png
+
 #begin Rick Astley - Never Gonna Give You Up [HQ].mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor
@@ -157,4 +169,16 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:UnlimitedMusic.mp3
+
+#begin Wide Mouse.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Wide Mouse.png
 

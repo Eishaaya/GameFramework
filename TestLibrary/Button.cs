@@ -13,13 +13,13 @@ namespace BaseGameLibrary
 {
     public class Button : Sprite
     {
-        public ICursor.Info ChosenClick; 
+        public ICursor.Info ChosenClick;
         public Color NormalColor { get; set; }
         public Color HoverColor { get; set; }
         public Color ClickedColor { get; set; }
-        public bool Hold { get; set; } //<-
+        //public bool Hold { get; set; } //<-
         public bool Held { get; set; } //<- Not a fan of this group, this data makes more sense in the mouse, or in another structure for a hotkey situation
-        public bool PrevDown { get; set; } 
+        public bool PrevDown { get; set; }
 
         public Button(Texture2D image, Vector2 location)
             : this(image, location, Vector2.Zero) { }
@@ -35,7 +35,7 @@ namespace BaseGameLibrary
             HoverColor = hovercolor;
             ClickedColor = clickedcolor;
             NormalColor = color;
-            Hold = false;
+           // Hold = false;
             PrevDown = false;
         }
 
@@ -52,7 +52,7 @@ namespace BaseGameLibrary
         {
             base.CloneLogic(copy);
             copy.NormalColor = NormalColor;
-            copy.Hold = Hold;
+           // copy.Hold = Hold;
             copy.Held = Held;
             copy.PrevDown = PrevDown;
         }
@@ -64,12 +64,16 @@ namespace BaseGameLibrary
             var click = (int)cursor.Clicked(this, ChosenClick);
             if (click > 0)
             {
-                if (click > threshold)
+                var good = click > threshold;
+                if (good || (PrevDown && cursor.Held))
                 {
                     Color = ClickedColor;
-                    return true;
+                    PrevDown = true;
+                    return good;
                 }
+                PrevDown = false;
                 Color = HoverColor;
+                return false;
             }
             Color = NormalColor;
             return false;
@@ -81,19 +85,17 @@ namespace BaseGameLibrary
         {
             if (Hitbox.Contains(cursor))
             {
-                if (!isclicked)
-                {
-                    Color = HoverColor;
-                    Hold = false;
-                    PrevDown = false;
-                }
-                else
+                if (isclicked || PrevDown)
                 {
                     Color = ClickedColor;
-                    Hold = PrevDown;
+                    //Hold = PrevDown;
                     PrevDown = true;
-                    return true;
+                    return isclicked;
                 }
+                Color = HoverColor;
+                //Hold = false;
+                PrevDown = false;
+                return false;
             }
             else
             {

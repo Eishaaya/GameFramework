@@ -37,7 +37,7 @@ namespace BaseGameLibrary
         }
         public void Update(Vector2 mousePos, bool heldMouse, ICursor cursor)
         {
-            if (!Running || cursor.Held) return;
+            if (!Running) return;
 
             for (int i = 0; i < buttons.Count; i++)
             {

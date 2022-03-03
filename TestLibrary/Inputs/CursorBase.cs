@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 using System;
 using System.Collections.Generic;
@@ -27,21 +28,16 @@ namespace BaseGameLibrary.Inputs
             Clicked
         }
 
-        public Vector2 Location { get; private set; }
-        public bool Moved { get; private set; }
+        public Vector2 Location { get; protected set; }
+        public bool Moved { get; protected set; }
 
         public ClickStatus Clicked(Sprite button, Info condition)
         {
-            if (this[Info.Left])
-            {
-                ; // this never hits
-            }
             if (button.Hitbox.Contains(Location))
             {
-                var prev = this[condition];
                 if (this[condition])
                 {
-                    if (prev)
+                    if (Held)
                     {
                         return ClickStatus.Held;
                     }
@@ -81,12 +77,9 @@ namespace BaseGameLibrary.Inputs
     //}
     #endregion
 
-    public sealed class Cursor<TInput> : ICursor where TInput : Enum
-    {
-
-        public static Cursor<TInput> Mouse { get; } = new Cursor<TInput>();
-
-        private Cursor()
+    public abstract class CursorBase<TInput> : ICursor where TInput : Enum
+    {      
+        protected CursorBase()
         {
             Inputs = new Dictionary<Info, TInput>();
         }
@@ -102,12 +95,7 @@ namespace BaseGameLibrary.Inputs
             }
         }
 
-
-
-        public Vector2 Location { get; private set; }
-        public bool Moved { get; private set; }
-
-        public void Update()
+        public virtual void Update()
         {
             var oldLocation = Location;
             Location = new Vector2((int)InputManager<TInput>.Instance[Inputs[Info.X]], (int)InputManager<TInput>.Instance[Inputs[Info.Y]]);
@@ -143,19 +131,43 @@ namespace BaseGameLibrary.Inputs
 
         public override bool Held { get; protected set; }
 
-        public override InputStateComponent this[Info key]
+        public override InputStateComponent this[Info key]        
+            => InputManager<TInput>.Instance [Inputs[key]];
+            //var annoyed = InputManager<TInput>.Instance[Inputs[Info.Scroll]];
+            //if (annoyed)
+            //{
+            //    ;
+            //}
+            //return annoyed;        
+
+        public static explicit operator Vector2(CursorBase<TInput> mouse) => mouse.Location;
+    }
+
+    public class Cursor<TInput> : CursorBase<TInput> where TInput : Enum
+    {
+        public static Cursor<TInput> Mouse { get; } = new Cursor<TInput>();
+    }
+
+    public class VisualCursor<TInput> : CursorBase<TInput> where TInput : Enum
+    {
+        Sprite cursor;
+
+        public void AttachSprite(Sprite sprite)
         {
-            get
-            {
-                var annoyed = InputManager<TInput>.Instance[Inputs[Info.Scroll]];
-                if (annoyed)
-                {
-                    ;
-                }
-                return annoyed;
-            }
+            cursor = sprite;            
+            cursor.Location = Location;
+        }
+        public override void Update()
+        {
+            base.Update();
+            cursor.Location = Location;
         }
 
-        public static explicit operator Vector2(Cursor<TInput> mouse) => mouse.Location;
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            cursor.Draw(spriteBatch);
+        }
+
+        public static VisualCursor<TInput> Mouse { get; } = new VisualCursor<TInput>();
     }
 }

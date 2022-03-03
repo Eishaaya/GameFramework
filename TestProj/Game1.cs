@@ -21,7 +21,7 @@ namespace TestProj
         //Timer timer;
         //int runner = 0;
 
-        Indextionary<int, string> indextionary = new Indextionary<int, string>();        
+        Indextionary<int, string> indextionary = new Indextionary<int, string>();
         Screenmanager manny;
 
         Screen screen;
@@ -53,7 +53,7 @@ namespace TestProj
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            // IsMouseVisible = true;
         }
 
         protected override void Initialize()
@@ -71,7 +71,11 @@ namespace TestProj
             //indextionary.Add(0, "hello");
             indextionary[0] = "amogus";
 
-
+            //DIEU TIER CODING
+            BoolInt bob = new BoolInt(720);
+            var bobby = (bool)bob;
+            bob = bobby;
+            ;
 
             Dictionary<Binds, InputControl> idkName = new Dictionary<Binds, InputControl>()
             {
@@ -88,13 +92,14 @@ namespace TestProj
             };
             InputManager<Binds>.Instance.Fill(idkName);
 
-            Cursor<Binds>.Mouse.AttachClicks(Binds.LClick, Binds.RClick, Binds.MClick, Binds.Scroll, Binds.MouseX, Binds.MouseY);
+            VisualCursor<Binds>.Mouse.AttachClicks(Binds.LClick, Binds.RClick, Binds.MClick, Binds.Scroll, Binds.MouseX, Binds.MouseY);
+            VisualCursor<Binds>.Mouse.AttachSprite(new Sprite(Content.Load<Texture2D>("unknown"), Vector2.Zero, Vector2.Zero, .030f));
 
             test = new Label(Content.Load<SpriteFont>("File"), Color.Wheat, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), "Shid & fard", true);
             // timer = new Timer(5000);
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            var karan = new Sprite(Content.Load<Texture2D>("unknown"), new Vector2(100), new Vector2(100), .5f);
+            var karan = new Sprite(Content.Load<Texture2D>("unknown"), new Vector2(400), new Vector2(100), .05f);
 
             sequence = new Sequence();
             sequence.AttachSequence(
@@ -148,22 +153,20 @@ namespace TestProj
 
             var isLeft = manager[Binds.Left] == true;
             var isRight = manager[Binds.Right] == true;
-            var isHeld = manager[Binds.LClick] == true;
+            var no = VisualCursor<Binds>.Mouse[ICursor.Info.Left];
+            var isHeld = no == true;
+
+
+            if (true || manager[Binds.Group])
+            {
+                screen.Update(gameTime, manny, VisualCursor<Binds>.Mouse);
+            }
+            VisualCursor<Binds>.Mouse.Update();
+
             var mouseX = manager[Binds.MouseX];
             var mouseY = manager[Binds.MouseY];
 
             test.Text($"Left: {isLeft}, Right: {isRight}, Held: {isHeld}\nMouse Moved: {mouseX || mouseY}, ({(int)mouseX}, {(int)mouseY})");
-
-            if (true || manager[Binds.Group])
-            {
-                screen.Update(gameTime, manny, Cursor<Binds>.Mouse);
-            }
-            Cursor<Binds>.Mouse.Update();
-            if (isHeld)
-            {
-                var no = Cursor<Binds>.Mouse[ICursor.Info.Left];
-                no = manager[Binds.LClick];
-            }
         }
 
         //int gIMMEeIGHT()
@@ -176,9 +179,10 @@ namespace TestProj
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
 
+
             // test.Draw(spriteBatch);
             screen.Draw(spriteBatch);
-
+            VisualCursor<Binds>.Mouse.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
