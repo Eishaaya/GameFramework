@@ -53,7 +53,7 @@ namespace BaseGameLibrary
         protected Dictionary<EnemyState, FrameObject> totalFrames;
 
         public Enemy(Texture2D image, Vector2 location, Color color, float rotation, SpriteEffects effects, float attack, float attackrange, float health, MoveType movetype, AttackType attacktype, Rectangle hitbox, Vector2 origin, float scale, float depth, Dictionary<EnemyState, FrameObject> totalframes, int time, Vector2[][][] Origins = null)
-          : base(image, location, color, rotation, effects, hitbox, origin, scale, depth, ((AnimationFrame[][])totalframes[EnemyState.Idle])[0], time, Origins == null ? null : Origins[(int)EnemyState.Idle][0])
+          : base(image, location, color, rotation, effects, origin, scale, depth, ((AnimationFrame[][])totalframes[EnemyState.Idle])[0], true, false, time, Origins == null ? null : Origins[(int)EnemyState.Idle][0])
         {
             moveType = movetype;
             attackType = attacktype;

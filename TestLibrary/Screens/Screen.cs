@@ -285,7 +285,7 @@ namespace BaseGameLibrary
             }
             introDone = false;
         }
-        public virtual void Update(GameTime time, Screenmanager manny, ICursor cursor)
+        public virtual void Update(GameTime time, Screenmanager manny, CursorRoot cursor)
         {
             Play(time);
           //  CheckKeys();

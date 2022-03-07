@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,7 @@ namespace BaseGameLibrary
         Texture2D texture;
 
         public static implicit operator Texture2D(TextureFrame frame) => frame.texture;
-        public static implicit operator TextureFrame(Texture2D frame)  => new TextureFrame(frame);
+        public static implicit operator TextureFrame(Texture2D frame) => new TextureFrame(frame);
 
         public override void Draw(SpriteBatch batch, Texture2D Image, Vector2 Location, Color Color, float rotation, Vector2[] origins, Vector2 Origin, float Scale, SpriteEffects effect, float Depth, int currentframe)
         {
@@ -63,27 +64,40 @@ namespace BaseGameLibrary
         public AnimationFrame[] Frames { get; set; }
         Vector2[] origins;
         public Timer FrameTime { get; protected set; }
-    //    TimeSpan tick;
-        public int currentframe;
+        //    TimeSpan tick;
+        public int CurrentFrame { get; private set; }
+        bool autoLoop;
+        bool autoInvert;
 
-        public bool LastFrame 
+        int frameSpeed = 1;
+
+        public void Restart()
+        {
+            CurrentFrame = frameSpeed > 0? 0 : Frames.Length - 1;
+        }
+        public void InvertAnimation()
+        {
+            frameSpeed = -frameSpeed;
+        }
+        public bool LastFrame
         {
             get; private set;
         }
 
         public bool OnLastFrame
         {
-            get => currentframe == Frames.Length - 1;
+            get => CurrentFrame == Frames.Length - 1;
         }
 
-        public AnimatingSprite (Texture2D image, Vector2 location, Color color, float rotation, SpriteEffects effects, Rectangle hitbox, Vector2 origin, float scale, float depth, AnimationFrame[] frames, int time, Vector2[] Origins = null)
-            :base(image, location, color, rotation, effects, origin, scale, depth)
+        public AnimatingSprite(Texture2D image, Vector2 location, Color color, float rotation, SpriteEffects effects, Vector2 origin, float scale, float depth, AnimationFrame[] frames, bool loop, bool invert, int time, Vector2[] Origins = null)
+            : base(image, location, color, rotation, effects, origin, scale, depth)
         {
             Frames = frames;
             FrameTime = new TimeSpan(0, 0, 0, 0, time);
             origins = Origins;
-            currentframe = 0;
-
+            CurrentFrame = 0;
+            autoLoop = loop;
+            autoInvert = invert;
 
             if (origins != null && origins.Length < frames.Length)
             {
@@ -96,7 +110,7 @@ namespace BaseGameLibrary
             Frames = frames;
             FrameTime = new TimeSpan(0, 0, 0, 0, time);
             origins = Origins;
-            currentframe = 0;
+            CurrentFrame = 0;
 
 
             if (origins != null && origins.Length < frames.Length)
@@ -129,13 +143,30 @@ namespace BaseGameLibrary
         {
             LastFrame = false;
             FrameTime.Tick(gametime);
-            if(FrameTime.Ready())
+            if (FrameTime.Ready())
             {
-                currentframe++;
+                CurrentFrame += frameSpeed;
             }
-            if(currentframe >= Frames.Length)
+
+            var tooBig = CurrentFrame >= Frames.Length;
+            if (tooBig || CurrentFrame < 0)
             {
-                currentframe = 0;
+                if (autoInvert)
+                {
+                    InvertAnimation();
+                }
+                if (autoLoop)
+                {
+                    Restart();
+                }
+                else if (tooBig)
+                {
+                    CurrentFrame = Frames.Length - 1;
+                }
+                else
+                {
+                    CurrentFrame = 0;
+                }
                 LastFrame = true;
             }
         }
@@ -146,13 +177,13 @@ namespace BaseGameLibrary
         }
         public override void Draw(SpriteBatch batch)
         {
-            Frames[currentframe].Draw(batch, Image, Location, Color, Rotation, origins, Origin, Scale, Effect, Depth, currentframe);
+            Frames[CurrentFrame].Draw(batch, Image, Location, Color, Rotation, origins, Origin, Scale, Effect, Depth, CurrentFrame);
         }
 
         AnimatingSprite ICopyable<AnimatingSprite>.Clone()
         {
-            var newSprite = new AnimatingSprite(Image, Location, Color, Rotation, Effect, Hitbox, Origin, Scale, Depth, Frames, FrameTime.TotalMillies, origins);
-            newSprite.currentframe = currentframe;
+            var newSprite = new AnimatingSprite(Image, Location, Color, Rotation, Effect, Origin, Scale, Depth, Frames, autoLoop, autoInvert, FrameTime.TotalMillies, origins);
+            newSprite.CurrentFrame = CurrentFrame;
             return newSprite;
         }
     }

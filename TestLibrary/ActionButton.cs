@@ -108,7 +108,7 @@ namespace BaseGameLibrary
             }
         }
 
-        public void Click(ICursor cursor)
+        public void Click(CursorRoot cursor)
         {
             for (int i = 0; i < clickActions.Count; i++)
             {

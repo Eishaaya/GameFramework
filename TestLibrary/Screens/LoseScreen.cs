@@ -69,7 +69,7 @@ namespace BaseGameLibrary
             File.WriteAllText("data.json", stuffToWrite);
         }
 
-        public override void Update(GameTime time, Screenmanager manny, ICursor cursor)
+        public override void Update(GameTime time, Screenmanager manny, CursorRoot cursor)
         {
             base.Update(time, manny, cursor);
             if (heldMouse)

@@ -5,11 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using static BaseGameLibrary.Inputs.ICursor;
+using static BaseGameLibrary.Inputs.CursorRoot;
 
 namespace BaseGameLibrary.Inputs
 {
-    public abstract class ICursor
+    public abstract class CursorRoot
     {
         public enum Info : int
         {
@@ -77,7 +77,7 @@ namespace BaseGameLibrary.Inputs
     //}
     #endregion
 
-    public abstract class CursorBase<TInput> : ICursor where TInput : Enum
+    public abstract class CursorBase<TInput> : CursorRoot where TInput : Enum
     {      
         protected CursorBase()
         {
@@ -132,13 +132,7 @@ namespace BaseGameLibrary.Inputs
         public override bool Held { get; protected set; }
 
         public override InputStateComponent this[Info key]        
-            => InputManager<TInput>.Instance [Inputs[key]];
-            //var annoyed = InputManager<TInput>.Instance[Inputs[Info.Scroll]];
-            //if (annoyed)
-            //{
-            //    ;
-            //}
-            //return annoyed;        
+            => InputManager<TInput>.Instance [Inputs[key]];    
 
         public static explicit operator Vector2(CursorBase<TInput> mouse) => mouse.Location;
     }
@@ -148,7 +142,7 @@ namespace BaseGameLibrary.Inputs
         public static Cursor<TInput> Mouse { get; } = new Cursor<TInput>();
     }
 
-    public class VisualCursor<TInput> : CursorBase<TInput> where TInput : Enum
+    public abstract class VisualCursorBase<TInput> : CursorBase<TInput> where TInput : Enum
     {
         Sprite cursor;
 
@@ -167,7 +161,14 @@ namespace BaseGameLibrary.Inputs
         {
             cursor.Draw(spriteBatch);
         }
-
+    }
+    public class VisualCursor<TInput> : VisualCursorBase<TInput> where TInput : Enum
+    {
         public static VisualCursor<TInput> Mouse { get; } = new VisualCursor<TInput>();
+    }
+
+    public class AnimatedCursor<TInput> : VisualCursorBase<TInput> where TInput : Enum
+    {
+
     }
 }

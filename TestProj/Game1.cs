@@ -59,6 +59,26 @@ namespace TestProj
         protected override void Initialize()
         {
             base.Initialize();
+            
+            // Form related tomfoolery
+
+            //var form = System.Windows.Forms.Form.FromHandle(Window.Handle) as System.Windows.Forms.Form;
+            //var button = new System.Windows.Forms.Button()
+            //{
+            //    Location = System.Drawing.Point.Empty,
+            //    AutoSize = true,
+            //    Text = "Hello"
+            //};
+
+            //button.Click += (s, e) => System.Windows.Forms.MessageBox.Show("Hacks!\0Hi!");
+
+            //form.Controls.Add(button);
+            //form.MouseMove += (s, e) => form.Text = $"{e.X}, {e.Y}";
+
+            //form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            //form.AllowTransparency = true;
+            //form.TransparencyKey = System.Drawing.Color.CornflowerBlue;
+
 
         }
 
@@ -116,7 +136,7 @@ namespace TestProj
 
             //  var eight = gIMMEeIGHT();
 
-            var bottomScroll = new AnimatingSprite(Content.Load<Texture2D>("bottom"), new Vector2(0, 50), Color.White, 0, SpriteEffects.None, new Rectangle(0, 0, 0, 0), new Vector2(0, 0), 1, .025f,
+            var bottomScroll = new AnimatingSprite(Content.Load<Texture2D>("bottom"), new Vector2(0, 50), Color.White, 0, SpriteEffects.None, new Vector2(0, 0), 1, .025f,
             new RectangleFrame[]
             {
                 new Rectangle(0, 0, 600, 90),
@@ -134,7 +154,7 @@ namespace TestProj
                 new Rectangle(0, 1092, 600, 90),
                 new Rectangle(0, 1183, 600, 90),
                 new Rectangle(0, 1274, 600, 90)
-            }, 80);
+            }, false, true, 80);
 
 
             var pretty = new AestheticsManager(bottomScroll, karan, sequence, test);
@@ -153,7 +173,7 @@ namespace TestProj
 
             var isLeft = manager[Binds.Left] == true;
             var isRight = manager[Binds.Right] == true;
-            var no = VisualCursor<Binds>.Mouse[ICursor.Info.Left];
+            var no = VisualCursor<Binds>.Mouse[CursorRoot.Info.Left];
             var isHeld = no == true;
 
 

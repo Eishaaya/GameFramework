@@ -35,7 +35,7 @@ namespace BaseGameLibrary
                 currentButton.Click(clicks, heldMouse, mousePos);
             }
         }
-        public void Update(Vector2 mousePos, bool heldMouse, ICursor cursor)
+        public void Update(Vector2 mousePos, bool heldMouse, CursorRoot cursor)
         {
             if (!Running) return;
 

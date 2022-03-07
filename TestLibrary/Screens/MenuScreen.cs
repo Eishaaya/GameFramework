@@ -25,7 +25,7 @@ namespace BaseGameLibrary
             Unlimited = infinite;
             setting = sett;
         }
-        public override void Update(GameTime time, Screenmanager manny, ICursor cursor)
+        public override void Update(GameTime time, Screenmanager manny, CursorRoot cursor)
         {
             base.Update(time, manny, cursor);
             Play(time);

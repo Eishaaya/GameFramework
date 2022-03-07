@@ -11,7 +11,7 @@ namespace BaseGameLibrary
 {
     public class Screenmanager
     {
-        ICursor cursor;
+        CursorRoot cursor;
         public Dictionary<Setting, HashSet<Screen>> screenSettings { get; } = new Dictionary<Setting, HashSet<Screen>>();
         public Screen CurrentScreen => activeScreens.Peek();
 
@@ -19,7 +19,7 @@ namespace BaseGameLibrary
         List<Screen> allScreens;
         public Stack<Screen> PreviousScreens { get; private set; }
         public bool BindsChanged { get; set; }
-        public Screenmanager(List<Screen> screens, ICursor mouse)
+        public Screenmanager(List<Screen> screens, CursorRoot mouse)
         {
             cursor = mouse;
             activeScreens = new Stack<Screen>();
