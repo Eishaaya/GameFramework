@@ -31,9 +31,12 @@ namespace BaseGameLibrary.Inputs
         public Vector2 Location { get; protected set; }
         public bool Moved { get; protected set; }
 
+        protected virtual bool Touching(Sprite button)
+            => button.Hitbox.Contains(Location);
+
         public ClickStatus Clicked(Sprite button, Info condition)
         {
-            if (button.Hitbox.Contains(Location))
+            if (Touching(button))
             {
                 if (this[condition])
                 {
@@ -78,7 +81,7 @@ namespace BaseGameLibrary.Inputs
     #endregion
 
     public abstract class CursorBase<TInput> : CursorRoot where TInput : Enum
-    {      
+    {
         protected CursorBase()
         {
             Inputs = new Dictionary<Info, TInput>();
@@ -95,7 +98,7 @@ namespace BaseGameLibrary.Inputs
             }
         }
 
-        public virtual void Update()
+        public virtual void Update(GameTime gameTime)
         {
             var oldLocation = Location;
             Location = new Vector2((int)InputManager<TInput>.Instance[Inputs[Info.X]], (int)InputManager<TInput>.Instance[Inputs[Info.Y]]);
@@ -131,8 +134,8 @@ namespace BaseGameLibrary.Inputs
 
         public override bool Held { get; protected set; }
 
-        public override InputStateComponent this[Info key]        
-            => InputManager<TInput>.Instance [Inputs[key]];    
+        public override InputStateComponent this[Info key]
+            => InputManager<TInput>.Instance[Inputs[key]];
 
         public static explicit operator Vector2(CursorBase<TInput> mouse) => mouse.Location;
     }
@@ -144,16 +147,14 @@ namespace BaseGameLibrary.Inputs
 
     public abstract class VisualCursorBase<TInput> : CursorBase<TInput> where TInput : Enum
     {
-        Sprite cursor;
+        protected Sprite cursor;
 
-        public void AttachSprite(Sprite sprite)
+        protected override bool Touching(Sprite button)
+            => button.Hitbox.Intersects(cursor.Hitbox);
+
+        public override void Update(GameTime gameTime)
         {
-            cursor = sprite;            
-            cursor.Location = Location;
-        }
-        public override void Update()
-        {
-            base.Update();
+            base.Update(gameTime);
             cursor.Location = Location;
         }
 
@@ -164,11 +165,38 @@ namespace BaseGameLibrary.Inputs
     }
     public class VisualCursor<TInput> : VisualCursorBase<TInput> where TInput : Enum
     {
-        public static VisualCursor<TInput> Mouse { get; } = new VisualCursor<TInput>();
+        public static VisualCursor<TInput> Instance { get; } = new VisualCursor<TInput>();
+
+        public void AttachSprite(Sprite sprite)
+        {
+            cursor = sprite;
+            cursor.Location = Location;
+        }
     }
 
     public class AnimatedCursor<TInput> : VisualCursorBase<TInput> where TInput : Enum
     {
+        public static AnimatedCursor<TInput> Instance { get; } = new AnimatedCursor<TInput>();
 
+        public void AttachSprite(AnimatingSprite sprite)
+        {
+            if (!Held)
+            {
+                sprite.InvertAnimation();
+            }
+            cursor = sprite;
+            cursor.Location = Location;
+        }
+        public override void Update(GameTime gameTime)
+        {
+            var held = Held;
+            base.Update(gameTime);
+            if (Held != held)
+            {
+                ((AnimatingSprite)cursor).InvertAnimation();
+            }
+            cursor.Update(gameTime);
+            cursor.Location = Location;
+        }
     }
 }

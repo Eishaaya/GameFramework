@@ -112,8 +112,12 @@ namespace TestProj
             };
             InputManager<Binds>.Instance.Fill(idkName);
 
-            VisualCursor<Binds>.Mouse.AttachClicks(Binds.LClick, Binds.RClick, Binds.MClick, Binds.Scroll, Binds.MouseX, Binds.MouseY);
-            VisualCursor<Binds>.Mouse.AttachSprite(new Sprite(Content.Load<Texture2D>("unknown"), Vector2.Zero, Vector2.Zero, .030f));
+            AnimatedCursor<Binds>.Instance.AttachClicks(Binds.LClick, Binds.RClick, Binds.MClick, Binds.Scroll, Binds.MouseX, Binds.MouseY);
+            AnimatedCursor<Binds>.Instance.AttachSprite(new AnimatingSprite(Vector2.Zero, Color.White, new Vector2(31, 0), .3f, new RectangleContainer(Content.Load<Texture2D>("Mousesheet"), new RectangleFrame[] {
+                new Rectangle(0, 0, 72, 103),
+                new Rectangle(72, 0, 71, 103),
+                new Rectangle(143, 0, 73, 103)
+            }), 50, false, false));
 
             test = new Label(Content.Load<SpriteFont>("File"), Color.Wheat, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), "Shid & fard", true);
             // timer = new Timer(5000);
@@ -136,7 +140,7 @@ namespace TestProj
 
             //  var eight = gIMMEeIGHT();
 
-            var bottomScroll = new AnimatingSprite(Content.Load<Texture2D>("bottom"), new Vector2(0, 50), Color.White, 0, SpriteEffects.None, new Vector2(0, 0), 1, .025f,
+            var bottomScroll = new AnimatingSprite(new Vector2(0, 50), Color.White, 0, SpriteEffects.None, new Vector2(0, 0), 1, .025f, new RectangleContainer(Content.Load<Texture2D>("bottom"),
             new RectangleFrame[]
             {
                 new Rectangle(0, 0, 600, 90),
@@ -154,7 +158,7 @@ namespace TestProj
                 new Rectangle(0, 1092, 600, 90),
                 new Rectangle(0, 1183, 600, 90),
                 new Rectangle(0, 1274, 600, 90)
-            }, false, true, 80);
+            }), 80, false, true);
 
 
             var pretty = new AestheticsManager(bottomScroll, karan, sequence, test);
@@ -173,15 +177,15 @@ namespace TestProj
 
             var isLeft = manager[Binds.Left] == true;
             var isRight = manager[Binds.Right] == true;
-            var no = VisualCursor<Binds>.Mouse[CursorRoot.Info.Left];
+            var no = AnimatedCursor<Binds>.Instance[CursorRoot.Info.Left];
             var isHeld = no == true;
 
 
             if (true || manager[Binds.Group])
             {
-                screen.Update(gameTime, manny, VisualCursor<Binds>.Mouse);
+                screen.Update(gameTime, manny, AnimatedCursor<Binds>.Instance);
             }
-            VisualCursor<Binds>.Mouse.Update();
+            AnimatedCursor<Binds>.Instance.Update(gameTime);
 
             var mouseX = manager[Binds.MouseX];
             var mouseY = manager[Binds.MouseY];
@@ -202,7 +206,7 @@ namespace TestProj
 
             // test.Draw(spriteBatch);
             screen.Draw(spriteBatch);
-            VisualCursor<Binds>.Mouse.Draw(spriteBatch);
+            AnimatedCursor<Binds>.Instance.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
