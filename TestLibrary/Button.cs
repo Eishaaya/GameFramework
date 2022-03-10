@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BaseGameLibrary
 {
-    public class Button : Sprite
+    public class Button : SpriteBase
     {
         public CursorRoot.Info ChosenClick { get; set; }
         public Color NormalColor { get; set; }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BaseGameLibrary
 {
-    public class FadingLabel : Label, IGameObject<FadingLabel>
+    public class FadingLabel : LabelBase, IGameObject<FadingLabel>
     {
         Timer lifeTimer;
         bool fading;
@@ -29,7 +29,7 @@ namespace BaseGameLibrary
             fading = false;
         }
 
-        public new FadingLabel Clone()
+        public FadingLabel Clone()
          => new FadingLabel(Font, Color, Location, text, Origin, Rotation, Effect, Scale, Depth, lifeTimer.TotalMillies);
 
         public override void Update(GameTime gameTime)
@@ -48,19 +48,19 @@ namespace BaseGameLibrary
             }
         }
     }
-    public class Label : VisualObject, IGameObject<Label>
+    public abstract class LabelBase : VisualObject
     {
         protected string text;
         public SpriteFont Font { get; }
 
 
-        public Label(SpriteFont font, Color color, Vector2 location, string text, bool middle = false)
+        public LabelBase(SpriteFont font, Color color, Vector2 location, string text, bool middle = false)
             : this(font, color, location, text, middle ? font.MeasureString(text) / 2 : Vector2.Zero) { }
-        public Label(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin)
+        public LabelBase(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin)
             : this(font, color, location, text, Origin, 1) { }
-        public Label(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin, float Scale)
+        public LabelBase(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin, float Scale)
             : this(font, color, location, text, Origin, 0, SpriteEffects.None, Scale, 1) { }
-        public Label(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin, float Rotation, SpriteEffects Effect, float Scale, float Depth)
+        public LabelBase(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin, float Rotation, SpriteEffects Effect, float Scale, float Depth)
         : base(location, color, Origin, Rotation, Effect, Scale, Depth)
         {
             this.text = text;
@@ -97,7 +97,7 @@ namespace BaseGameLibrary
             return text;
         }
 
-        public static Label operator +(Label me, string newWord)
+        public static LabelBase operator +(LabelBase me, string newWord)
         {
             me.text += newWord;
             return me;
@@ -111,11 +111,24 @@ namespace BaseGameLibrary
             batch.DrawString(Font, text, Location + offset, Color, Rotation, Origin, Scale, Effect, Depth);
         }
 
+    }
+
+    public class Label : LabelBase, IGameObject<Label>
+    {
+        public Label(SpriteFont font, Color color, Vector2 location, string text, bool middle = false)
+    : this(font, color, location, text, middle ? font.MeasureString(text) / 2 : Vector2.Zero) { }
+        public Label(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin)
+            : this(font, color, location, text, Origin, 1) { }
+        public Label(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin, float Scale)
+            : this(font, color, location, text, Origin, 0, SpriteEffects.None, Scale, 1) { }
+        public Label(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin, float Rotation, SpriteEffects Effect, float Scale, float Depth)
+            : base(font, color, location, text, Origin, Rotation, Effect, Scale, Depth) { }
+
         public Label Clone()
             => new Label(Font, Color, Location, text, Origin, Rotation, Effect, Scale, Depth);
     }
 
-    public class ValueLabel : Label, IGameObject<ValueLabel>
+    public class ValueLabel : LabelBase, IGameObject<ValueLabel>
     {
         string infoText;
 

@@ -8,8 +8,8 @@ namespace BaseGameLibrary
 {
     class Toggler : Button
     {
-        public Sprite Ball { get; }
-        public Sprite BottomColor { get; }
+        public SpriteBase Ball { get; }
+        public SpriteBase BottomColor { get; }
         public ScalableSprite MovingColor { get; }
         public Label laby { get; }
 
@@ -19,11 +19,11 @@ namespace BaseGameLibrary
 
         Vector2 setOff;
 
-        public Toggler(Texture2D image, Vector2 location, Vector2 origin, Sprite ball, Sprite bottom, ScalableSprite movingColor, SpriteFont font = null, string text = "")
+        public Toggler(Texture2D image, Vector2 location, Vector2 origin, SpriteBase ball, SpriteBase bottom, ScalableSprite movingColor, SpriteFont font = null, string text = "")
             : this(image, location, Color.White, Color.DarkGray, Color.Gray, origin, ball, bottom, movingColor, font, text) { }
-        public Toggler(Texture2D image, Vector2 location, Color color, Color hoverColor, Color clickedColor, Vector2 origin, Sprite ball, Sprite bottom, ScalableSprite movingColor, SpriteFont font = null, string text = "")
+        public Toggler(Texture2D image, Vector2 location, Color color, Color hoverColor, Color clickedColor, Vector2 origin, SpriteBase ball, SpriteBase bottom, ScalableSprite movingColor, SpriteFont font = null, string text = "")
             : this(image, location, color, 0, SpriteEffects.None, origin, 1, 1, hoverColor, clickedColor, ball, bottom, movingColor, font, text) { }
-        public Toggler(Texture2D image, Vector2 location, Color color, float rotation, SpriteEffects effect, Vector2 origin, float superscale, float depth, Color hovercolor, Color clickedcolor, Sprite Ball, Sprite Bottom, ScalableSprite Moving, SpriteFont font = null, string text = "", float stringH = 50, float offx = 0, float offy = 0, bool On = false)
+        public Toggler(Texture2D image, Vector2 location, Color color, float rotation, SpriteEffects effect, Vector2 origin, float superscale, float depth, Color hovercolor, Color clickedcolor, SpriteBase Ball, SpriteBase Bottom, ScalableSprite Moving, SpriteFont font = null, string text = "", float stringH = 50, float offx = 0, float offy = 0, bool On = false)
             : base(image, location, color, rotation, effect, origin, superscale, depth, hovercolor, clickedcolor)
         {
             Done = true;

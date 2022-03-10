@@ -117,7 +117,7 @@ namespace BaseGameLibrary
         public override Texture2D Image => (TextureFrame)frames[CurrentFrame];
     }
 
-    public class AnimatingSprite : Sprite, IGameObject<AnimatingSprite>
+    public class AnimatingSprite : SpriteBase, IGameObject<AnimatingSprite>
     {
         //public struct Animation
         //{

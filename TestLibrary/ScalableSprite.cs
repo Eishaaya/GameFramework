@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BaseGameLibrary
 {
-    class ScalableSprite : Sprite
+    class ScalableSprite : SpriteBase
     {
         public Vector2 Scale2D;
         public override Rectangle Hitbox

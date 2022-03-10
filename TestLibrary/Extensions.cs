@@ -29,7 +29,7 @@ namespace BaseGameLibrary
             return waiter.Wait(time);
         }
 
-        public static Vector2 GetDimensions(this Label label) => label.Font.MeasureString(label.Text());
+        public static Vector2 GetDimensions(this LabelBase label) => label.Font.MeasureString(label.Text());
 
         public static int Previous(this Random random, int min, int max)
         {
@@ -75,7 +75,7 @@ namespace BaseGameLibrary
             return result;
         }
 
-        public static void ColorPoints(this List<Sprite> points, Color newColor)
+        public static void ColorPoints(this List<SpriteBase> points, Color newColor)
         {
             for (int i = 0; i < points.Count; i++)
             {

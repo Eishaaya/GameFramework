@@ -16,9 +16,9 @@ namespace BaseGameLibrary
         Button menu;
         Button back;
         Button restart;
-        Sprite tint;
+        SpriteBase tint;
         Keys exit;
-        public PauseScreen(Sprite dark, Button menuButt, Button ReturnButt, Button restartButt, Keys Exit = Keys.Escape)
+        public PauseScreen(SpriteBase dark, Button menuButt, Button ReturnButt, Button restartButt, Keys Exit = Keys.Escape)
             : base()
         {
             exit = Exit;

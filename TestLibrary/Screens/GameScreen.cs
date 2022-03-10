@@ -17,7 +17,7 @@ namespace BaseGameLibrary
         GameRunner<TEnum> main;
         Random random;
         Label[] labels;
-        Sprite[] sprites;
+        SpriteBase[] sprites;
         AnimatingSprite[] animatingSprites;        
         Keys[] keys;
         public Impact[] Effects { get; set; } // empty atm, do stuff here
@@ -25,7 +25,7 @@ namespace BaseGameLibrary
         public bool Lost {get; set;}
       //  Keys pauseKey;
 
-        public GameScreen(SoundEffect mus, SoundEffect intro, Label[] labels, Sprite[] sprites, AnimatingSprite[] animatingSprites, Keys[] keys, ActionButton[] buttons, Impact[] effects, Random random)
+        public GameScreen(SoundEffect mus, SoundEffect intro, Label[] labels, SpriteBase[] sprites, AnimatingSprite[] animatingSprites, Keys[] keys, ActionButton[] buttons, Impact[] effects, Random random)
             : base(mus, intro, buttons)
         {
             this.labels = labels;

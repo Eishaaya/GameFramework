@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BaseGameLibrary
 {
-    abstract class Projectile : Sprite, IPoolable
+    abstract class Projectile : SpriteBase, IPoolable
     {
         public float Damage { get; set; }
         float acceleration;

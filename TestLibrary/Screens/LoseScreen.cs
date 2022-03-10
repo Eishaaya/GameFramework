@@ -17,13 +17,13 @@ namespace BaseGameLibrary
     {
         Button menu;
         Button back;
-        Sprite tint;
-        Sprite lose;
+        SpriteBase tint;
+        SpriteBase lose;
         Label score;
         List<int> scores;
         List<Label> topScores;
         SpriteFont font;
-        public LoseScreen(Sprite dark, Sprite Loser, Button menuButt, Button RestartButt, SpriteFont Font)
+        public LoseScreen(SpriteBase dark, SpriteBase Loser, Button menuButt, Button RestartButt, SpriteFont Font)
             : base()
         {
             tint = dark;

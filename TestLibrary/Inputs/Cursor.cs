@@ -31,10 +31,10 @@ namespace BaseGameLibrary.Inputs
         public Vector2 Location { get; protected set; }
         public bool Moved { get; protected set; }
 
-        protected virtual bool Touching(Sprite button)
+        protected virtual bool Touching(SpriteBase button)
             => button.Hitbox.Contains(Location);
 
-        public ClickStatus Clicked(Sprite button, Info condition)
+        public ClickStatus Clicked(SpriteBase button, Info condition)
         {
             if (Touching(button))
             {
@@ -147,9 +147,9 @@ namespace BaseGameLibrary.Inputs
 
     public abstract class VisualCursorBase<TInput> : CursorBase<TInput> where TInput : Enum
     {
-        protected Sprite cursor;
+        protected SpriteBase cursor;
 
-        protected override bool Touching(Sprite button)
+        protected override bool Touching(SpriteBase button)
             => button.Hitbox.Intersects(cursor.Hitbox);
 
         public override void Update(GameTime gameTime)

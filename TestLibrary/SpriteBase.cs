@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BaseGameLibrary
 {
-    public class Sprite : VisualObject, IGameObject<Sprite>
+    public abstract class SpriteBase : VisualObject
     {
         public Texture2D Image { get; set; }
         public virtual Rectangle Hitbox
@@ -18,35 +18,11 @@ namespace BaseGameLibrary
                 return new Rectangle((int)(Location.X - Origin.X * Scale), (int)(Location.Y - Origin.Y * Scale), (int)(Image.Width * Scale), (int)(Image.Height * Scale));
             }
         }
-
-        public Sprite(Texture2D image, Vector2 location)
-            : this(image, location, Vector2.Zero) { }
-        public Sprite(Texture2D image, Vector2 location, Vector2 origin)
-            : this(image, location, origin, 1) { }
-        public Sprite(Texture2D image, Vector2 location, Vector2 origin, float scale)
-    : this(image, location, Color.White, 0, SpriteEffects.None, origin, scale, 1) { }
-        public Sprite(Texture2D image, Vector2 location, Color color, float rotation, SpriteEffects effects, Vector2 origin, float scale, float depth)
+        public SpriteBase(Texture2D image, Vector2 location, Color color, float rotation, SpriteEffects effects, Vector2 origin, float scale, float depth)
         : base(location, color, origin, rotation, effects, scale, depth)
         {
             Image = image;
         }
-
-        #region clone
-
-        public Sprite Clone()
-        {
-            var copy = new Sprite(Image, Location, Color, Rotation, Effect, Origin, Scale, Depth);
-            CloneLogic(copy);
-
-            return copy;
-        }
-        protected new void CloneLogic<T>(T copy) where T : Sprite
-        {
-            base.CloneLogic(copy);
-            copy.Image = Image;
-        }
-
-        #endregion
 
         public override void Draw(SpriteBatch batch)
         {
@@ -60,5 +36,34 @@ namespace BaseGameLibrary
         }
 
         public override void Update(GameTime gameTime) { }
+    }
+
+    public class Sprite : SpriteBase, IGameObject<Sprite>
+    {
+        public Sprite(Texture2D image, Vector2 location)
+            : this(image, location, Vector2.Zero) { }
+        public Sprite(Texture2D image, Vector2 location, Vector2 origin)
+            : this(image, location, origin, 1) { }
+        public Sprite(Texture2D image, Vector2 location, Vector2 origin, float scale)
+            : this(image, location, Color.White, 0, SpriteEffects.None, origin, scale, 1) { }
+        public Sprite(Texture2D image, Vector2 location, Color color, float rotation, SpriteEffects effects, Vector2 origin, float scale, float depth)
+        : base(image, location, color, rotation, effects, origin, scale, depth) { }
+
+        #region clone
+
+        public Sprite Clone()
+        {
+            var copy = new Sprite(Image, Location, Color, Rotation, Effect, Origin, Scale, Depth);
+            CloneLogic(copy);
+
+            return copy;
+        }
+        protected new void CloneLogic<T>(T copy) where T : SpriteBase
+        {
+            base.CloneLogic(copy);
+            copy.Image = Image;
+        }
+
+        #endregion
     }
 }
