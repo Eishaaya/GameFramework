@@ -23,6 +23,6 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Visual\" />
+    <Folder Include="Managers\" />
   </ItemGroup>
 </Project>
