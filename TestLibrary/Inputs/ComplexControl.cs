@@ -4,19 +4,12 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 
+using static BaseGameLibrary.Inputs.InputExtensions;
+
 namespace BaseGameLibrary.Inputs
 {
     public class ComplexControl<T> : InputControl where T : Enum
     {
-        public enum ControlType
-        {
-            OR,
-            AND,
-            XOR,
-            NOR,
-            NAND,
-            XNOR
-        }
         public enum CompareType
         {
             LessThan,

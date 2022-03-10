@@ -7,6 +7,15 @@ namespace BaseGameLibrary.Inputs
     public static class InputExtensions
     {
         //Combiner Funcs
+        public enum ControlType
+        {
+            OR,
+            AND,
+            XOR,
+            NOR,
+            NAND,
+            XNOR
+        }
         public static bool OR<T> (ParamFunc<T, BoolInt, bool>[] inputControls) where T : Enum
         {
             bool result = false;

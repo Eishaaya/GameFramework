@@ -50,6 +50,7 @@ namespace BaseGameLibrary
 
         public override void Draw(SpriteBatch batch)
         {
+            if (!Visible) return;
             batch.Draw(Image, Location + offset, null, Color, Rotation, Origin, Scale, Effect, Depth);           
         }
 

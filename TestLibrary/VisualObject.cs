@@ -47,9 +47,9 @@ namespace BaseGameLibrary
         public SpriteEffects Effect { get; set; }
         public Vector2 Origin { get; set; }
         public Color OriginalColor { get; set; }
+        public bool Visible { get; set; }
 
-
-        public VisualObject(Vector2 location, Color color, Vector2 origin, float Rotation, SpriteEffects Effect, float scale, float depth)
+        public VisualObject(Vector2 location, Color color, Vector2 origin, float Rotation, SpriteEffects Effect, float scale, float depth, bool visible = true)
         {
             Location = location;
             Color = color;
@@ -69,6 +69,7 @@ namespace BaseGameLibrary
             sizeSet = float.NaN;
             degreeSet = float.NaN;
             spotSet = new Vector2(float.NaN, float.NaN);
+            Visible = visible;
         }
 
         #region clone

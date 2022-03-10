@@ -9,6 +9,7 @@ using System;
 using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 using BaseGameLibrary.Inputs;
+using static BaseGameLibrary.Inputs.InputExtensions;
 
 namespace TestProj
 {
@@ -37,6 +38,9 @@ namespace TestProj
             Scroll,
             MouseX,
             MouseY,
+            Alt,
+            F,
+            Four,
             Help,
             Group
         }
@@ -99,8 +103,12 @@ namespace TestProj
 
             Dictionary<Binds, InputControl> idkName = new Dictionary<Binds, InputControl>()
             {
+                [Binds.Alt] = new KeyControl(Keys.LeftAlt, new DigitalStateComponent()),
+                [Binds.F] = new KeyControl(Keys.F, new DigitalStateComponent()),
+                [Binds.Four] = new KeyControl(Keys.D4, new DigitalStateComponent()),
+
                 [Binds.Left] = left,
-                [Binds.Right] = right,
+                [Binds.Right] = new ComplexControl<Binds>(ControlType.AND, new DigitalStateComponent(), Binds.Alt, Binds.F, Binds.Four),
                 [Binds.LClick] = clicked,
                 [Binds.RClick] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.RightButton == ButtonState.Pressed, Mouse.GetState()), new DigitalStateComponent()),
                 [Binds.MClick] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.MiddleButton == ButtonState.Pressed, Mouse.GetState()), new DigitalStateComponent()),
@@ -108,11 +116,11 @@ namespace TestProj
                 [Binds.MouseX] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.Position.X, Mouse.GetState()), new AnalogStateComponent()),
                 [Binds.MouseY] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.Position.Y, Mouse.GetState()), new AnalogStateComponent()),
                 [Binds.Help] = new StickControl(0, new DigitalStateComponent()),
-                [Binds.Group] = new ComplexControl<Binds>(ComplexControl<Binds>.ControlType.AND, new DigitalStateComponent(), Binds.Left, Binds.Right, Binds.LClick)
+                [Binds.Group] = new ComplexControl<Binds>(ControlType.AND, new DigitalStateComponent(), Binds.Left, Binds.Right, Binds.LClick)
             };
             InputManager<Binds>.Instance.Fill(idkName);
 
-            AnimatedCursor<Binds>.Instance.AttachClicks(Binds.LClick, Binds.RClick, Binds.MClick, Binds.Scroll, Binds.MouseX, Binds.MouseY);
+            AnimatedCursor<Binds>.Instance.AttachClicks(Binds.LClick, Binds.Right, Binds.Left, Binds.Scroll, Binds.MouseX, Binds.MouseY);
             AnimatedCursor<Binds>.Instance.AttachSprite(new AnimatingSprite(Vector2.Zero, Color.White, new Vector2(31, 0), .3f, new RectangleContainer(Content.Load<Texture2D>("Mousesheet"), new RectangleFrame[] {
                 new Rectangle(0, 0, 72, 103),
                 new Rectangle(72, 0, 71, 103),
@@ -163,7 +171,12 @@ namespace TestProj
 
             var pretty = new AestheticsManager(bottomScroll, karan, sequence, test);
 
-            ActionButton button = new ActionButton(new Button(Content.Load<Texture2D>("Toggle Ball"), new Vector2(200)), new ParamAction<AestheticsManager>(m => m.Running = !m.Running, pretty));
+            var butt = new Button(Content.Load<Texture2D>("Toggle Ball"), new Vector2(200));
+            ActionButton button = null;
+            button = new ActionButton(butt,
+                                      new ParamAction<AestheticsManager>(m => m.Running = !m.Running, pretty),
+                                      new ParamAction<Game1>(m => m.Exit(), this),
+                                      new ParamAction<Button>(m => m.Visible = !m.Visible, butt));
             ButtonManager buttons = new ButtonManager(button);
 
             screen = new Screen(Content.Load<SoundEffect>("UnlimitedIntro"), Content.Load<SoundEffect>("UnlimitedMusic"), buttons, pretty);

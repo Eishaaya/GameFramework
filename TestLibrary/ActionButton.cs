@@ -68,7 +68,7 @@ namespace BaseGameLibrary
         }
 
         Dictionary<ClickType, IParamAction> clickActions;
-        Button button;
+        public Button Button { get; private set; }
 
         public ActionButton(Button button, IParamAction leftAction = null, IParamAction rightAction = null, IParamAction middleAction = null)
             : this(button, new Dictionary<ClickType, IParamAction>())
@@ -89,7 +89,7 @@ namespace BaseGameLibrary
 
         public ActionButton(Button button, Dictionary<ClickType, IParamAction> clickActions)
         {
-            this.button = button;
+            this.Button = button;
             this.clickActions = clickActions;
         }
 
@@ -100,7 +100,7 @@ namespace BaseGameLibrary
                 var checkedClick = (ClickType)i;
                 if (clickActions.ContainsKey(checkedClick) && !heldMouse)
                 {
-                    if (button.Check(mousePos, presses[i]))
+                    if (Button.Check(mousePos, presses[i]))
                     {
                         clickActions[checkedClick].Call();
                     }
@@ -115,7 +115,8 @@ namespace BaseGameLibrary
                 var checkedClick = (ClickType)i;
                 if (clickActions.ContainsKey(checkedClick))
                 {
-                    if (button.Check(cursor))
+                    Button.ChosenClick = (CursorRoot.Info)checkedClick;
+                    if (Button.Check(cursor))
                     {
                         clickActions[checkedClick].Call();
                     }
@@ -126,7 +127,7 @@ namespace BaseGameLibrary
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            button.Draw(spriteBatch);
+            Button.Draw(spriteBatch);
         }
 
     }

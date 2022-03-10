@@ -13,7 +13,7 @@ namespace BaseGameLibrary
 {
     public class Button : Sprite
     {
-        public CursorRoot.Info ChosenClick;
+        public CursorRoot.Info ChosenClick { get; set; }
         public Color NormalColor { get; set; }
         public Color HoverColor { get; set; }
         public Color ClickedColor { get; set; }
@@ -71,7 +71,7 @@ namespace BaseGameLibrary
                     PrevDown = true;
                     return good;
                 }
-                PrevDown = false;
+                PrevDown = cursor.Held;
                 Color = HoverColor;
                 return false;
             }

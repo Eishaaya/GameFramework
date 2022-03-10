@@ -107,6 +107,7 @@ namespace BaseGameLibrary
 
         public override void Draw(SpriteBatch batch)
         {
+            if (!Visible) return;
             batch.DrawString(Font, text, Location + offset, Color, Rotation, Origin, Scale, Effect, Depth);
         }
 
