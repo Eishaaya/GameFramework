@@ -13,12 +13,12 @@ namespace BaseGameLibrary
 {
     class PauseScreen : Screen
     {
-        Button menu;
-        Button back;
-        Button restart;
+        ButtonBase menu;
+        ButtonBase back;
+        ButtonBase restart;
         SpriteBase tint;
         Keys exit;
-        public PauseScreen(SpriteBase dark, Button menuButt, Button ReturnButt, Button restartButt, Keys Exit = Keys.Escape)
+        public PauseScreen(SpriteBase dark, ButtonBase menuButt, ButtonBase ReturnButt, ButtonBase restartButt, Keys Exit = Keys.Escape)
             : base()
         {
             exit = Exit;

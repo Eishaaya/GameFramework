@@ -18,14 +18,14 @@ namespace BaseGameLibrary
         Random random;
         Label[] labels;
         SpriteBase[] sprites;
-        AnimatingSprite[] animatingSprites;        
+        AnimatingSpriteBase[] animatingSprites;        
         Keys[] keys;
         public Impact[] Effects { get; set; } // empty atm, do stuff here
 
         public bool Lost {get; set;}
       //  Keys pauseKey;
 
-        public GameScreen(SoundEffect mus, SoundEffect intro, Label[] labels, SpriteBase[] sprites, AnimatingSprite[] animatingSprites, Keys[] keys, ActionButton[] buttons, Impact[] effects, Random random)
+        public GameScreen(SoundEffect mus, SoundEffect intro, Label[] labels, SpriteBase[] sprites, AnimatingSpriteBase[] animatingSprites, Keys[] keys, ActionButton[] buttons, Impact[] effects, Random random)
             : base(mus, intro, buttons)
         {
             this.labels = labels;
@@ -68,7 +68,7 @@ namespace BaseGameLibrary
         }
         public override void Play(GameTime time)
         {
-            foreach (AnimatingSprite animatingSprite in  animatingSprites)
+            foreach (AnimatingSpriteBase animatingSprite in  animatingSprites)
             {
                 animatingSprite.Animate(time);
             }

@@ -14,10 +14,10 @@ namespace BaseGameLibrary
 {
     class SettingsScreen : Screen
     {
-        Button defaltButt;
-        Button arrowButt;
-        Button applyButt;
-        Button menuButt;
+        ButtonBase defaltButt;
+        ButtonBase arrowButt;
+        ButtonBase applyButt;
+        ButtonBase menuButt;
         //List<Button> bindButtons;
         List<ValueLabel> bindLabels;
         List<Setting> defaults;
@@ -28,7 +28,7 @@ namespace BaseGameLibrary
         public List<Toggler> toggles;
         //List<bool> toggOns;
 
-        public SettingsScreen(Button d, Button a, Button ap, Button menuButton, Texture2D b, List<Setting> dk, List<Setting> ak, List<string> keyTypes, List<bool> togs, Toggler template, SpriteFont font, SoundEffect effect)
+        public SettingsScreen(ButtonBase d, ButtonBase a, ButtonBase ap, ButtonBase menuButton, Texture2D b, List<Setting> dk, List<Setting> ak, List<string> keyTypes, List<bool> togs, Toggler template, SpriteFont font, SoundEffect effect)
             : base(effect)
         {
             toggles = new List<Toggler>();

@@ -68,9 +68,9 @@ namespace BaseGameLibrary
         }
 
         Dictionary<ClickType, IParamAction> clickActions;
-        public Button Button { get; private set; }
+        public ButtonBase Button { get; private set; }
 
-        public ActionButton(Button button, IParamAction leftAction = null, IParamAction rightAction = null, IParamAction middleAction = null)
+        public ActionButton(ButtonBase button, IParamAction leftAction = null, IParamAction rightAction = null, IParamAction middleAction = null)
             : this(button, new Dictionary<ClickType, IParamAction>())
         {
             if (leftAction != null)
@@ -87,7 +87,7 @@ namespace BaseGameLibrary
             }
         }
 
-        public ActionButton(Button button, Dictionary<ClickType, IParamAction> clickActions)
+        public ActionButton(ButtonBase button, Dictionary<ClickType, IParamAction> clickActions)
         {
             this.Button = button;
             this.clickActions = clickActions;

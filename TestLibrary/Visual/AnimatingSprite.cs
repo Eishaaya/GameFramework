@@ -117,7 +117,7 @@ namespace BaseGameLibrary
         public override Texture2D Image => (TextureFrame)frames[CurrentFrame];
     }
 
-    public class AnimatingSprite : SpriteBase, IGameObject<AnimatingSprite>
+    public abstract class AnimatingSpriteBase : SpriteBase
     {
         //public struct Animation
         //{
@@ -129,11 +129,11 @@ namespace BaseGameLibrary
         //    }
         //}
         public FrameContainer Frames { get; set; }
-        Vector2[] origins;
+        protected Vector2[] origins;
         public Timer FrameTime { get; protected set; }
         //    TimeSpan tick;
-        bool autoLoop;
-        bool autoInvert;
+        protected bool autoLoop;
+        protected bool autoInvert;
 
         int frameSpeed = 1;
 
@@ -166,11 +166,11 @@ namespace BaseGameLibrary
             }
         }
 
-        public AnimatingSprite(Vector2 location, FrameContainer frames, int time, bool loop = true, bool invert = false, Vector2[] origins = null)
+        public AnimatingSpriteBase(Vector2 location, FrameContainer frames, int time, bool loop = true, bool invert = false, Vector2[] origins = null)
             : this(location, Color.White, Vector2.Zero, 1, frames, time, loop, invert, origins) { }
-        public AnimatingSprite(Vector2 location, Color color, Vector2 origin, float scale, FrameContainer frames, int time, bool loop, bool invert, Vector2[] origins = null)
+        public AnimatingSpriteBase(Vector2 location, Color color, Vector2 origin, float scale, FrameContainer frames, int time, bool loop, bool invert, Vector2[] origins = null)
             : this(location, color, 0, SpriteEffects.None, origin, scale, 1, frames, time, invert, loop, origins) { }
-        public AnimatingSprite(Vector2 location, Color color, float rotation, SpriteEffects effects, Vector2 origin, float scale, float depth, FrameContainer frames, int time, bool invert, bool loop, Vector2[] Origins = null)
+        public AnimatingSpriteBase(Vector2 location, Color color, float rotation, SpriteEffects effects, Vector2 origin, float scale, float depth, FrameContainer frames, int time, bool invert, bool loop, Vector2[] Origins = null)
             : base(frames.Image, location, color, rotation, effects, origin, scale, depth)
         {
             Frames = frames;
@@ -259,7 +259,16 @@ namespace BaseGameLibrary
             Frames.Draw(batch, Location, Color, Rotation, Origin, Scale, Effect, Depth);
             // DrawHitBox(batch);
         }
+    }
 
+    public class AnimatingSprite : AnimatingSpriteBase, IGameObject<AnimatingSprite>
+    {
+        public AnimatingSprite(Vector2 location, FrameContainer frames, int time, bool loop = true, bool invert = false, Vector2[] origins = null)
+            : this(location, Color.White, Vector2.Zero, 1, frames, time, loop, invert, origins) { }
+        public AnimatingSprite(Vector2 location, Color color, Vector2 origin, float scale, FrameContainer frames, int time, bool loop, bool invert, Vector2[] origins = null)
+            : this(location, color, 0, SpriteEffects.None, origin, scale, 1, frames, time, invert, loop, origins) { }
+        public AnimatingSprite(Vector2 location, Color color, float rotation, SpriteEffects effects, Vector2 origin, float scale, float depth, FrameContainer frames, int time, bool invert, bool loop, Vector2[] origins = null)
+            : base(location, color, rotation, effects, origin, scale, depth, frames, time, invert, loop, origins) { }
         AnimatingSprite ICopyable<AnimatingSprite>.Clone()
         {
             var newSprite = new AnimatingSprite(Location, Color, Rotation, Effect, Origin, Scale, Depth, Frames, FrameTime.TotalMillies, autoLoop, autoInvert, origins);

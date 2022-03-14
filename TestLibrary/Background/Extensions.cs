@@ -211,9 +211,9 @@ namespace BaseGameLibrary
         }
 
         //make generic cloning
-        public static IEnumerable<Button> SpawnInGrid (Vector2 startLocation, float xDist, float yDist, int xCount, int yCount, Button template)
+        public static IEnumerable<ButtonBase> SpawnInGrid (Vector2 startLocation, float xDist, float yDist, int xCount, int yCount, ButtonBase template)
         {
-            var bindButtons = new Button[xCount * yCount];
+            var bindButtons = new ButtonBase[xCount * yCount];
             for (int x = 0; x < xCount; x++)
             {
                 for (int y = 0; y < yCount; y++)
@@ -232,7 +232,7 @@ namespace BaseGameLibrary
             return bindButtons.AsEnumerable();
         }
 
-        public static IEnumerable<Button> SpawnInGrid(Vector2 startLocation, float xDist, float yDist, int xCount, int yCount, IEnumerable<Button> buttons)
+        public static IEnumerable<ButtonBase> SpawnInGrid(Vector2 startLocation, float xDist, float yDist, int xCount, int yCount, IEnumerable<ButtonBase> buttons)
         {
             var arrayButtons = buttons.ToArray();
             for (int x = 0; x < xCount; x++)

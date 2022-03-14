@@ -5,11 +5,11 @@ using System;
 
 namespace BaseGameLibrary
 {
-    class Slider : Button
+    class Slider : ButtonBase
     {
         SpriteBase bar;
         Label laby;
-        Button[] points;
+        ButtonBase[] points;
 
         bool freeSlider { get; }
 
@@ -19,18 +19,18 @@ namespace BaseGameLibrary
         string[] texts;
         bool prevTouched = false;
 
-        public Slider(Texture2D image, Vector2 location, Vector2 origin, float scale, SpriteBase bottom, Button point, int pointCount, bool free, SpriteFont font = null, string text = "", string[] labels = null)
+        public Slider(Texture2D image, Vector2 location, Vector2 origin, float scale, SpriteBase bottom, ButtonBase point, int pointCount, bool free, SpriteFont font = null, string text = "", string[] labels = null)
             : this(image, location, Color.White, Color.DarkGray, Color.Gray, origin, scale, bottom, point, pointCount, free, font, text, labels) { }
 
 
-        public Slider(Texture2D image, Vector2 location, Color color, Color hoverColor, Color clickedColor, Vector2 origin, float scale, SpriteBase bottom, Button point, int pointCount, bool free, SpriteFont font = null,
+        public Slider(Texture2D image, Vector2 location, Color color, Color hoverColor, Color clickedColor, Vector2 origin, float scale, SpriteBase bottom, ButtonBase point, int pointCount, bool free, SpriteFont font = null,
                       string text = "", string[] labels = null)
 
             : this(image, location, color, 0, SpriteEffects.None, origin, scale, 1, hoverColor, clickedColor, bottom, point, pointCount, free, font, text, labels) { }
 
 
         public Slider(Texture2D image, Vector2 location, Color color, float rotation, SpriteEffects effect, Vector2 origin, float scale, float depth, Color hovercolor, Color clickedcolor,
-                      SpriteBase Bottom, Button point, int pointCount, bool free, SpriteFont font = null, string text = "", string[] labels = null, float stringH = 50,
+                      SpriteBase Bottom, ButtonBase point, int pointCount, bool free, SpriteFont font = null, string text = "", string[] labels = null, float stringH = 50,
                       float offx = 0, float offy = 0, int value = 0)
 
             : base(image, location, color, rotation, effect, origin, scale, depth, hovercolor, clickedcolor)
@@ -41,7 +41,7 @@ namespace BaseGameLibrary
             bar = Bottom;
             Value = value;
 
-            points = new Button[pointCount];
+            points = new ButtonBase[pointCount];
             for (int i = 0; i < points.Length; i++)
             {
                 points[i] = point.Clone();
@@ -154,6 +154,11 @@ namespace BaseGameLibrary
             {
                 laby.Draw(batch);
             }
+        }
+
+        public override Slider Clone()
+        {
+            throw new NotImplementedException();
         }
     }
 }

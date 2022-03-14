@@ -13,6 +13,8 @@ using static BaseGameLibrary.Inputs.InputExtensions;
 
 namespace TestProj
 {
+
+
     public class Game1 : Game //COMMENT TO LET ME COMMIT
     {
         //InputManager<Binds> manager;
@@ -86,8 +88,13 @@ namespace TestProj
 
         }
 
+
         protected override void LoadContent()
         {
+
+
+
+
             var ticky = new Ticker();
 
             Screen testScreen = new Screen();
@@ -121,6 +128,7 @@ namespace TestProj
             InputManager<Binds>.Instance.Fill(idkName);
 
             AnimatedCursor<Binds>.Instance.AttachClicks(Binds.LClick, Binds.Right, Binds.Left, Binds.Scroll, Binds.MouseX, Binds.MouseY);
+          
             AnimatedCursor<Binds>.Instance.AttachSprite(new AnimatingSprite(Vector2.Zero, Color.White, new Vector2(31, 0), .3f, new RectangleContainer(Content.Load<Texture2D>("Mousesheet"), new RectangleFrame[] {
                 new Rectangle(0, 0, 72, 103),
                 new Rectangle(72, 0, 71, 103),
@@ -176,7 +184,7 @@ namespace TestProj
             button = new ActionButton(butt,
                                       new ParamAction<AestheticsManager>(m => m.Running = !m.Running, pretty),
                                       new ParamAction<Game1>(m => m.Exit(), this),
-                                      new ParamAction<Button>(m => m.Visible = !m.Visible, butt));
+                                      new ParamAction<ButtonBase>(m => m.Visible = !m.Visible, butt));
             ButtonManager buttons = new ButtonManager(button);
 
             screen = new Screen(Content.Load<SoundEffect>("UnlimitedIntro"), Content.Load<SoundEffect>("UnlimitedMusic"), buttons, pretty);

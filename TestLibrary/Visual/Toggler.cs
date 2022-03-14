@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BaseGameLibrary
 {
-    class Toggler : Button
+    class Toggler : ButtonBase
     {
         public SpriteBase Ball { get; }
         public SpriteBase BottomColor { get; }
@@ -123,6 +123,11 @@ namespace BaseGameLibrary
             {
                 laby.Draw(batch);
             }
+        }
+
+        public override Toggler Clone()
+        {
+            throw new NotImplementedException();
         }
     }
 }

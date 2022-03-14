@@ -15,15 +15,15 @@ namespace BaseGameLibrary
 {
     class LoseScreen : Screen
     {
-        Button menu;
-        Button back;
+        ButtonBase menu;
+        ButtonBase back;
         SpriteBase tint;
         SpriteBase lose;
         Label score;
         List<int> scores;
         List<Label> topScores;
         SpriteFont font;
-        public LoseScreen(SpriteBase dark, SpriteBase Loser, Button menuButt, Button RestartButt, SpriteFont Font)
+        public LoseScreen(SpriteBase dark, SpriteBase Loser, ButtonBase menuButt, ButtonBase RestartButt, SpriteFont Font)
             : base()
         {
             tint = dark;

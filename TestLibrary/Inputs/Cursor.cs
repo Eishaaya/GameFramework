@@ -178,7 +178,7 @@ namespace BaseGameLibrary.Inputs
     {
         public static AnimatedCursor<TInput> Instance { get; } = new AnimatedCursor<TInput>();
 
-        public void AttachSprite(AnimatingSprite sprite)
+        public void AttachSprite(AnimatingSpriteBase sprite)
         {
             if (!Held)
             {
@@ -193,7 +193,7 @@ namespace BaseGameLibrary.Inputs
             base.Update(gameTime);
             if (Held != held)
             {
-                ((AnimatingSprite)cursor).InvertAnimation();
+                ((AnimatingSpriteBase)cursor).InvertAnimation();
             }
             cursor.Update(gameTime);
             cursor.Location = Location;

@@ -15,10 +15,10 @@ namespace BaseGameLibrary
 {
     class MenuScreen : Screen
     {
-        Button chrisIsAPoopyHead;
-        Button Unlimited;
-        Button setting;
-        public MenuScreen(Button poopMakerOfff, Button infinite, SoundEffect music, Button sett)
+        ButtonBase chrisIsAPoopyHead;
+        ButtonBase Unlimited;
+        ButtonBase setting;
+        public MenuScreen(ButtonBase poopMakerOfff, ButtonBase infinite, SoundEffect music, ButtonBase sett)
             :base(music)
         {
             chrisIsAPoopyHead = poopMakerOfff;            

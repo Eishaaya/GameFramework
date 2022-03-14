@@ -12,10 +12,10 @@ namespace BaseGameLibrary
     class ButtonLabel
     {
         public bool Clicked { get; set; }
-        public Button Button { get; set; }
+        public ButtonBase Button { get; set; }
         public Label Label { get; set; }
 
-        public ButtonLabel(Button button, Label label)
+        public ButtonLabel(ButtonBase button, Label label)
         {
             Clicked = false;
             Button = button;
