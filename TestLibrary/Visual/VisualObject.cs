@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BaseGameLibrary
 {
-    public abstract class VisualObject : IPoolable, IRunnable
+    public abstract class VisualObject : IPoolable, IGameObject<VisualObject>
     {
         public enum ColorNums
         {
@@ -86,6 +86,7 @@ namespace BaseGameLibrary
             copy.oldRotation = oldRotation;
         }
 
+        public abstract VisualObject Clone();
 
         #endregion
 

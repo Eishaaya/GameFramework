@@ -24,7 +24,7 @@ namespace BaseGameLibrary
 
         #region clone
 
-        public new ScalableSprite Clone()
+        public override ScalableSprite Clone()
         {
             var copy = new ScalableSprite(Image, Location, Color, Rotation, Effect, Origin, Scale2D, Depth, Scale);
             CloneLogic(copy);
@@ -44,6 +44,5 @@ namespace BaseGameLibrary
         {
             batch.Draw(Image, Location, null, Color, Rotation, Origin, Scale2D, Effect, Depth);
         }
-
     }
 }

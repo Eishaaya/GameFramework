@@ -20,8 +20,8 @@ namespace BaseGameLibrary
         //public bool Hold { get; set; } //<-
         public bool Held { get; set; } //<- Not a fan of this group, this data makes more sense in the mouse, or in another structure for a hotkey situation
         public bool PrevDown { get; set; }
-        public ButtonBase(Texture2D image, Vector2 location, Color color, float rotation, SpriteEffects effect, Vector2 origin, float superscale, float depth, Color hovercolor, Color clickedcolor)
-            : base(image, location, color, rotation, effect, origin, superscale, depth)
+        public ButtonBase(Texture2D image, Vector2 location, Color color, float rotation, SpriteEffects effect, Vector2 origin, float scale, float depth, Color hovercolor, Color clickedcolor)
+            : base(image, location, color, rotation, effect, origin, scale, depth)
         {
             HoverColor = hovercolor;
             ClickedColor = clickedcolor;
@@ -31,16 +31,15 @@ namespace BaseGameLibrary
         }
 
         #region clone
-
-        public abstract ButtonBase Clone();
-        protected new void CloneLogic<T>(T copy) where T : ButtonBase
+        protected void CloneLogic(ButtonBase copy)
         {
             base.CloneLogic(copy);
             copy.NormalColor = NormalColor;
-           // copy.Hold = Hold;
+            // copy.Hold = Hold;
             copy.Held = Held;
             copy.PrevDown = PrevDown;
         }
+        public abstract override ButtonBase Clone();
 
         #endregion
 
@@ -105,8 +104,8 @@ namespace BaseGameLibrary
             : this(image, location, Color.White, origin, scale, Color.DarkGray, Color.Gray) { }
         public Button(Texture2D image, Vector2 location, Color color, Vector2 origin, float scale, Color hoverColor, Color clickedColor)
             : this(image, location, color, 0, SpriteEffects.None, origin, scale, 1, hoverColor, clickedColor) { }
-        public Button(Texture2D image, Vector2 location, Color color, float rotation, SpriteEffects effect, Vector2 origin, float superscale, float depth, Color hovercolor, Color clickedcolor)
-            : base(image, location, color, rotation, effect, origin, superscale, depth, hovercolor, clickedcolor) { }
+        public Button(Texture2D image, Vector2 location, Color color, float rotation, SpriteEffects effect, Vector2 origin, float scale, float depth, Color hovercolor, Color clickedcolor)
+            : base(image, location, color, rotation, effect, origin, scale, depth, hovercolor, clickedcolor) { }
 
         #region clone
 
@@ -115,15 +114,6 @@ namespace BaseGameLibrary
             var copy = new Button(Image, Location, Color, Rotation, Effect, Origin, Scale, Depth, HoverColor, ClickedColor);
             CloneLogic(copy);
             return copy;
-        }
-
-        protected new void CloneLogic<T>(T copy) where T : ButtonBase
-        {
-            base.CloneLogic(copy);
-            copy.NormalColor = NormalColor;
-            // copy.Hold = Hold;
-            copy.Held = Held;
-            copy.PrevDown = PrevDown;
         }
 
         #endregion

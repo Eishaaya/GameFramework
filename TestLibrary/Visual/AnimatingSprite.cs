@@ -269,7 +269,7 @@ namespace BaseGameLibrary
             : this(location, color, 0, SpriteEffects.None, origin, scale, 1, frames, time, invert, loop, origins) { }
         public AnimatingSprite(Vector2 location, Color color, float rotation, SpriteEffects effects, Vector2 origin, float scale, float depth, FrameContainer frames, int time, bool invert, bool loop, Vector2[] origins = null)
             : base(location, color, rotation, effects, origin, scale, depth, frames, time, invert, loop, origins) { }
-        AnimatingSprite ICopyable<AnimatingSprite>.Clone()
+        public override AnimatingSprite Clone()
         {
             var newSprite = new AnimatingSprite(Location, Color, Rotation, Effect, Origin, Scale, Depth, Frames, FrameTime.TotalMillies, autoLoop, autoInvert, origins);
             newSprite.Frames.CurrentFrame = Frames.CurrentFrame;

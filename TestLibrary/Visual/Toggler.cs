@@ -8,29 +8,31 @@ namespace BaseGameLibrary
 {
     class Toggler : ButtonBase
     {
-        public SpriteBase Ball { get; }
-        public SpriteBase BottomColor { get; }
-        public ScalableSprite MovingColor { get; }
-        public Label laby { get; }
+        public SpriteBase Ball { get; private set; }
+        public SpriteBase BottomColor { get; private set; }
+        public ScalableSprite MovingColor { get; private set; }
+        public Label Laby { get; private set; }
 
         public bool On { get; set; }
         public bool Done { get; set; }
         public bool hold { get; set; }
 
-        Vector2 setOff;
+        protected Vector2 setOff;
 
+        private Toggler(Texture2D image, Vector2 location, Color color, float rotation, SpriteEffects effect, Vector2 origin, float scale, float depth, Color hovercolor, Color clickedcolor)
+        :base(image, location, color, rotation, effect, origin, scale, depth, hovercolor, clickedcolor){ }
         public Toggler(Texture2D image, Vector2 location, Vector2 origin, SpriteBase ball, SpriteBase bottom, ScalableSprite movingColor, SpriteFont font = null, string text = "")
             : this(image, location, Color.White, Color.DarkGray, Color.Gray, origin, ball, bottom, movingColor, font, text) { }
         public Toggler(Texture2D image, Vector2 location, Color color, Color hoverColor, Color clickedColor, Vector2 origin, SpriteBase ball, SpriteBase bottom, ScalableSprite movingColor, SpriteFont font = null, string text = "")
             : this(image, location, color, 0, SpriteEffects.None, origin, 1, 1, hoverColor, clickedColor, ball, bottom, movingColor, font, text) { }
-        public Toggler(Texture2D image, Vector2 location, Color color, float rotation, SpriteEffects effect, Vector2 origin, float superscale, float depth, Color hovercolor, Color clickedcolor, SpriteBase Ball, SpriteBase Bottom, ScalableSprite Moving, SpriteFont font = null, string text = "", float stringH = 50, float offx = 0, float offy = 0, bool On = false)
-            : base(image, location, color, rotation, effect, origin, superscale, depth, hovercolor, clickedcolor)
+        public Toggler(Texture2D image, Vector2 location, Color color, float rotation, SpriteEffects effect, Vector2 origin, float scale, float depth, Color hovercolor, Color clickedcolor, SpriteBase Ball, SpriteBase Bottom, ScalableSprite Moving, SpriteFont font = null, string text = "", float stringH = 50, float offx = 0, float offy = 0, bool On = false)
+            : base(image, location, color, rotation, effect, origin, scale, depth, hovercolor, clickedcolor)
         {
             Done = true;
 
             if (font != null)
             {
-                laby = new Label(font, Color, new Vector2(location.X + image.Width / 2 - (int)font.MeasureString(text).X / 2, location.Y + stringH), text);
+                Laby = new Label(font, Color, new Vector2(location.X + image.Width / 2 - (int)font.MeasureString(text).X / 2, location.Y + stringH), text);
             }
             this.Ball = Ball;
             BottomColor = Bottom;
@@ -119,15 +121,30 @@ namespace BaseGameLibrary
             MovingColor.Draw(batch);
             base.Draw(batch);
             Ball.Draw(batch);
-            if (laby != null)
+            if (Laby != null)
             {
-                laby.Draw(batch);
+                Laby.Draw(batch);
             }
         }
 
         public override Toggler Clone()
         {
-            throw new NotImplementedException();
+            var copy = new Toggler(Image, Location, Color, Rotation, Effect, Origin, Scale, Depth, HoverColor, ClickedColor);
+            CloneLogic(copy);
+            return copy;
+        }
+
+        protected void CloneLogic(Toggler copy)
+        {
+            copy.Ball = Ball;
+            copy.BottomColor = BottomColor;
+            copy.MovingColor = MovingColor;
+            copy.Laby = Laby;
+
+            copy.On = On;
+            copy.Done = Done;
+            copy.Held = Held;
+            copy.setOff = setOff;
         }
     }
 }

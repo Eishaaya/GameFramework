@@ -34,20 +34,28 @@ namespace TestProj
         {
             Left,
             Right,
+            KeyX,
+            Up,
+            Down,
+            KeyY,
+
             LClick,
             RClick,
             MClick,
             Scroll,
             MouseX,
             MouseY,
+
             Alt,
             F,
             Four,
+            AltF4,
+
             Help,
             Group
         }
-        KeyControl left = new KeyControl(Keys.A, new DigitalStateComponent());
-        KeyControl right = new KeyControl(Keys.D, new DigitalStateComponent());
+        KeyControl left = new KeyControl(Keys.A, new AnalogStateComponent());
+        KeyControl right = new KeyControl(Keys.D, new AnalogStateComponent());
 
         MouseControl clicked = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.LeftButton == ButtonState.Pressed, Mouse.GetState()), new DigitalStateComponent());
 
@@ -91,10 +99,6 @@ namespace TestProj
 
         protected override void LoadContent()
         {
-
-
-
-
             var ticky = new Ticker();
 
             Screen testScreen = new Screen();
@@ -113,9 +117,15 @@ namespace TestProj
                 [Binds.Alt] = new KeyControl(Keys.LeftAlt, new DigitalStateComponent()),
                 [Binds.F] = new KeyControl(Keys.F, new DigitalStateComponent()),
                 [Binds.Four] = new KeyControl(Keys.D4, new DigitalStateComponent()),
+                [Binds.AltF4] = new ComplexControl<Binds>(ControlType.AND, Value, new DigitalStateComponent(), DefaultSelector.Boolean, Binds.Alt, Binds.F, Binds.Four),
 
                 [Binds.Left] = left,
-                [Binds.Right] = new ComplexControl<Binds>(ControlType.AND, new DigitalStateComponent(), Binds.Alt, Binds.F, Binds.Four),
+                [Binds.Right] = right,
+                [Binds.KeyX] = new ComplexControl<Binds>(ControlType.Subtract, Add, AnalogState, DefaultSelector.Integer, Binds.Left, Binds.Right),
+
+                [Binds.Up] = new KeyControl(Keys.W, new AnalogStateComponent()),
+                [Binds.Down] = new KeyControl(Keys.S, new AnalogStateComponent()),
+
                 [Binds.LClick] = clicked,
                 [Binds.RClick] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.RightButton == ButtonState.Pressed, Mouse.GetState()), new DigitalStateComponent()),
                 [Binds.MClick] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.MiddleButton == ButtonState.Pressed, Mouse.GetState()), new DigitalStateComponent()),
@@ -123,7 +133,7 @@ namespace TestProj
                 [Binds.MouseX] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.Position.X, Mouse.GetState()), new AnalogStateComponent()),
                 [Binds.MouseY] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.Position.Y, Mouse.GetState()), new AnalogStateComponent()),
                 [Binds.Help] = new StickControl(0, new DigitalStateComponent()),
-                [Binds.Group] = new ComplexControl<Binds>(ControlType.AND, new DigitalStateComponent(), Binds.Left, Binds.Right, Binds.LClick)
+                [Binds.Group] = new ComplexControl<Binds>(ControlType.AND, Value, new DigitalStateComponent(), DefaultSelector.Boolean, Binds.Left, Binds.Right, Binds.LClick)
             };
             InputManager<Binds>.Instance.Fill(idkName);
 
@@ -196,8 +206,8 @@ namespace TestProj
             var manager = InputManager<Binds>.Instance;
             manager.Update(gameTime);
 
-            var isLeft = manager[Binds.Left] == true;
-            var isRight = manager[Binds.Right] == true;
+            int isLeft = (int)manager[Binds.Up];
+            int isRight = (int)manager[Binds.Down];
             var no = AnimatedCursor<Binds>.Instance[CursorRoot.Info.Left];
             var isHeld = no == true;
 
@@ -211,7 +221,7 @@ namespace TestProj
             var mouseX = manager[Binds.MouseX];
             var mouseY = manager[Binds.MouseY];
 
-            test.Text($"Left: {isLeft}, Right: {isRight}, Held: {isHeld}\nMouse Moved: {mouseX || mouseY}, ({(int)mouseX}, {(int)mouseY})");
+            test.Text($"Up: {isLeft}, Down: {isRight}, Held: {isHeld}\nMouse Moved: {mouseX || mouseY}, ({(int)mouseX}, {(int)mouseY})");
         }
 
         //int gIMMEeIGHT()

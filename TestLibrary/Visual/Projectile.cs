@@ -64,5 +64,10 @@ namespace BaseGameLibrary
         {
             base.move(gameTime);
         }
+
+        public override VisualObject Clone()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

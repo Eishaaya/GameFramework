@@ -29,7 +29,7 @@ namespace BaseGameLibrary
             fading = false;
         }
 
-        public FadingLabel Clone()
+        public override FadingLabel Clone()
          => new FadingLabel(Font, Color, Location, text, Origin, Rotation, Effect, Scale, Depth, lifeTimer.TotalMillies);
 
         public override void Update(GameTime gameTime)
@@ -124,7 +124,7 @@ namespace BaseGameLibrary
         public Label(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin, float Rotation, SpriteEffects Effect, float Scale, float Depth)
             : base(font, color, location, text, Origin, Rotation, Effect, Scale, Depth) { }
 
-        public Label Clone()
+        public override Label Clone()
             => new Label(Font, Color, Location, text, Origin, Rotation, Effect, Scale, Depth);
     }
 
@@ -149,7 +149,7 @@ namespace BaseGameLibrary
             text = infoText + newText;
         }
 
-        ValueLabel ICopyable<ValueLabel>.Clone()
+        public override ValueLabel Clone()
             => new ValueLabel(Font, Color, Location, text, infoText, Origin, Rotation, Effect, Scale, Depth);
     }
 }

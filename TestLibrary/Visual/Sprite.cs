@@ -23,6 +23,13 @@ namespace BaseGameLibrary
         {
             Image = image;
         }
+        #region clone
+        protected new void CloneLogic<T>(T copy) where T : SpriteBase
+        {
+            base.CloneLogic(copy);
+            copy.Image = Image;
+        }
+        #endregion
 
         public override void Draw(SpriteBatch batch)
         {
@@ -38,7 +45,7 @@ namespace BaseGameLibrary
         public override void Update(GameTime gameTime) { }
     }
 
-    public class Sprite : SpriteBase, IGameObject<Sprite>
+    public class Sprite : SpriteBase
     {
         public Sprite(Texture2D image, Vector2 location)
             : this(image, location, Vector2.Zero) { }
@@ -51,17 +58,12 @@ namespace BaseGameLibrary
 
         #region clone
 
-        public Sprite Clone()
+        public override Sprite Clone()
         {
             var copy = new Sprite(Image, Location, Color, Rotation, Effect, Origin, Scale, Depth);
             CloneLogic(copy);
 
             return copy;
-        }
-        protected new void CloneLogic<T>(T copy) where T : SpriteBase
-        {
-            base.CloneLogic(copy);
-            copy.Image = Image;
         }
 
         #endregion
