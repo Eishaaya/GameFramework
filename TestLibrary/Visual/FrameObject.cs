@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BaseGameLibrary
+namespace BaseGameLibrary.Visual
 {
     class FrameObject
     {

@@ -1,4 +1,5 @@
 ﻿using BaseGameLibrary.Inputs;
+using BaseGameLibrary.Visual;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;

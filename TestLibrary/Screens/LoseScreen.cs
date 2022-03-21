@@ -1,4 +1,5 @@
 ﻿using BaseGameLibrary.Inputs;
+using BaseGameLibrary.Visual;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,7 +10,7 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 
-using static BaseGameLibrary.ActionButton;
+using static BaseGameLibrary.Visual.ActionButton;
 
 namespace BaseGameLibrary
 {

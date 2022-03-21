@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace BaseGameLibrary
+namespace BaseGameLibrary.Visual
 {
     class ButtonLabel
     {

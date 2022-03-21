@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BaseGameLibrary
+namespace BaseGameLibrary.Visual
 {
     public abstract class ButtonBase : SpriteBase
     {
@@ -20,6 +20,8 @@ namespace BaseGameLibrary
         //public bool Hold { get; set; } //<-
         public bool Held { get; set; } //<- Not a fan of this group, this data makes more sense in the mouse, or in another structure for a hotkey situation
         public bool PrevDown { get; set; }
+
+        protected ButtonBase() { }
         public ButtonBase(Texture2D image, Vector2 location, Color color, float rotation, SpriteEffects effect, Vector2 origin, float scale, float depth, Color hovercolor, Color clickedcolor)
             : base(image, location, color, rotation, effect, origin, scale, depth)
         {
@@ -34,7 +36,10 @@ namespace BaseGameLibrary
         protected void CloneLogic(ButtonBase copy)
         {
             base.CloneLogic(copy);
+            copy.ChosenClick = ChosenClick;
             copy.NormalColor = NormalColor;
+            copy.HoverColor = HoverColor;
+            copy.ClickedColor = ClickedColor;
             // copy.Hold = Hold;
             copy.Held = Held;
             copy.PrevDown = PrevDown;
@@ -96,6 +101,7 @@ namespace BaseGameLibrary
 
     public class Button : ButtonBase, IGameObject<Button>
     {
+        private Button() { }
         public Button(Texture2D image, Vector2 location)
            : this(image, location, Vector2.Zero) { }
         public Button(Texture2D image, Vector2 location, Vector2 origin)
@@ -111,7 +117,7 @@ namespace BaseGameLibrary
 
         public override Button Clone()
         {
-            var copy = new Button(Image, Location, Color, Rotation, Effect, Origin, Scale, Depth, HoverColor, ClickedColor);
+            var copy = new Button();
             CloneLogic(copy);
             return copy;
         }

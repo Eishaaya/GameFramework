@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BaseGameLibrary
+namespace BaseGameLibrary.Visual
 {
     public class FadingLabel : LabelBase, IGameObject<FadingLabel>
     {
@@ -47,6 +47,11 @@ namespace BaseGameLibrary
                 Fade();
             }
         }
+
+        public static FadingLabel operator +(FadingLabel me, string newWord)
+            => (FadingLabel)me.Add(newWord);
+        public static FadingLabel operator +(FadingLabel me, LabelBase newWord)
+            => (FadingLabel)me.Add(newWord);
     }
     public abstract class LabelBase : VisualObject
     {
@@ -97,11 +102,18 @@ namespace BaseGameLibrary
             return text;
         }
 
-        public static LabelBase operator +(LabelBase me, string newWord)
+        public virtual LabelBase Add(string newWord)
         {
-            me.text += newWord;
-            return me;
+            text += newWord;
+            return this;
         }
+        public LabelBase Add(LabelBase newWord)
+            => Add(newWord.Text());
+
+        public static LabelBase operator +(LabelBase me, string newWord)
+            => me.Add(newWord);
+        public static LabelBase operator +(LabelBase me, LabelBase newWord)
+            => me.Add(newWord);
 
         public override void Update(GameTime gameTime) { }
 
@@ -126,6 +138,11 @@ namespace BaseGameLibrary
 
         public override Label Clone()
             => new Label(Font, Color, Location, text, Origin, Rotation, Effect, Scale, Depth);
+
+        public static Label operator +(Label me, string newWord)
+            => (Label)me.Add(newWord);
+        public static Label operator +(Label me, LabelBase newWord)
+            => (Label)me.Add(newWord);
     }
 
     public class ValueLabel : LabelBase, IGameObject<ValueLabel>
@@ -151,5 +168,10 @@ namespace BaseGameLibrary
 
         public override ValueLabel Clone()
             => new ValueLabel(Font, Color, Location, text, infoText, Origin, Rotation, Effect, Scale, Depth);
+
+        public static ValueLabel operator +(ValueLabel me, string newWord)
+            => (ValueLabel)me.Add(newWord);
+        public static ValueLabel operator +(ValueLabel me, LabelBase newWord)
+            => (ValueLabel)me.Add(newWord);
     }
 }

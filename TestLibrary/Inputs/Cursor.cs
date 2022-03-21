@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BaseGameLibrary.Visual;
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using System;
@@ -127,10 +129,8 @@ namespace BaseGameLibrary.Inputs
                 => InputManager<TInput>.Instance[Inputs[Info.Middle]];
         }
         public InputStateComponent Scroll
-        {
-            get
                 => InputManager<TInput>.Instance[Inputs[Info.Scroll]];
-        }
+        //make gets nicer
 
         public override bool Held { get; protected set; }
 

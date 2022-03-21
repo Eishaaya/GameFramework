@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BaseGameLibrary
+namespace BaseGameLibrary.Visual
 {
     public interface IFollowable
     {

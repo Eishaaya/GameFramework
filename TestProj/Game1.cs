@@ -4,12 +4,13 @@ using Microsoft.Xna.Framework.Input;
 using BaseGameLibrary;
 using static BaseGameLibrary.Extensions;
 using static BaseGameLibrary.Sequence;
-using static BaseGameLibrary.VisualObject;
+using static BaseGameLibrary.Visual.VisualObject;
 using System;
 using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 using BaseGameLibrary.Inputs;
 using static BaseGameLibrary.Inputs.InputExtensions;
+using BaseGameLibrary.Visual;
 
 namespace TestProj
 {
@@ -99,6 +100,10 @@ namespace TestProj
 
         protected override void LoadContent()
         {
+            Label label = new Label(null, Color.Wheat, Vector2.Zero, "Fard");
+            Label label2 = new Label(null, Color.Wheat, Vector2.Zero, "shid");
+            label2 += label;
+
             var ticky = new Ticker();
 
             Screen testScreen = new Screen();
@@ -117,14 +122,15 @@ namespace TestProj
                 [Binds.Alt] = new KeyControl(Keys.LeftAlt, new DigitalStateComponent()),
                 [Binds.F] = new KeyControl(Keys.F, new DigitalStateComponent()),
                 [Binds.Four] = new KeyControl(Keys.D4, new DigitalStateComponent()),
-                [Binds.AltF4] = new ComplexControl<Binds>(ControlType.AND, Value, new DigitalStateComponent(), DefaultSelector.Boolean, Binds.Alt, Binds.F, Binds.Four),
+                [Binds.AltF4] = new ComplexControl<Binds>(ControlType.AND, Value, new DigitalStateComponent(), DefaultSelector.Boolean, 1, Binds.Alt, Binds.F, Binds.Four),
 
                 [Binds.Left] = left,
                 [Binds.Right] = right,
-                [Binds.KeyX] = new ComplexControl<Binds>(ControlType.Subtract, Add, AnalogState, DefaultSelector.Integer, Binds.Left, Binds.Right),
+                [Binds.KeyX] = new ComplexControl<Binds>(ControlType.Subtract, AddState, AnalogState, DefaultSelector.Integer, 5, Binds.Right, Binds.Left),
 
                 [Binds.Up] = new KeyControl(Keys.W, new AnalogStateComponent()),
                 [Binds.Down] = new KeyControl(Keys.S, new AnalogStateComponent()),
+                [Binds.KeyY] = new ComplexControl<Binds>(ControlType.Subtract, AddState, AnalogState, DefaultSelector.Integer, 5, Binds.Down, Binds.Up),
 
                 [Binds.LClick] = clicked,
                 [Binds.RClick] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.RightButton == ButtonState.Pressed, Mouse.GetState()), new DigitalStateComponent()),
@@ -132,12 +138,13 @@ namespace TestProj
                 [Binds.Scroll] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.ScrollWheelValue, Mouse.GetState()), new DigitalStateComponent()),
                 [Binds.MouseX] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.Position.X, Mouse.GetState()), new AnalogStateComponent()),
                 [Binds.MouseY] = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.Position.Y, Mouse.GetState()), new AnalogStateComponent()),
+
                 [Binds.Help] = new StickControl(0, new DigitalStateComponent()),
-                [Binds.Group] = new ComplexControl<Binds>(ControlType.AND, Value, new DigitalStateComponent(), DefaultSelector.Boolean, Binds.Left, Binds.Right, Binds.LClick)
+                [Binds.Group] = new ComplexControl<Binds>(ControlType.AND, Value, new DigitalStateComponent(), DefaultSelector.Boolean, 1, Binds.Left, Binds.Right, Binds.LClick)
             };
             InputManager<Binds>.Instance.Fill(idkName);
 
-            AnimatedCursor<Binds>.Instance.AttachClicks(Binds.LClick, Binds.Right, Binds.Left, Binds.Scroll, Binds.MouseX, Binds.MouseY);
+            AnimatedCursor<Binds>.Instance.AttachClicks(Binds.LClick, Binds.RClick, Binds.AltF4, Binds.Scroll, Binds.KeyX, Binds.MouseY);
           
             AnimatedCursor<Binds>.Instance.AttachSprite(new AnimatingSprite(Vector2.Zero, Color.White, new Vector2(31, 0), .3f, new RectangleContainer(Content.Load<Texture2D>("Mousesheet"), new RectangleFrame[] {
                 new Rectangle(0, 0, 72, 103),
@@ -149,7 +156,7 @@ namespace TestProj
             // timer = new Timer(5000);
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            var karan = new Sprite(Content.Load<Texture2D>("unknown"), new Vector2(400), new Vector2(100), .05f);
+            var karan = new Sprite(Content.Load<Texture2D>("BiggestTile"), new Vector2(400), new Vector2(100), 1f);
 
             sequence = new Sequence();
             sequence.AttachSequence(

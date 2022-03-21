@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BaseGameLibrary
+namespace BaseGameLibrary.Visual
 {
     public abstract class SpriteBase : VisualObject
     {
@@ -18,13 +18,16 @@ namespace BaseGameLibrary
                 return new Rectangle((int)(Location.X - Origin.X * Scale), (int)(Location.Y - Origin.Y * Scale), (int)(Image.Width * Scale), (int)(Image.Height * Scale));
             }
         }
+        protected SpriteBase()
+            : base() { }
         public SpriteBase(Texture2D image, Vector2 location, Color color, float rotation, SpriteEffects effects, Vector2 origin, float scale, float depth)
         : base(location, color, origin, rotation, effects, scale, depth)
         {
             Image = image;
         }
         #region clone
-        protected new void CloneLogic<T>(T copy) where T : SpriteBase
+        public abstract override SpriteBase Clone();
+        protected void CloneLogic(SpriteBase copy)
         {
             base.CloneLogic(copy);
             copy.Image = Image;
@@ -45,8 +48,10 @@ namespace BaseGameLibrary
         public override void Update(GameTime gameTime) { }
     }
 
-    public class Sprite : SpriteBase
+    public class Sprite : SpriteBase, IGameObject<Sprite>
     {
+        private Sprite()
+            : base() { }
         public Sprite(Texture2D image, Vector2 location)
             : this(image, location, Vector2.Zero) { }
         public Sprite(Texture2D image, Vector2 location, Vector2 origin)
@@ -60,7 +65,7 @@ namespace BaseGameLibrary
 
         public override Sprite Clone()
         {
-            var copy = new Sprite(Image, Location, Color, Rotation, Effect, Origin, Scale, Depth);
+            var copy = new Sprite();
             CloneLogic(copy);
 
             return copy;

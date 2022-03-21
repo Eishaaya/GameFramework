@@ -56,21 +56,21 @@
       <FileName>Screens\SettingsScreen.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.ActionButton" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.ActionButton" Collapsed="true">
     <Position X="20" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEAAAAAAAAAAAgAAAAAAAAAAAAAAAACAAAAAAAAAAgA=</HashCode>
       <FileName>Visual\ActionButton.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.ManagementActions" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.ManagementActions" Collapsed="true">
     <Position X="25.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AwAAAABAAAAgBAAAAAAAAAAAAAAAAAAAIAAAAAAAACA=</HashCode>
       <FileName>Visual\ActionButton.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.AestheticsManager" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="BaseGameLibrary.Visual.AestheticsManager" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="21.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAgAAAAgAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
@@ -78,77 +78,78 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="BaseGameLibrary.AnimationFrame" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.AnimationFrame" Collapsed="true">
     <Position X="6.75" Y="15.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Visual\AnimatingSpriteBase.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Visual\AnimatingSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.RectangleFrame" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.RectangleFrame" Collapsed="true">
     <Position X="5.5" Y="16.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Visual\AnimatingSpriteBase.cs</FileName>
+      <HashCode>AAAAAAAAAQAAAgBAAAAAIAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Visual\AnimatingSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.TextureFrame" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.TextureFrame" Collapsed="true">
     <Position X="7.75" Y="16.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Visual\AnimatingSpriteBase.cs</FileName>
+      <HashCode>AAAAAAAAAAABAgAAAAAAAAIAAAAEAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Visual\AnimatingSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.FrameContainer" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.FrameContainer" Collapsed="true">
     <Position X="1.75" Y="15.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Visual\AnimatingSpriteBase.cs</FileName>
+      <HashCode>EACQCAAAIAAAAgAAAACAAABAAAAAABAAAAAAAQABABA=</HashCode>
+      <FileName>Visual\AnimatingSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.RectangleContainer" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.RectangleContainer" Collapsed="true">
     <Position X="0.5" Y="16.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Visual\AnimatingSpriteBase.cs</FileName>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAABA=</HashCode>
+      <FileName>Visual\AnimatingSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.TextureContainer" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.TextureContainer" Collapsed="true">
     <Position X="2.75" Y="16.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Visual\AnimatingSpriteBase.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAABA=</HashCode>
+      <FileName>Visual\AnimatingSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.AnimatingSpriteBase" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.AnimatingSpriteBase" Collapsed="true">
     <Position X="12.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Visual\AnimatingSpriteBase.cs</FileName>
+      <HashCode>EAQQCAAAIAAEAgAAAAAAAAUAAAAEAKhAAAAAAAAAAAM=</HashCode>
+      <FileName>Visual\AnimatingSprite.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.Button" Collapsed="true">
-    <Position X="15.75" Y="3.25" Width="1.5" />
+  <Class Name="BaseGameLibrary.Visual.Button" Collapsed="true">
+    <Position X="16.25" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAACQgAAAAAAIAAACAAAAAAAAAAAAAIAAAAAAAAABI=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
       <FileName>Visual\Button.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="BaseGameLibrary.ButtonLabel" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.ButtonLabel" Collapsed="true">
     <Position X="23.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEAAAAgAEAAAAgAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
       <FileName>Visual\ButtonLabel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.ButtonManager" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.ButtonManager" Collapsed="true">
     <Position X="25.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAgAAIAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
       <FileName>Visual\Managers\ButtonManager.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.Camera" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.Camera" Collapsed="true">
     <Position X="27" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAgAAAAAAAAAABAAAAAAAAAAAAAAAAAgAAA=</HashCode>
@@ -165,11 +166,11 @@
   <Class Name="BaseGameLibrary.Extensions" Collapsed="true">
     <Position X="20" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAASgAAAVgABiAAAEBABAAAECUAIAAAAAQAACAAAtA=</HashCode>
+      <HashCode>AAAASgQAAVgABiAAAEBABAAAECUAIAAAAAQAACAAAtA=</HashCode>
       <FileName>Background\Extensions.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.FrameObject" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.FrameObject" Collapsed="true">
     <Position X="21.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAEEAAAAAAAAAAAAAAAAAAAAAgAAAAAAQAAAAA=</HashCode>
@@ -204,7 +205,7 @@
       <FileName>Background\Indextionary.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.FadingLabel" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.FadingLabel" Collapsed="true">
     <Position X="1.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAABAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
@@ -212,14 +213,14 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="BaseGameLibrary.LabelBase" Collapsed="true">
-    <Position X="3.5" Y="1.75" Width="1.5" />
+  <Class Name="BaseGameLibrary.Visual.LabelBase" Collapsed="true">
+    <Position X="6.25" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAgAAQAAAAAAAAAAAAAAIAAAACAACAAA=</HashCode>
       <FileName>Visual\Label.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.Label" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.Label" Collapsed="true">
     <Position X="3.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
@@ -227,10 +228,10 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="BaseGameLibrary.ValueLabel" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.ValueLabel" Collapsed="true">
     <Position X="5.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAABAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAABBA=</HashCode>
       <FileName>Visual\Label.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -311,14 +312,14 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="BaseGameLibrary.Particle" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.Particle" Collapsed="true">
     <Position X="10.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAQAAAAAAAACAACAAAAgAAAAGBAAEQAAAABAAUAAAAA=</HashCode>
       <FileName>Visual\Particle.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.ParticleEffect" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="BaseGameLibrary.Visual.ParticleEffect" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="21.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAwAAAAwAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
@@ -326,7 +327,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="BaseGameLibrary.Projectile" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.Projectile" Collapsed="true">
     <Position X="8" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAADACAAAAACAAAAAAAAAAAAAAQQAAAAAAAAAAAA=</HashCode>
@@ -334,14 +335,14 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="BaseGameLibrary.Laser" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.Laser" Collapsed="true">
     <Position X="8" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAACAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAgAAAAAAAAAAAAAAAAABA=</HashCode>
       <FileName>Visual\Projectile.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.ScalableSprite" Collapsed="true">
+  <Class Name="BaseGameLibrary.Visual.ScalableSprite" Collapsed="true">
     <Position X="10.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACAAAAAAEAgAAAAAAAAAAAAAAAAAAAAAAAAAgABA=</HashCode>
@@ -356,67 +357,52 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="BaseGameLibrary.Slider" Collapsed="true">
-    <Position X="17" Y="4.75" Width="1.5" />
+  <Class Name="BaseGameLibrary.Visual.Slider" Collapsed="true">
+    <Position X="18" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABACBiAAKAAAgAAAAAAAIAAAAAAAAAAAAAgABAABAA=</HashCode>
+      <HashCode>AABACBiAAKAAAgAAAAAAAIAAAAAAAAAAAAAgABAABBA=</HashCode>
       <FileName>Visual\Slider.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.SpriteBase" Collapsed="true">
-    <Position X="12.5" Y="1.75" Width="1.5" />
+  <Class Name="BaseGameLibrary.Visual.SpriteBase" Collapsed="true">
+    <Position X="12.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAEAgAAAAAAAAAAAAAAABAAAAAAAAAIAAA=</HashCode>
-      <FileName>Visual\SpriteBase.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.Stan" Collapsed="true">
-    <Position X="27" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Background\Timer.cs</FileName>
+      <HashCode>AAQACAAAAAAEAgAAAAAAAAAAAAAAABAAAAAAAAAIABA=</HashCode>
+      <FileName>Visual\Sprite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BaseGameLibrary.TickerBase" Collapsed="true">
     <Position X="6.75" Y="12.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAABAAAAAAAABAAAAAAAAAAAAAAAAAAEAAAAAAAAQAA=</HashCode>
+      <HashCode>AAABCAAAAAAABAAAAAAAAAAAAAAAAAAEAAAAAAAAQAA=</HashCode>
       <FileName>Background\Timer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BaseGameLibrary.Ticker" Collapsed="true">
     <Position X="5.5" Y="13.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
       <FileName>Background\Timer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BaseGameLibrary.Timer" Collapsed="true">
     <Position X="7.75" Y="13.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAQQAEAIAgAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAACAAAAAAQQAEAIAgAAAAAAAAAACAAAAAAAAAAABA=</HashCode>
       <FileName>Background\Timer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.Toggler" Collapsed="true">
-    <Position X="14.75" Y="4.75" Width="1.5" />
+  <Class Name="BaseGameLibrary.Visual.Toggler" Collapsed="true">
+    <Position X="15.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABAAAgAAIAABkAAAAAAAAACAAAAAgAIAAAAABAAAIA=</HashCode>
+      <HashCode>AABACAgAAIAABkAAAAAAAAACAAAAAgAIEAAAAAAAAJA=</HashCode>
       <FileName>Visual\Toggler.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="BaseGameLibrary.VisualObject" Collapsed="true">
-    <Position X="9" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AESICAEAAAgBApABBAJABAAAEAEAKABogAQAgCggAAA=</HashCode>
-      <FileName>Visual\VisualObject.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="BaseGameLibrary.Inputs.ComplexControl&lt;T&gt;" Collapsed="true">
     <Position X="5.25" Y="10.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAiQA=</HashCode>
+      <HashCode>AAQAAAAAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAiQA=</HashCode>
       <FileName>Inputs\ComplexControl.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -493,7 +479,7 @@
   <Class Name="BaseGameLibrary.Inputs.InputExtensions" Collapsed="true">
     <Position X="20" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAEAAAACAAgAAAgAAAAEAAAAgIAAAAQQAAAAAAACA=</HashCode>
+      <HashCode>AAIQEBABASABgAAggAADAEAAAAgIAAAARQAgAAAACCQ=</HashCode>
       <FileName>Inputs\InputExtensions.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -518,6 +504,53 @@
       <FileName>Inputs\StateComponents.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="BaseGameLibrary.Visual.Sprite" Collapsed="true">
+    <Position X="14" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Visual\Sprite.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BaseGameLibrary.Visual.ButtonBase" Collapsed="true">
+    <Position X="17.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAACQgAAAAAAIAAACAAAAAAAAAAAAAIAAAAAAAAABI=</HashCode>
+      <FileName>Visual\Button.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseGameLibrary.Visual.AnimatingSprite" Collapsed="true">
+    <Position X="12.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Visual\AnimatingSprite.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BaseGameLibrary.ParamFunc&lt;T1, T2, TReturn&gt;" Collapsed="true">
+    <Position X="34" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQABgAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Background\ParamFuncs.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BaseGameLibrary.ParamAction&lt;T1, T2&gt;" Collapsed="true">
+    <Position X="32.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQABgAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Background\ParamFuncs.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BaseGameLibrary.Visual.VisualObject" Collapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AESICAEAAAgBApABBAJABAAAEAEAKABogAQAgCggABA=</HashCode>
+      <FileName>Visual\VisualObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
   <Struct Name="BaseGameLibrary.BoolInt" Collapsed="true">
     <Position X="20" Y="5.75" Width="1.5" />
     <TypeIdentifier>
@@ -532,21 +565,21 @@
       <FileName>Screens\Screen.cs</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="BaseGameLibrary.Click" Collapsed="true">
+  <Struct Name="BaseGameLibrary.Visual.Click" Collapsed="true">
     <Position X="21.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAACAAAAIgAAAAAAAAAAAAgQAAAAAAAAAAAAAA=</HashCode>
       <FileName>Visual\ActionButton.cs</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="BaseGameLibrary.InputValue" Collapsed="true">
+  <Struct Name="BaseGameLibrary.Visual.InputValue" Collapsed="true">
     <Position X="23.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Visual\ActionButton.cs</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="BaseGameLibrary.InputValue&lt;TData, TType&gt;" Collapsed="true">
+  <Struct Name="BaseGameLibrary.Visual.InputValue&lt;TData, TType&gt;" Collapsed="true">
     <Position X="25.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAEAA=</HashCode>
@@ -560,14 +593,14 @@
       <FileName>Background\LoopedFloat.cs</FileName>
     </TypeIdentifier>
   </Struct>
-  <Interface Name="BaseGameLibrary.ButtonEffect" Collapsed="true">
+  <Interface Name="BaseGameLibrary.Visual.ButtonEffect" Collapsed="true">
     <Position X="20" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Visual\ActionButton.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="BaseGameLibrary.IFollowable" Collapsed="true">
+  <Interface Name="BaseGameLibrary.Visual.IFollowable" Collapsed="true">
     <Position X="21.75" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -582,14 +615,14 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="BaseGameLibrary.IRunnable" Collapsed="true">
-    <Position X="10.5" Y="13.5" Width="1.5" />
+    <Position X="9.75" Y="16.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Background\IRunnable.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="BaseGameLibrary.ICopyable&lt;T&gt;" Collapsed="true">
-    <Position X="17.5" Y="13.5" Width="1.5" />
+    <Position X="12.25" Y="16.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
       <FileName>Background\IRunnable.cs</FileName>
@@ -630,7 +663,7 @@
       <FileName>Screens\Screen.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="BaseGameLibrary.InputValueTypes" Collapsed="true">
+  <Enum Name="BaseGameLibrary.Visual.InputValueTypes" Collapsed="true">
     <Position X="20" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>

@@ -4,7 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using static BaseGameLibrary.VisualObject;
+using BaseGameLibrary.Visual;
+using static BaseGameLibrary.Visual.VisualObject;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -203,6 +204,16 @@ namespace BaseGameLibrary
                 numbers[i] = number - numbers[i];
             }
             return numbers;
+        }
+
+        public static IEnumerable<VisualObject> ShallowClone(this IEnumerable<VisualObject> me)
+        {
+            var newMe = new VisualObject[me.Count()];
+            for (int i = 0; i < newMe.Length; i++)
+            {
+                newMe[i] = me.ElementAt(i).Clone();
+            }
+            return newMe;
         }
 
         public static Vector2 ConvertPos(this Vector2 location, Vector2 scale, Vector2 offset)

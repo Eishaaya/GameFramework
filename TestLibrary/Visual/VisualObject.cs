@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BaseGameLibrary
+namespace BaseGameLibrary.Visual
 {
     public abstract class VisualObject : IPoolable, IGameObject<VisualObject>
     {
@@ -49,6 +49,7 @@ namespace BaseGameLibrary
         public Color OriginalColor { get; set; }
         public bool Visible { get; set; }
 
+        protected VisualObject() { }
         public VisualObject(Vector2 location, Color color, Vector2 origin, float Rotation, SpriteEffects Effect, float scale, float depth, bool visible = true)
         {
             Location = location;
@@ -73,8 +74,16 @@ namespace BaseGameLibrary
         }
 
         #region clone
-        protected void CloneLogic<T>(T copy) where T : VisualObject
+        protected void CloneLogic(VisualObject copy)
         {
+            copy.Location = Location;
+            copy.Color = Color;
+            copy.Effect = Effect;
+            copy.Origin = Origin;
+            copy.Rotation = Rotation;
+            copy.Depth = Depth;
+            copy.Scale = Scale;
+            copy.Visible = Visible;
             copy.bigger = bigger;
             copy.rotated = rotated;
             copy.spotSet = spotSet;
@@ -84,6 +93,10 @@ namespace BaseGameLibrary
             copy.oldScale = oldScale;
             copy.OriginalColor = OriginalColor;
             copy.oldRotation = oldRotation;
+
+            copy.changeFactor = changeFactor;
+            copy.totalColorDistance = totalColorDistance;
+            copy.moved = moved;
         }
 
         public abstract VisualObject Clone();

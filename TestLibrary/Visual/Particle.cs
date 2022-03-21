@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BaseGameLibrary
+namespace BaseGameLibrary.Visual
 {
-    class Particle : ScalableSprite
+    class Particle : ScalableSpriteBase
     {
         public bool going;
         public Vector2 speed { get; set; }
@@ -129,6 +129,11 @@ namespace BaseGameLibrary
                     this.ChangeColor(newColor, .1f + (float)(changeSpeed / 100));
                 }
             }
+        }
+
+        public override ScalableSpriteBase Clone()
+        {
+            throw new NotImplementedException();
         }
     }
 }

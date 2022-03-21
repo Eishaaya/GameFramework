@@ -22,7 +22,7 @@ namespace BaseGameLibrary.Inputs
         }
         public enum CompareType
         {
-            Value,
+            Analog,
             Digital,
             LessThan,
             GreaterThan,
@@ -136,22 +136,22 @@ namespace BaseGameLibrary.Inputs
             => InputManager<T>.Instance[key] < threshold;
         public static BoolInt Equal<T>(T key, BoolInt threshold) where T : Enum
             => (int)InputManager<T>.Instance[key] == threshold;
-        public static BoolInt Value<T>(T key, BoolInt threshold) where T : Enum
-            => (int)InputManager<T>.Instance[key];
+        public static BoolInt Analog<T>(T key, BoolInt multiplyer) where T : Enum
+            => (int)InputManager<T>.Instance[key] * multiplyer;
 
 
         //PressLogic modifiers
         public static BoolInt Value<T>(ComplexControl<T> victim, BoolInt value) where T : Enum
             => value;
-        public static BoolInt Add<T>(ComplexControl<T> victim, BoolInt value) where T : Enum
+        public static BoolInt AddState<T>(ComplexControl<T> victim, BoolInt value) where T : Enum
             => ((int)victim.StateComponent) + value;
-        public static BoolInt Subtract<T>(ComplexControl<T> victim, BoolInt value) where T : Enum
+        public static BoolInt SubtractState<T>(ComplexControl<T> victim, BoolInt value) where T : Enum
             => ((int)victim.StateComponent) - value;
-        public static BoolInt Multiply<T>(ComplexControl<T> victim, BoolInt value) where T : Enum
+        public static BoolInt MultiplyState<T>(ComplexControl<T> victim, BoolInt value) where T : Enum
             => ((int)victim.StateComponent) * value;
-        public static BoolInt Divide<T>(ComplexControl<T> victim, BoolInt value) where T : Enum
+        public static BoolInt DivideState<T>(ComplexControl<T> victim, BoolInt value) where T : Enum
             => ((int)victim.StateComponent) / value;
-        public static BoolInt Power<T>(ComplexControl<T> victim, BoolInt value) where T : Enum
+        public static BoolInt PowerState<T>(ComplexControl<T> victim, BoolInt value) where T : Enum
             => (int)Math.Pow((int)victim.StateComponent, value);
 
         //StateComponent yoinkers

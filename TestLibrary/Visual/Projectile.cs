@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BaseGameLibrary
+namespace BaseGameLibrary.Visual
 {
     abstract class Projectile : SpriteBase, IPoolable
     {
@@ -65,7 +65,7 @@ namespace BaseGameLibrary
             base.move(gameTime);
         }
 
-        public override VisualObject Clone()
+        public override Projectile Clone()
         {
             throw new NotImplementedException();
         }

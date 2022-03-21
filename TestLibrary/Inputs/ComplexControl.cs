@@ -32,7 +32,7 @@ namespace BaseGameLibrary.Inputs
                 [CompareType.GreaterThan] = Greater,
                 [CompareType.LessThan] = Less,
                 [CompareType.EqualTo] = Equal,
-                [CompareType.Value] = Value
+                [CompareType.Analog] = Analog
             };
 
         Func<ComplexControl<T>, BoolInt, BoolInt> pressModifier;
@@ -44,13 +44,13 @@ namespace BaseGameLibrary.Inputs
             this.myType = myType;
             this.pressModifier = pressModifier;
         }
-        public ComplexControl(ControlType myType, Func<ComplexControl<T>, BoolInt, BoolInt> pressModifier, InputStateComponent inputStateComponent, DefaultSelector selector, params T[] subKeys)
+        public ComplexControl(ControlType myType, Func<ComplexControl<T>, BoolInt, BoolInt> pressModifier, InputStateComponent inputStateComponent, DefaultSelector selector, BoolInt modifier, params T[] subKeys)
             : this(myType, pressModifier, inputStateComponent)
         {
             subComponents = new ParamFunc<T, BoolInt, BoolInt>[subKeys.Length];
             for (int i = 0; i < subKeys.Length; i++)
             {
-                subComponents[i] = new ParamFunc<T, BoolInt, BoolInt>(Comparers[(CompareType)selector], subKeys[i], true);
+                subComponents[i] = new ParamFunc<T, BoolInt, BoolInt>(Comparers[(CompareType)selector], subKeys[i], modifier);
             }
         }
         public ComplexControl(ControlType myType, Func<ComplexControl<T>, BoolInt, BoolInt> pressModifier, InputStateComponent inputStateComponent, CompareType compareType, params (T key, BoolInt modifier)[] subInfo)

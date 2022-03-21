@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using System;
 
-namespace BaseGameLibrary
+namespace BaseGameLibrary.Visual
 {
     class Slider : ButtonBase
     {
@@ -11,7 +11,7 @@ namespace BaseGameLibrary
         Label laby;
         ButtonBase[] points;
 
-        bool freeSlider { get; }
+        bool freeSlider;
 
         public int Value { get; private set; }
         public bool Done { get; private set; }
@@ -55,6 +55,26 @@ namespace BaseGameLibrary
             }
 
             Location = points[value].Location;
+        }        
+        private Slider() { }
+
+        public void CloneLogic(Slider copy)
+        {
+            base.CloneLogic(copy);
+            copy.bar = bar.Clone();
+            copy.laby = laby.Clone();
+            copy.points = (ButtonBase[])copy.points.ShallowClone();
+            copy.freeSlider = freeSlider;
+            copy.Value = Value;
+            copy.Done = Done;
+            copy.texts = texts;
+            copy.prevTouched = prevTouched;            
+        }
+        public override Slider Clone()
+        {
+            var copy = new Slider();
+            CloneLogic(copy);
+            return copy;
         }
 
         public override bool Check(Vector2 cursor, bool isclicked)
@@ -154,11 +174,6 @@ namespace BaseGameLibrary
             {
                 laby.Draw(batch);
             }
-        }
-
-        public override Slider Clone()
-        {
-            throw new NotImplementedException();
         }
     }
 }

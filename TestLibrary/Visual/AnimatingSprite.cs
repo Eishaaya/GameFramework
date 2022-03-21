@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BaseGameLibrary
+namespace BaseGameLibrary.Visual
 {
     public abstract class AnimationFrame
     {
@@ -62,8 +62,10 @@ namespace BaseGameLibrary
     public abstract class FrameContainer
     {
         public int CurrentFrame { get; set; }
-        protected AnimationFrame[] frames;
+        protected AnimationFrame[] frames; //clone????
         Vector2[] origins;
+
+        protected FrameContainer() { }
         public FrameContainer(AnimationFrame[] frames, Vector2[] origins = null)
         {
             this.frames = frames;
@@ -97,11 +99,19 @@ namespace BaseGameLibrary
         {
             get => CurrentFrame == Length - 1;
         }
+
+        public abstract FrameContainer Clone();
+        public void CloneLogic(FrameContainer copy)
+        {
+            copy.CurrentFrame = CurrentFrame;
+            copy.frames = (AnimationFrame[])frames.Clone();
+        }
     }
 
     public class RectangleContainer : FrameContainer
     {
         Texture2D image;
+        private RectangleContainer() { }
         public RectangleContainer(Texture2D image, RectangleFrame[] frames, Vector2[] origins = null)
             : base(frames, origins)
         {
@@ -109,12 +119,33 @@ namespace BaseGameLibrary
         }
 
         public override Texture2D Image => image;
+
+        public override RectangleContainer Clone()
+        {
+            var copy = new RectangleContainer();
+            CloneLogic(copy);
+            return copy;
+        }
+
+        public void CloneLogic(RectangleContainer copy)
+        {
+            base.CloneLogic(copy);
+            copy.image = image;
+        }
     }
     public class TextureContainer : FrameContainer
     {
+        private TextureContainer() { }
         public TextureContainer(TextureFrame[] frames, Vector2[] origins = null)
             : base(frames, origins) { }
         public override Texture2D Image => (TextureFrame)frames[CurrentFrame];
+
+        public override TextureContainer Clone()
+        {
+            var copy = new TextureContainer();
+            CloneLogic(copy);
+            return copy;
+        }
     }
 
     public abstract class AnimatingSpriteBase : SpriteBase
@@ -165,7 +196,8 @@ namespace BaseGameLibrary
                                                             (int)(Frames.Current.Dimensions.X * Scale), (int)(Frames.Current.Dimensions.Y * Scale));
             }
         }
-
+        public AnimatingSpriteBase()
+            : base() { }
         public AnimatingSpriteBase(Vector2 location, FrameContainer frames, int time, bool loop = true, bool invert = false, Vector2[] origins = null)
             : this(location, Color.White, Vector2.Zero, 1, frames, time, loop, invert, origins) { }
         public AnimatingSpriteBase(Vector2 location, Color color, Vector2 origin, float scale, FrameContainer frames, int time, bool loop, bool invert, Vector2[] origins = null)
@@ -183,8 +215,20 @@ namespace BaseGameLibrary
             {
                 origins = null;
             }
-
         }
+        #region
+        public void CloneLogic(AnimatingSpriteBase copy)
+        {
+            base.CloneLogic(copy);
+            copy.Frames = Frames.Clone();
+            copy.origins = origins;
+            copy.FrameTime = FrameTime.Clone();
+            copy.autoLoop = autoLoop;
+            copy.autoInvert = autoInvert;
+            copy.frameSpeed = frameSpeed;
+            copy.LastFrame = LastFrame;
+        }
+        #endregion
         public void SetAnimatingSprite(Texture2D image, Vector2 location, Color color, float rotation, SpriteEffects effects, Vector2 origin, float scale, float depth, FrameContainer frames, int time, Vector2[] Origins = null)
         {
             Frames = frames;
@@ -261,8 +305,8 @@ namespace BaseGameLibrary
         }
     }
 
-    public class AnimatingSprite : AnimatingSpriteBase, IGameObject<AnimatingSprite>
-    {
+    public class AnimatingSprite : AnimatingSpriteBase, IGameObject<AnimatingSprite> {
+        private AnimatingSprite() { }
         public AnimatingSprite(Vector2 location, FrameContainer frames, int time, bool loop = true, bool invert = false, Vector2[] origins = null)
             : this(location, Color.White, Vector2.Zero, 1, frames, time, loop, invert, origins) { }
         public AnimatingSprite(Vector2 location, Color color, Vector2 origin, float scale, FrameContainer frames, int time, bool loop, bool invert, Vector2[] origins = null)
@@ -271,8 +315,8 @@ namespace BaseGameLibrary
             : base(location, color, rotation, effects, origin, scale, depth, frames, time, invert, loop, origins) { }
         public override AnimatingSprite Clone()
         {
-            var newSprite = new AnimatingSprite(Location, Color, Rotation, Effect, Origin, Scale, Depth, Frames, FrameTime.TotalMillies, autoLoop, autoInvert, origins);
-            newSprite.Frames.CurrentFrame = Frames.CurrentFrame;
+            var newSprite = new AnimatingSprite();
+            CloneLogic(newSprite);
             return newSprite;
         }
     }
