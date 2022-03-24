@@ -3,18 +3,15 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BaseGameLibrary.Visual
 {
-    public class FadingLabel : LabelBase, IGameObject<FadingLabel>
+    public sealed class FadingLabel : LabelBase, IGameObject<FadingLabel>
     {
         Timer lifeTimer;
         bool fading;
 
+        private FadingLabel() { }
         public FadingLabel(SpriteFont font, Color color, Vector2 location, string text, int lifeTime, bool middle = false)
             : this(font, color, location, text, middle ? font.MeasureString(text) / 2 : Vector2.Zero, lifeTime) { }
         public FadingLabel(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin, int lifeTime)
@@ -30,7 +27,18 @@ namespace BaseGameLibrary.Visual
         }
 
         public override FadingLabel Clone()
-         => new FadingLabel(Font, Color, Location, text, Origin, Rotation, Effect, Scale, Depth, lifeTimer.TotalMillies);
+        {
+            var copy = new FadingLabel();
+            CloneLogic(copy);
+            return copy;
+        }
+
+        public void CloneLogic(FadingLabel copy)
+        {
+            copy.lifeTimer = lifeTimer;
+            copy.fading = fading;
+            base.CloneLogic(copy);
+        }
 
         public override void Update(GameTime gameTime)
         {
@@ -56,9 +64,9 @@ namespace BaseGameLibrary.Visual
     public abstract class LabelBase : VisualObject
     {
         protected string text;
-        public SpriteFont Font { get; }
+        public SpriteFont Font { get; private set; }
 
-
+        protected LabelBase() { }
         public LabelBase(SpriteFont font, Color color, Vector2 location, string text, bool middle = false)
             : this(font, color, location, text, middle ? font.MeasureString(text) / 2 : Vector2.Zero) { }
         public LabelBase(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin)
@@ -72,6 +80,13 @@ namespace BaseGameLibrary.Visual
             Font = font;
         }
 
+        public override abstract LabelBase Clone();
+
+        public void CloneLogic(LabelBase copy)
+        {
+            copy.text = text;
+            copy.Font = Font;
+        }
 
         public virtual void Text(string text)
         {
@@ -102,6 +117,11 @@ namespace BaseGameLibrary.Visual
             return text;
         }
 
+        public virtual string ActualText()
+        {
+            return text;
+        }
+
         public virtual LabelBase Add(string newWord)
         {
             text += newWord;
@@ -125,10 +145,11 @@ namespace BaseGameLibrary.Visual
 
     }
 
-    public class Label : LabelBase, IGameObject<Label>
+    public sealed class Label : LabelBase, IGameObject<Label>
     {
+        private Label() { }
         public Label(SpriteFont font, Color color, Vector2 location, string text, bool middle = false)
-    : this(font, color, location, text, middle ? font.MeasureString(text) / 2 : Vector2.Zero) { }
+            : this(font, color, location, text, middle ? font.MeasureString(text) / 2 : Vector2.Zero) { }
         public Label(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin)
             : this(font, color, location, text, Origin, 1) { }
         public Label(SpriteFont font, Color color, Vector2 location, string text, Vector2 Origin, float Scale)
@@ -137,7 +158,11 @@ namespace BaseGameLibrary.Visual
             : base(font, color, location, text, Origin, Rotation, Effect, Scale, Depth) { }
 
         public override Label Clone()
-            => new Label(Font, Color, Location, text, Origin, Rotation, Effect, Scale, Depth);
+        {
+            var copy = new Label();
+            CloneLogic(copy);
+            return copy;
+        }
 
         public static Label operator +(Label me, string newWord)
             => (Label)me.Add(newWord);
@@ -145,17 +170,12 @@ namespace BaseGameLibrary.Visual
             => (Label)me.Add(newWord);
     }
 
-    public class ValueLabel : LabelBase, IGameObject<ValueLabel>
+    public abstract class ValueLabelBase : LabelBase, IGameObject<ValueLabelBase>
     {
         string infoText;
 
-        public ValueLabel(SpriteFont font, Color color, Vector2 location, string text, string infoText, bool middle = false)
-            : this(font, color, location, text, infoText, middle ? font.MeasureString(text) / 2 : Vector2.Zero) { }
-        public ValueLabel(SpriteFont font, Color color, Vector2 location, string text, string infoText, Vector2 Origin)
-            : this(font, color, location, text, infoText, Origin, 1) { }
-        public ValueLabel(SpriteFont font, Color color, Vector2 location, string text, string infoText, Vector2 Origin, float Scale)
-            : this(font, color, location, text, infoText, Origin, 0, SpriteEffects.None, Scale, 1) { }
-        public ValueLabel(SpriteFont font, Color color, Vector2 location, string text, string infoText, Vector2 Origin, float Rotation, SpriteEffects Effect, float Scale, float Depth)
+        protected ValueLabelBase() { }
+        public ValueLabelBase(SpriteFont font, Color color, Vector2 location, string text, string infoText, Vector2 Origin, float Rotation, SpriteEffects Effect, float Scale, float Depth)
         : base(font, color, location, text, Origin, Rotation, Effect, Scale, Depth)
         {
             this.infoText = infoText;
@@ -165,13 +185,114 @@ namespace BaseGameLibrary.Visual
         {
             text = infoText + newText;
         }
+        public override string ActualText()
+        {
+            var returnString = "";
+            for (int i = infoText.Length; i < text.Length; i++)
+            {
+                returnString += text[i];
+            }
+            return returnString;
+        }
+
+        public abstract override ValueLabelBase Clone();
+        
+        public void CloneLogic(ValueLabelBase copy)
+        {
+            copy.infoText = infoText;
+            base.CloneLogic(copy);
+        }
+
+        public static ValueLabelBase operator +(ValueLabelBase me, string newWord)
+            => (ValueLabelBase)me.Add(newWord);
+        public static ValueLabelBase operator +(ValueLabelBase me, LabelBase newWord)
+            => (ValueLabelBase)me.Add(newWord);
+    }
+
+    public sealed class ValueLabel : ValueLabelBase
+    {
+        private ValueLabel() { }
+        public ValueLabel(SpriteFont font, Color color, Vector2 location, string text, string infoText, bool middle = false)
+            : this(font, color, location, text, infoText, middle ? font.MeasureString(text) / 2 : Vector2.Zero) { }
+        public ValueLabel(SpriteFont font, Color color, Vector2 location, string text, string infoText, Vector2 Origin)
+            : this(font, color, location, text, infoText, Origin, 1) { }
+        public ValueLabel(SpriteFont font, Color color, Vector2 location, string text, string infoText, Vector2 Origin, float Scale)
+            : this(font, color, location, text, infoText, Origin, 0, SpriteEffects.None, Scale, 1) { }
+        public ValueLabel(SpriteFont font, Color color, Vector2 location, string text, string infoText, Vector2 Origin, float Rotation, SpriteEffects Effect, float Scale, float Depth)
+            : base(font, color, location, text, infoText, Origin, Rotation, Effect, Scale, Depth) { }
 
         public override ValueLabel Clone()
-            => new ValueLabel(Font, Color, Location, text, infoText, Origin, Rotation, Effect, Scale, Depth);
+        {
+            var copy = new ValueLabel();
+            CloneLogic(copy);
+            Type billy = typeof(float);
+            return copy;
+        }
+    }
 
-        public static ValueLabel operator +(ValueLabel me, string newWord)
-            => (ValueLabel)me.Add(newWord);
-        public static ValueLabel operator +(ValueLabel me, LabelBase newWord)
-            => (ValueLabel)me.Add(newWord);
+    public class LabelParser<T> : IGameObject<LabelParser<T>>
+    {
+        public LabelBase Label { get; private set; }
+
+        public ParserBase<T> Parser { get; private set; }
+        string oldText;
+
+        private LabelParser() { }
+        public LabelParser(Label label, ParserBase<T> parser)
+        {
+            Label = label;            
+            Parser = parser;
+            oldText = parser.value.ToString();
+            if (Parser.Parse(label.ActualText()))
+            {
+                oldText = label.ActualText();
+            }
+            label.Text(oldText);
+        }
+
+        #region clone
+
+        public LabelParser<T> Clone()
+        {
+            var copy = new LabelParser<T>();
+            CloneLogic(copy);
+            return copy;
+        }
+
+        public void CloneLogic(LabelParser<T> copy)
+        {
+            copy.Parser = Parser.Clone();
+            copy.Label = Label.Clone();
+            copy.oldText = (string)oldText.Clone();
+        }
+
+        #endregion
+
+        public void Parse()
+        {
+            var text = Label.ActualText();
+            if (Parser.Parse(text))
+            {
+                oldText = text;
+            }
+            Revert();
+        }
+
+        public void Revert()
+        {
+            Label.Text(oldText);
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            Label.Update(gameTime);
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            Label.Draw(spriteBatch);
+        }
+
+        
     }
 }

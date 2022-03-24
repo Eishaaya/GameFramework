@@ -21,7 +21,7 @@ namespace BaseGameLibrary
         ButtonBase applyButt;
         ButtonBase menuButt;
         //List<Button> bindButtons;
-        List<ValueLabel> bindLabels;
+        List<ValueLabelBase> bindLabels;
         List<Setting> defaults;
         List<Setting> arrows;
         //List<string> keyTypes;
@@ -34,7 +34,7 @@ namespace BaseGameLibrary
             : base(effect)
         {
             toggles = new List<Toggler>();
-            bindLabels = new List<ValueLabel>();            
+            bindLabels = new List<ValueLabelBase>();            
             applyButt = ap;
             defaults = dk;
             arrows = ak;

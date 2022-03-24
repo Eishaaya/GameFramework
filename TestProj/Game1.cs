@@ -100,6 +100,8 @@ namespace TestProj
 
         protected override void LoadContent()
         {
+            int bobus = 69;
+            int.TryParse("10", out bobus);
             Label label = new Label(null, Color.Wheat, Vector2.Zero, "Fard");
             Label label2 = new Label(null, Color.Wheat, Vector2.Zero, "shid");
             label2 += label;
