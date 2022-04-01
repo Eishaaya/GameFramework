@@ -11,7 +11,7 @@ namespace BaseGameLibrary.Visual
     public abstract class SpriteBase : VisualObject
     {
         public Texture2D Image { get; set; }
-        public virtual Rectangle Hitbox
+        public override Rectangle Hitbox
         {
             get
             {

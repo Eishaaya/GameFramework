@@ -278,7 +278,7 @@
   <Class Name="BaseGameLibrary.Inputs.InputExtensions" Collapsed="true">
     <Position X="37.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIQEBABASABgAAggAADAEAAAAgIAAAARQAgAAAACCQ=</HashCode>
+      <HashCode>AAIQEBABASABgAAggCADAEAAAAgIAAAARQAgAAAACCQ=</HashCode>
       <FileName>Inputs\InputExtensions.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -439,13 +439,6 @@
       <FileName>Visual\FrameObject.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseGameLibrary.Visual.InputButton&lt;T, TInput&gt;" Collapsed="true">
-    <Position X="6" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAgAEAAAAgAAAAAAAAAAAAAAABAAAACAAAAAABA=</HashCode>
-      <FileName>Visual\InputButton.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="BaseGameLibrary.Visual.FadingLabel" Collapsed="true">
     <Position X="21.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
@@ -457,7 +450,7 @@
   <Class Name="BaseGameLibrary.Visual.LabelBase" Collapsed="true">
     <Position X="24" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAYACAAAAAAAAgAIQAAAAAAAAAAAAAAIAAAACAACABA=</HashCode>
+      <HashCode>AAYACAAAAAAEAgAIQAAAAAAAAAAAAAAIAAAACAACABA=</HashCode>
       <FileName>Visual\Label.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -553,7 +546,7 @@
   <Class Name="BaseGameLibrary.Visual.VisualObject" Collapsed="true">
     <Position X="13.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AESICAEAAAgBApABBAJABAAAEAEAKABogAQAgCggABA=</HashCode>
+      <HashCode>AESICAEAAAgFApABBAJABAAAEAEAKABogAQAgCggABA=</HashCode>
       <FileName>Visual\VisualObject.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -568,7 +561,7 @@
   <Class Name="BaseGameLibrary.Visual.StringParser" Collapsed="true">
     <Position X="2.75" Y="10.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
       <FileName>Visual\Parsers.cs</FileName>
     </TypeIdentifier>
   </Class>

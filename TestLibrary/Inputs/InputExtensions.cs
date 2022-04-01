@@ -1,12 +1,22 @@
 ﻿using Microsoft.Xna.Framework.Input;
 
 using System;
+using System.Collections.Generic;
 
 namespace BaseGameLibrary.Inputs
 {
+
     public static class InputExtensions
     {
         //Combiner Funcs
+        [Flags]
+        public enum LayoutType
+        {
+            Restrict = 1, 
+            ScaleToLabel = 2,
+            AutoNewLine = 4,
+        }
+
         public enum ControlType
         {
             OR,
@@ -159,5 +169,25 @@ namespace BaseGameLibrary.Inputs
             => new DigitalStateComponent();
         public static InputStateComponent AnalogState
             => new AnalogStateComponent();
+
+        public static Dictionary<TInput, Action<InputButton<T, TInput>>> GenerateInputs<T, TInput>(TInput[] cancel, TInput[] ready, params (TInput input, char value)[] keys) where TInput : Enum
+        {
+            var inputs = new Dictionary<TInput, Action<InputButton<T, TInput>>>();
+            foreach (var command in cancel)
+            {
+                inputs.Add(command, InputButton<T, TInput>.Cancel);
+            }
+            foreach (var command in ready)
+            {
+                inputs.Add(command, InputButton<T, TInput>.Ready);
+            }
+            foreach (var key in keys)
+            {
+                inputs.Add(key.input, m => m.InputCandidates.Add(
+                          (key.value, (int)InputManager<TInput>.Instance[key.input])));
+            }
+            return inputs;
+        }
+
     }
 }

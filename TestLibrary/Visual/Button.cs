@@ -29,7 +29,7 @@ namespace BaseGameLibrary.Visual
             ClickedColor = clickedcolor;
             NormalColor = color;
            // Hold = false;
-            PrevDown = false;
+            PrevDown = false;                      
         }
 
         #region clone
@@ -48,17 +48,35 @@ namespace BaseGameLibrary.Visual
 
         #endregion
 
-        public virtual bool Check(CursorRoot cursor, int threshold = 2)
+        ///<summary>
+        ///Checks if the button has been clicked using the cursor, also coloring
+        ///</summary>
+        public bool Check(CursorRoot cursor, out bool Pressed, int threshold = 2)
+            => Check(cursor, out Pressed, (CursorRoot.ClickStatus)threshold);
+        ///<summary>
+        ///Checks if the button has been clicked using the cursor, also coloring
+        ///</summary>
+        public bool Check(CursorRoot cursor, int threshold = 2)
+            => Check(cursor, (CursorRoot.ClickStatus)threshold);
+        ///<summary>
+        ///Checks if the button has been clicked using the cursor, also coloring
+        ///</summary>
+        public virtual bool Check(CursorRoot cursor, CursorRoot.ClickStatus threshold = CursorRoot.ClickStatus.Held)
+            => Check(cursor, out _, threshold);
+        ///<summary>
+        ///Checks if the button has been clicked using the cursor, also coloring
+        ///</summary>
+        public virtual bool Check(CursorRoot cursor, out bool Pressed, CursorRoot.ClickStatus threshold = CursorRoot.ClickStatus.Held)
         {
-            var click = (int)cursor.Clicked(this, ChosenClick);
+            var click = cursor.Clicked(this, ChosenClick);
+            Pressed = click > threshold;
             if (click > 0)
             {
-                var good = click > threshold;
-                if (good || (PrevDown && cursor.Held))
+                if (Pressed || (PrevDown && cursor.Held))
                 {
                     Color = ClickedColor;
                     PrevDown = true;
-                    return good;
+                    return Pressed;
                 }
                 PrevDown = cursor.Held;
                 Color = HoverColor;
@@ -67,7 +85,9 @@ namespace BaseGameLibrary.Visual
             Color = NormalColor;
             return false;
         }
-
+        ///<summary>
+        ///A direct and manual check for if the button has been clicked, and coloring!
+        ///</summary>
         public virtual bool Check(Vector2 cursor, bool isclicked)
         {
             if (Hitbox.Contains(cursor))

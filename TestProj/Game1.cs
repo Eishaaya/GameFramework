@@ -14,8 +14,6 @@ using BaseGameLibrary.Visual;
 
 namespace TestProj
 {
-
-
     public class Game1 : Game //COMMENT TO LET ME COMMIT
     {
         //InputManager<Binds> manager;
@@ -60,7 +58,7 @@ namespace TestProj
 
         MouseControl clicked = new MouseControl(new ParamFunc<MouseState, BoolInt>(m => m.LeftButton == ButtonState.Pressed, Mouse.GetState()), new DigitalStateComponent());
 
-
+        InputButton<string, Binds> inputButton;
 
         Sequence sequence;
 
@@ -153,6 +151,11 @@ namespace TestProj
                 new Rectangle(72, 0, 71, 103),
                 new Rectangle(143, 0, 73, 103)
             }), 50, false, false));
+
+            inputButton = new InputButton<string, Binds>(Content.Load<Texture2D>("unkown"), new Vector2(300), Vector2.Zero, 1, 
+                                                        new LabelParser<string>(new Label(test.Font, Color.White, new Vector2(300), "hullo"), new StringParser("")), 
+                                                        InputExtensions.GenerateInputs<string, Binds>(new Binds[] { Binds.Alt }, );
+
 
             test = new Label(Content.Load<SpriteFont>("File"), Color.Wheat, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), "Shid & fard", true);
             // timer = new Timer(5000);

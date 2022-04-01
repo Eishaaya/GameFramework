@@ -40,6 +40,9 @@ namespace BaseGameLibrary.Visual
             base.CloneLogic(copy);
         }
 
+        ///<summary>
+        ///Waits, then fades the FadingLabel
+        ///</summary>
         public override void Update(GameTime gameTime)
         {
             if (!fading)
@@ -66,6 +69,8 @@ namespace BaseGameLibrary.Visual
         protected string text;
         public SpriteFont Font { get; private set; }
 
+        public override Rectangle Hitbox => new Rectangle(Location.ToPoint(), Font.MeasureString(Text()).ToPoint());
+
         protected LabelBase() { }
         public LabelBase(SpriteFont font, Color color, Vector2 location, string text, bool middle = false)
             : this(font, color, location, text, middle ? font.MeasureString(text) / 2 : Vector2.Zero) { }
@@ -88,48 +93,85 @@ namespace BaseGameLibrary.Visual
             copy.Font = Font;
         }
 
+        ///<summary>
+        ///Sets the text of the Label equal to a new string
+        ///</summary>
         public virtual void Text(string text)
         {
             this.text = text;
         }
+        ///<summary>
+        ///Sets the text of the Label equal to a rounded double
+        ///</summary>
         public void Text(double number, int maxDigits = 0)
         {
             Text(Math.Round(number, maxDigits).ToString());
         }
-
+        ///<summary>
+        ///Sets the text of the Label to display a rounded coordinate
+        ///</summary>
         public void Text(Vector2 coordinate, int maxDigits = 0)
         {
             Text($"({Math.Round(coordinate.X, maxDigits)}, {Math.Round(coordinate.Y, maxDigits)})");
         }
-
+        ///<summary>
+        ///Sets the text of the Label to display the dimensions of a rectangle
+        ///</summary>
         public void Text(Rectangle box)
         {
             Text($"({box.X}, {box.Y}, {box.Width}, {box.Height})");
         }
 
+        ///<summary>
+        ///Sets the text of the Label equal to a key
+        ///</summary>
         public void Text(Keys key)
         {
             Text($"{key}");
         }
 
+        ///<summary>
+        ///Returns the text of the Label
+        ///</summary>
         public string Text()
         {
             return text;
         }
 
+        ///<summary>
+        ///Returns the text of the Label
+        ///</summary>
         public virtual string ActualText()
         {
             return text;
         }
 
+        ///<summary>
+        ///Adds a new character to the end of the Label
+        ///</summary>
+        public virtual LabelBase Add(char newLetter)
+        {
+            text += newLetter;
+            return this;
+        }
+        ///<summary>
+        ///Adds a new string to the end of the Label
+        ///</summary>
         public virtual LabelBase Add(string newWord)
         {
             text += newWord;
             return this;
         }
+        ///<summary>
+        ///Adds the text of another label to the end of the Label
+        ///</summary>
         public LabelBase Add(LabelBase newWord)
             => Add(newWord.Text());
 
+        public static LabelBase operator +(LabelBase me, int newNumber)
+            => me.Add(newNumber.ToString());
+        public static LabelBase operator +(LabelBase me, char newLetter)
+            => me.Add(newLetter);
         public static LabelBase operator +(LabelBase me, string newWord)
             => me.Add(newWord);
         public static LabelBase operator +(LabelBase me, LabelBase newWord)
@@ -251,7 +293,9 @@ namespace BaseGameLibrary.Visual
         }
 
         #region clone
-
+        ///<summary>
+        ///Provides a shallow clone of the LabelParser
+        ///</summary>
         public LabelParser<T> Clone()
         {
             var copy = new LabelParser<T>();
@@ -268,6 +312,11 @@ namespace BaseGameLibrary.Visual
 
         #endregion
 
+        ///<summary>
+        ///Parses the new text. If it succeeds, 
+        ///the old text is updated and the new text is kept, 
+        ///otherwise it reverts to the old text 
+        ///</summary>
         public void Parse()
         {
             var text = Label.ActualText();
@@ -278,16 +327,24 @@ namespace BaseGameLibrary.Visual
             Revert();
         }
 
+        ///<summary>
+        ///Changes the text of the Label to the old text
+        ///</summary>
         public void Revert()
         {
             Label.Text(oldText);
         }
 
+        ///<summary>
+        ///Runs label Update
+        ///</summary>
         public void Update(GameTime gameTime)
         {
             Label.Update(gameTime);
         }
-
+        ///<summary>
+        ///Draws the label to the screen
+        ///</summary>
         public void Draw(SpriteBatch spriteBatch)
         {
             Label.Draw(spriteBatch);

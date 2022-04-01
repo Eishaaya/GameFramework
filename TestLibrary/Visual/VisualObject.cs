@@ -49,6 +49,8 @@ namespace BaseGameLibrary.Visual
         public Color OriginalColor { get; set; }
         public bool Visible { get; set; }
 
+        public abstract Rectangle Hitbox { get; }
+
         protected VisualObject() { }
         public VisualObject(Vector2 location, Color color, Vector2 origin, float Rotation, SpriteEffects Effect, float scale, float depth, bool visible = true)
         {
@@ -74,6 +76,10 @@ namespace BaseGameLibrary.Visual
         }
 
         #region clone
+
+        ///<summary>
+        ///Copies over all the internal data over to the clone
+        ///</summary>
         protected void CloneLogic(VisualObject copy)
         {
             copy.Location = Location;
@@ -98,12 +104,22 @@ namespace BaseGameLibrary.Visual
             copy.totalColorDistance = totalColorDistance;
             copy.moved = moved;
         }
-
+        ///<summary>
+        ///Returns a shallow copy of the Visual Object
+        ///</summary>
         public abstract VisualObject Clone();
 
         #endregion
 
         #region visualFunctions
+
+        ///<summary>
+        ///Vibrates the object between a point and its original position
+        ///</summary>
+        ///<param name="distance">How far away the VisualObject vibrates to</param>
+        ///<param name="sped">How fast the VisualObject moves</param>
+        ///<param name="rando">Determines if the point the VisualObject vibrates to is randomly generated</param>
+
         public bool Vibrate(int distance, float sped, bool rando = true)
         {
             if (float.IsNaN(spotSet.X))
@@ -140,6 +156,12 @@ namespace BaseGameLibrary.Visual
             }
             return false;
         }
+        ///<summary>
+        ///Pulsates the VisualObject between a point and its original position
+        ///</summary>
+        ///<param name="size">How large the VisualObject grows/shrinks to</param>
+        ///<param name="sped">How fast the VisualObject scales</param>
+        ///<param name="rando">Determines if the size the VisualObject scales to is randomly generated</param>
         public bool Pulsate(int size, float sped, bool rando = true)
         {
             if (float.IsNaN(sizeSet))
@@ -339,8 +361,13 @@ namespace BaseGameLibrary.Visual
             }
             return false;
         }
-
+        ///<summary>
+        ///Updates the VisualObject
+        ///</summary>
         public abstract void Update(GameTime gameTime);
+        ///<summary>
+        ///Draws the visual object to the screen
+        ///</summary>
         public abstract void Draw(SpriteBatch spriteBatch);
         #endregion
     }
