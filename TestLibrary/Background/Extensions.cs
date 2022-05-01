@@ -14,7 +14,7 @@ namespace BaseGameLibrary
     public static class Extensions
     {
 
-        public static Random random = new Random();
+        public static Random random = new();
 
 
         //Wrapping for sequence

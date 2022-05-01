@@ -92,7 +92,7 @@ namespace BaseGameLibrary.Visual
                 if (clickActions.ContainsKey(checkedClick))
                 {
                     Button.ChosenClick = (CursorRoot.Info)checkedClick;
-                    if (Button.Check(cursor))
+                    if (Button.Check(cursor, 2))
                     {
                         clickActions[checkedClick].Call();
                     }

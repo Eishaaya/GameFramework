@@ -60,8 +60,7 @@ namespace BaseGameLibrary.Inputs
 
         public override BoolInt PressLogic(KeyboardState ks, MouseState ms, JoystickState js)
         {
-            myClick.Parameter1 = ms;
-            return myClick.Call();
+            return myClick.Call(ms);
         }
     }
 
