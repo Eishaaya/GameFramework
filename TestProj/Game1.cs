@@ -154,7 +154,7 @@ namespace TestProj
 
             inputButton = new InputButton<string, Binds>(Content.Load<Texture2D>("unkown"), new Vector2(300), Vector2.Zero, 1, 
                                                         new LabelParser<string>(new Label(test.Font, Color.White, new Vector2(300), "hullo"), new StringParser("")), 
-                                                        InputExtensions.GenerateInputs<string, Binds>(new Binds[] { Binds.Alt }, );
+                                                        InputExtensions.GenerateInputs<string, Binds>(new Binds[] { Binds.Alt }, new Binds[] { Binds.Down }, (Binds.F, 'F'))); //HERE
 
 
             test = new Label(Content.Load<SpriteFont>("File"), Color.Wheat, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), "Shid & fard", true);
@@ -248,6 +248,7 @@ namespace TestProj
 
 
             // test.Draw(spriteBatch);
+            inputButton.Draw(spriteBatch);
             screen.Draw(spriteBatch);
             AnimatedCursor<Binds>.Instance.Draw(spriteBatch);
             spriteBatch.End();
