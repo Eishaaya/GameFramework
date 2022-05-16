@@ -118,6 +118,9 @@ namespace TestProj
             bob = bobby;
             ;
 
+
+            IParamAction iLiterallyDoNotKnow = new ParamFunc<int, int, int, int, int, int, bool>(null, 1, 1, 1, 1 ,1 ,1);
+
             Dictionary<Binds, InputControl> idkName = new Dictionary<Binds, InputControl>()
             {
                 [Binds.Alt] = new KeyControl(Keys.LeftAlt, new DigitalStateComponent()),
