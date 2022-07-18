@@ -96,9 +96,13 @@ namespace TestProj
 
         }
 
+        static void Stuff<T>(T stuffTODO)
+        {
 
+        }
         protected override void LoadContent()
         {
+
             int bobus = 69;
             int.TryParse("10", out bobus);
             Label label = new Label(null, Color.Wheat, Vector2.Zero, "Fard");
@@ -169,9 +173,11 @@ namespace TestProj
 
             var karan = new Sprite(Content.Load<Texture2D>("BiggestTile"), new Vector2(400), new Vector2(100), 1f);
 
+            Stuff(5);
+
             sequence = new Sequence();
             sequence.AttachSequence(
-                new ParamFunc<Label, ColorNums, bool>(FadeTo, test, ColorNums.Red),
+                new ParamFunc<ColorNums, int, bool>(test.FadeTo, ColorNums.Red, 5),
                 new ParamFunc<Label, Color, float, bool>(ChangeColor, test, Color.White, .1f),
                 new ParamFunc<Label, ColorNums, bool>(FadeTo, test, ColorNums.Green),
                 new ParamFunc<Label, int, float, bool, bool>(Pulsate, test, 150, .1f, false),
