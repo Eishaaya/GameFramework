@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace BaseGameLibrary.Inputs
 {
 
-    public static class InputExtensions
+    public static partial class Extensions
     {
         //Combiner Funcs
         [Flags]

@@ -9,7 +9,7 @@ using System;
 using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 using BaseGameLibrary.Inputs;
-using static BaseGameLibrary.Inputs.InputExtensions;
+using static BaseGameLibrary.Inputs.Extensions;
 using BaseGameLibrary.Visual;
 
 namespace TestProj
@@ -96,7 +96,7 @@ namespace TestProj
 
         }
 
-        static void Stuff<T>(T stuffTODO)
+        static void Stuff(int a)
         {
 
         }
@@ -164,9 +164,12 @@ namespace TestProj
 
 
             inputButton = new InputButton<string, Binds>(Content.Load<Texture2D>("unknown"), new Vector2(300), Vector2.Zero, 1, 
-                                                        new LabelParser<string>(new Label(test.Font, Color.White, new Vector2(300), "hullo"), new StringParser("")), 
-                                                        InputExtensions.GenerateInputs<string, Binds>(new Binds[] { Binds.Alt }, new Binds[] { Binds.Down }, (Binds.F, 'F'))); //HERE
+                                                        new LabelParser<string>(new Label(test.Font, Color.White, new Vector2(300), "hullo"), new StringParser("")),
+                                                        BaseGameLibrary.Inputs.Extensions.GenerateInputs<string, Binds>(new Binds[] { Binds.Alt }, new Binds[] { Binds.Down }, (Binds.F, 'F'))); //HERE
 
+
+
+            var plz = GetParamAction(Stuff, 1);
 
             // timer = new Timer(5000);
             spriteBatch = new SpriteBatch(GraphicsDevice);

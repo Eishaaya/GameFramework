@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BaseGameLibrary
 {
-    public static class Extensions
+    public static partial class Extensions
     {
 
         public static Random random = new();

@@ -304,7 +304,7 @@ namespace BaseGameLibrary
 
     public abstract class ParamActionBase<T1, T2> : ParamActionBase<T1>, IParamAction<T1, T2>
     {
-        protected T2 parameter2;
+        protected T2 parameter2;        
 
         protected ParamActionBase(T1 par1, T2 par2)
             : base(par1)

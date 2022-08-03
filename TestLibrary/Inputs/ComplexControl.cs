@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 
-using static BaseGameLibrary.Inputs.InputExtensions;
+using static BaseGameLibrary.Inputs.Extensions;
 
 namespace BaseGameLibrary.Inputs
 {
