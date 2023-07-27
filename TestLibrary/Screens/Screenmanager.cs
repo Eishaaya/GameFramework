@@ -1,65 +1,42 @@
-﻿using BaseGameLibrary.Inputs;
-
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BaseGameLibrary
 {
-    public class Screenmanager
+    public class Screenmanager<TScreenum> where TScreenum : Enum
     {
-        CursorRoot cursor;
-        public Dictionary<Setting, HashSet<Screen>> screenSettings { get; } = new Dictionary<Setting, HashSet<Screen>>();
-        public Screen CurrentScreen => activeScreens.Peek();
+        public CursorRoot Cursor { get; set; }
 
-        Stack<Screen> activeScreens; 
-        List<Screen> allScreens;
-        public Stack<Screen> PreviousScreens { get; private set; }
-        public bool BindsChanged { get; set; }
-        public Screenmanager(List<Screen> screens, CursorRoot mouse)
-        {
-            cursor = mouse;
-            activeScreens = new Stack<Screen>();
-            allScreens = screens;
-            activeScreens.Push(allScreens[0]);
-            PreviousScreens = new Stack<Screen>();
-            CurrentScreen.Start();
-        }
+        GameTime gameTime;
+        public TimeSpan DeltaTime => gameTime.ElapsedGameTime;
+        public TimeSpan TotalTime => gameTime.TotalGameTime;
+        
+        public IScreen CurrentScreen => activeScreens.Peek();
+
+        Stack<IScreen> activeScreens;
+        Dictionary<TScreenum, IScreen> allScreens;
+        public Stack<IScreen> PreviousScreens { get; private set; }
+        public static Screenmanager<TScreenum> Instance { get; } = new();
+        private Screenmanager() { }
         //public Screen Peek()
         //{
         //    return CurrentScreen;
         //}
-
-        public void GiveSettings(HashSet<Setting> settings, Screen screen)
+        public void Init(CursorRoot mouse, params (TScreenum key, IScreen)[] screens)
         {
-            foreach (var setting in settings)
-            {
-                if (screenSettings.ContainsKey(setting))
-                {
-                    screenSettings[setting].Add(screen);
-                }
-                else
-                {
-                    screenSettings.Add(setting, new HashSet<Screen>() { screen });
-                }
-
-                screen.AddSetting(setting);
-            }
+            Cursor = mouse;
+            activeScreens = new Stack<IScreen>();
+            allScreens = screens.ToDictionary(m => m.Item1, m => m.Item2);
+            activeScreens.Push(screens[0].screen);
+            PreviousScreens = new Stack<IScreen>();
+            CurrentScreen.Start();
         }
 
-        public void ChangeSetting(Setting changedSetting)
-        {
-            var changingScreens = screenSettings[changedSetting];
-            foreach (var screen in changingScreens)
-            {
-                screen.ChangeSetting(changedSetting);
-            }
-        }
 
-        public void Back()
+
+    public void Back()
         {
             activeScreens.Pop().StopMusic();
             if (activeScreens.Count > 0)
@@ -80,7 +57,7 @@ namespace BaseGameLibrary
             CurrentScreen.heldMouse = true;
             CurrentScreen.Start();
         }
-        public void Next(int index, bool replace)
+        public void Next(TScreenum choice, bool replace)
         {
             if (replace)
             {
@@ -91,12 +68,12 @@ namespace BaseGameLibrary
                     CurrentScreen.StopMusic();
                     activeScreens.Clear();
                 }
-                activeScreens.Push(allScreens[index]);
+                activeScreens.Push(allScreens[choice]);
             }
             else
             {
                 PreviousScreens.Push(CurrentScreen);
-                activeScreens.Push(allScreens[index]);
+                activeScreens.Push(allScreens[choice]);
             }
             CurrentScreen.heldMouse = true;
             CurrentScreen.Start();
@@ -107,7 +84,8 @@ namespace BaseGameLibrary
         }
         public void Update(GameTime time)
         {
-            Stack<Screen> drawScreens = new Stack<Screen>();
+            gameTime = time;
+            Stack<IScreen> drawScreens = new();
             while (activeScreens.Count > 0)
             {
                 drawScreens.Push(activeScreens.Pop());
@@ -117,12 +95,12 @@ namespace BaseGameLibrary
             {
                 activeScreens.Push(drawScreens.Pop());
             }
-            CurrentScreen.Update(time, this, cursor);
+            CurrentScreen.Update(time);
         }
 
         public void Draw(SpriteBatch batch)
         {
-            Stack<Screen> drawScreens = new Stack<Screen>();
+            Stack<IScreen> drawScreens = new ();
             while (activeScreens.Count > 0)
             {
                 drawScreens.Push(activeScreens.Pop());

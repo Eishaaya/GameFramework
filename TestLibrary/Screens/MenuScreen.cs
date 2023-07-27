@@ -15,7 +15,7 @@ using static BaseGameLibrary.Visual.ActionButton;
 
 namespace BaseGameLibrary
 {
-    class MenuScreen : Screen
+    class MenuScreen : ScreenBase
     {
         ButtonBase chrisIsAPoopyHead;
         ButtonBase Unlimited;

@@ -25,10 +25,10 @@ namespace BaseGameLibrary
         public static bool Rotate(VisualObject me, float target, float sped, bool rando) => me.Rotate(target, sped, rando);
         public static bool Fade(VisualObject me, int speed) => me.Fade(speed);
         public static bool Fade(VisualObject me, Color tint, int speed) => me.Fade(tint, speed);
-        public static bool Wait(Sequence waiter, int time)
-        {
-            return waiter.Wait(time);
-        }
+        //public static bool Wait(Sequence waiter, int time)
+        //{
+        //    return waiter.Wait(time);
+        //}
 
         public static Vector2 GetDimensions(this LabelBase label) => label.Font.MeasureString(label.Text());
 

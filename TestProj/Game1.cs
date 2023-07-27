@@ -179,7 +179,7 @@ namespace TestProj
             Stuff(5);
 
             sequence = new Sequence();
-            sequence.AttachSequence(
+            sequence.AssignTasks(
                 new ParamFunc<ColorNums, int, bool>(test.FadeTo, ColorNums.Red, 5),
                 new ParamFunc<Label, Color, float, bool>(ChangeColor, test, Color.White, .1f),
                 new ParamFunc<Label, ColorNums, bool>(FadeTo, test, ColorNums.Green),

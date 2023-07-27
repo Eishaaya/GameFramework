@@ -14,7 +14,7 @@ using static BaseGameLibrary.Visual.ActionButton;
 
 namespace BaseGameLibrary
 {
-    class SettingsScreen : Screen
+    class SettingsScreen : ScreenBase
     {
         ButtonBase defaltButt;
         ButtonBase arrowButt;

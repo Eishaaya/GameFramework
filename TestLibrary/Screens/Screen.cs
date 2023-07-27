@@ -14,96 +14,7 @@ using static BaseGameLibrary.Visual.ActionButton;
 
 namespace BaseGameLibrary
 {
-    //Magic stan APPROVED
-    [StructLayout(LayoutKind.Explicit)]
-    public struct Setting
-    {
-        public enum Types : byte
-        {
-            BoolValue,
-            FloatValue,
-            KeyValue,
-            IntValue
-        }
 
-        [FieldOffset(0)]
-        public int ID;
-
-        [FieldOffset(1)]
-        public Types Type;
-
-        [FieldOffset(2)]
-        public bool BoolValue;
-
-        [FieldOffset(2)]
-        public float FloatValue;
-
-        [FieldOffset(2)]
-        public Keys KeyValue;
-
-        [FieldOffset(2)]
-        public int IntValue;
-
-        [FieldOffset(3)]
-        public int oldValue;
-
-
-        #region bob the builder
-        public Setting(int ID, Types myType, int value)
-            : this(ID, myType)
-        {
-            IntValue = value;
-            oldValue = IntValue;
-        }
-
-        public Setting(int ID, Types myType, float value)
-            : this(ID, myType)
-        {
-            FloatValue = value;
-            oldValue = IntValue;
-        }
-
-        public Setting(int ID, Types myType, bool value)
-            : this(ID, myType)
-        {
-            BoolValue = value;
-            oldValue = IntValue;
-        }
-
-        public Setting(int ID, Types myType, Keys value)
-            : this(ID, myType)
-        {
-            KeyValue = value;
-            oldValue = IntValue;
-        }
-
-        public Setting(int ID, Types myType)
-        {
-            this.ID = ID;
-            Type = myType;
-
-            KeyValue = Keys.None;
-            BoolValue = false;
-            FloatValue = 0;
-            IntValue = 0;
-            oldValue = 0;
-        }
-        #endregion
-
-        public void Revert()
-        {
-            IntValue = oldValue;
-        }
-        public void UpdateValue()
-        {
-            oldValue = IntValue;
-        }
-
-        public static explicit operator bool (Setting setting) => setting.BoolValue;
-        public static explicit operator float(Setting setting) => setting.FloatValue;
-        public static explicit operator Keys(Setting setting) => setting.KeyValue;
-        public static explicit operator int(Setting setting) => setting.IntValue;
-    }
 
 
     enum MyGameInputs
@@ -172,48 +83,54 @@ namespace BaseGameLibrary
     //    }
     //}
 
+    public interface IScreen
+    {
+        public bool DrawBelow { get; }
+        public bool UpdateBelow { get; }
 
-    public class Screen //: IRunnable
-    {        
+        public abstract void Start();
+        public abstract void End();
+        public abstract void Update();
+        public abstract void Draw();
+    }
 
-        public Indextionary<int, Setting> Settings { get; } = new Indextionary<int, Setting>();
-        protected ButtonManager buttonManager;
-        protected AestheticsManager aesthetics;
+    public abstract class ScreenBase<TScreenum, TSoundType> : IScreen where TScreenum : Enum where TSoundType : Enum//: IRunnable
+    {
+
+        //public Indextionary<int, Setting> Settings { get; } = new Indextionary<int, Setting>();
+        protected List<IRunnable> objects;
 
         //Music management
-        public SoundEffectInstance IntroMusic { get; set; }
-        bool introDone;
-        public SoundEffectInstance Music { get; set; }
-        protected bool playMusic;
+        public TSoundType IntroMusic { get; set; }
+        public TSoundType Music { get; set; }
+        public abstract bool DrawBelow { get; }
+        public abstract bool UpdateBelow { get; }
 
         //internal binds
 
-        //Mouse detection        
-        protected MouseState mousy;
-        protected Click[] mouseClicks;
-        public bool heldMouse;
-        protected Vector2 mousePos;
+        ////Mouse detection        
+        //protected MouseState mousy;
+        //protected Click[] mouseClicks;
+        //public bool heldMouse;
+        //protected Vector2 mousePos;
 
-        //Key detection
-        protected bool keysDown = false;
-        protected KeyboardState Idaho;
+        ////Key detection
+        //protected bool keysDown = false;
+        //protected KeyboardState Idaho;
 
 
         //ctors
-        public Screen(IEnumerable<ActionButton> buttons = null, IEnumerable<IRunnable> pretties = null)
-            : this(null, null, buttons, pretties) { }
-        public Screen(SoundEffect m, IEnumerable<ActionButton> buttons = null, IEnumerable<IRunnable>pretties = null)
-            : this(m, null, buttons, pretties) { }
-        public Screen(SoundEffect m, SoundEffect im, IEnumerable<ActionButton> buttons = null, IEnumerable<IRunnable> pretties = null)
-            : this(m, im, new ButtonManager(buttons), new AestheticsManager(pretties)) { }
-        public Screen(SoundEffect m, SoundEffect im, ButtonManager buttons, AestheticsManager pretties)
+        //public Screen(IEnumerable<ActionButton> buttons = null, IEnumerable<IRunnable> pretties = null)
+        //    : this(null, null, buttons, pretties) { }
+        //public Screen(SoundEffect m, IEnumerable<ActionButton> buttons = null, IEnumerable<IRunnable> pretties = null)
+        //    : this(m, null, buttons, pretties) { }
+        //public Screen(SoundEffect m, SoundEffect im, IEnumerable<ActionButton> buttons = null, IEnumerable<IRunnable> pretties = null)
+        //    : this(m, im, new ButtonManager(buttons), new AestheticsManager(pretties)) { }
+        public ScreenBase(SoundEffect m, SoundEffect im, ButtonManager buttons, AestheticsManager pretties)
         {
             buttonManager = buttons ?? new ButtonManager();
             aesthetics = pretties ?? new AestheticsManager();
             playMusic = true;
-            Idaho = new KeyboardState();
-            mousy = new MouseState();
-            mouseClicks = new Click[3];
             Music = null;
             IntroMusic = null;
             if (m != null)
@@ -284,13 +201,13 @@ namespace BaseGameLibrary
             }
             introDone = false;
         }
-        public virtual void Update(GameTime time, Screenmanager manny, CursorRoot cursor)
+        public virtual void Update(GameTime time)
         {
             Play(time);
-          //  CheckKeys();
+            //  CheckKeys();
             heldMouse = false;
-            buttonManager.Update(mousePos, heldMouse, cursor);
-           // CheckMouse();
+            buttonManager.Update(mousePos, heldMouse);
+            // CheckMouse();
         }
 
         protected void CheckKeys()
@@ -361,5 +278,9 @@ namespace BaseGameLibrary
         {
             Settings[setting.ID] = setting;
         }
+
+        public abstract void End();
+        public abstract void Update();
+        public abstract void Draw();
     }
 }

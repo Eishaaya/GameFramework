@@ -114,7 +114,7 @@ namespace BaseGameLibrary.Visual
         {
             game.Exit();
         }
-        public static void Reset(Screen screen)
+        public static void Reset(ScreenBase screen)
         {
             screen.Reset();
         }

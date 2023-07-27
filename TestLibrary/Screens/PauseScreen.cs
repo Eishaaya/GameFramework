@@ -13,7 +13,7 @@ using static BaseGameLibrary.Visual.ActionButton;
 
 namespace BaseGameLibrary
 {
-    class PauseScreen : Screen
+    class PauseScreen : ScreenBase
     {
         ButtonBase menu;
         ButtonBase back;

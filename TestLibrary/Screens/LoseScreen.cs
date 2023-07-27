@@ -14,7 +14,7 @@ using static BaseGameLibrary.Visual.ActionButton;
 
 namespace BaseGameLibrary
 {
-    class LoseScreen : Screen
+    class LoseScreen : ScreenBase
     {
         ButtonBase menu;
         ButtonBase back;

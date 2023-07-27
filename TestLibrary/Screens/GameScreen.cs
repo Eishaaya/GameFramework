@@ -13,7 +13,7 @@ using System.Text;
 
 namespace BaseGameLibrary
 {
-    class GameScreen<TEnum> : Screen where TEnum : Enum 
+    class GameScreen<TEnum> : ScreenBase where TEnum : Enum 
     {
         GameRunner<TEnum> main;
         Random random;

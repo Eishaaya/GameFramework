@@ -11,40 +11,30 @@ using System.Text;
 
 namespace BaseGameLibrary.Visual
 {
-    public class ButtonManager
+    public class ButtonManager<TScreenum> : IRunnable where TScreenum : Enum
     {
         List<ActionButton> buttons;
-        public bool Running { get; set; }
+        //public bool Running { get; set; }
         // Screen parent;
-        public ButtonManager(params ActionButton[] buttons)
-            : this(buttons.AsEnumerable()) { }
+        public ButtonManager(params ActionButton[] buttons) => this.buttons = new(buttons);
+          
         public ButtonManager(IEnumerable<ActionButton> buttons)
         {
-           // this.parent = parent;
-            this.buttons = buttons == null? new List<ActionButton>() : buttons.ToList();
-            Running = true;
+           // this.parent = parent;            
+            this.buttons = buttons.ToList();
+            //Running = true;
         }
 
-        public void Update(Vector2 mousePos, bool heldMouse, params Click[] clicks)
+        void IRunnable.Update(GameTime gameTime) => Update();
+        public void Update()
         {
-            if (!Running) return;
+            //if (!Running) return;
 
             for (int i = 0; i < buttons.Count; i++)
             {
                 var currentButton = buttons[i];
 
-                currentButton.Click(clicks, heldMouse, mousePos);
-            }
-        }
-        public void Update(Vector2 mousePos, bool heldMouse, CursorRoot cursor)
-        {
-            if (!Running) return;
-
-            for (int i = 0; i < buttons.Count; i++)
-            {
-                var currentButton = buttons[i];
-
-                currentButton.Click(cursor);
+                currentButton.Click(Screenmanager<TScreenum>.Instance.Cursor);
             }
         }
 
@@ -55,5 +45,8 @@ namespace BaseGameLibrary.Visual
                 button.Draw(spriteBatch);
             }
         }
+
+
+
     }
 }
