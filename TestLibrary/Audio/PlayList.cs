@@ -17,17 +17,36 @@ namespace BaseGameLibrary.Audio
     public interface ILocationGenerator<T>
     {
         public T GetNextLocation();
-    }   
+    }
+    public class IndexLooper<T> : ILocationGenerator<int>
+    {
+        public IndexLooper(List<T> playList) => mylist = playList;
+        List<T> mylist;
+        int soundIndex = 0;
+        public int GetNextLocation() => soundIndex = (soundIndex + 1) % mylist.sounds.Count;
+
+    }
+    public class IndexShuffler<T> : ILocationGenerator<int>
+    {
+        public IndexShuffler(List<T> playList, Random? random = null)
+        {
+            mylist = playList;
+            this.random = random ?? Random.Shared;
+        }
+        Random random;
+        List<T> mylist;
+        List<int> bag;
+        public int GetNextLocation()
+        {
+            return bag[]
+        }
+
+    }
+
     public class PlayList<TSoundType> where TSoundType : Enum
     {
-        public class IntLooper : ILocationGenerator<int>
-        {
-            public IntLooper(PlayList<TSoundType> playList) => myPlaylist = playList;
-            PlayList<TSoundType> myPlaylist;
-            int soundIndex = 0;
-            public int GetNextLocation() => soundIndex = (soundIndex + 1) % myPlaylist.sounds.Count;
-            
-        }
+
+
         List<TSoundType> sounds;
         SoundEffectInstance currentSound;
 
@@ -37,7 +56,7 @@ namespace BaseGameLibrary.Audio
         {
             if (currentSound.State != SoundState.Stopped) return;
 
-            currentSoundIndex = GetNextSound();
+            currentSound = MusicManager<TSoundType>.Instance.Play(sounds[GetNextSound()]);
 
         }
     }

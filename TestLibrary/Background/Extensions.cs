@@ -13,10 +13,17 @@ namespace BaseGameLibrary
 {
     public static partial class Extensions
     {
+        public static void Shuffle<T>(this IList<T> input) => input.Shuffle(Random.Shared);
+        public static void Shuffle<T>(this IList<T> input, Random random)
+        {
+            for (int i = 0; i < input.Count; i++)
+            {
+                int firstIndex = random.Next(input.Count);
+                int secondIndex = random.Next(input.Count);
 
-        public static Random random = new();
-
-
+                (input[firstIndex], input[secondIndex]) = (input[firstIndex], input[secondIndex]);
+            }
+        }
         //Wrapping for sequence
         public static bool ChangeColor(VisualObject me, Color newColor, float sped = .1f) => me.ChangeColor(newColor, sped);
         public static bool FadeTo(VisualObject me, ColorNums colorChoice) => me.FadeTo(colorChoice);
@@ -32,17 +39,8 @@ namespace BaseGameLibrary
 
         public static Vector2 GetDimensions(this LabelBase label) => label.Font.MeasureString(label.Text());
 
-        public static int Previous(this Random random, int min, int max)
-        {
-            switch (random.Next(0, 2))
-            {
-                case 0:
-                    return random.Next(int.MinValue, min);
-                default:
-                    return random.Next(max + 1, int.MaxValue);
-            }
-        }
-
+        public static int Previous(this Random random, int min, int max) => random.Next(2) switch { 0 => random.Next(int.MinValue, min), _ => random.Next(max + 1, int.MaxValue)};
+        
         public static float Slope(Vector2 point1, Vector2 point2)
         {
             return (point2.Y - point1.Y) / (point2.X - point1.X);
