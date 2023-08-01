@@ -49,9 +49,9 @@ namespace BaseGameLibrary.Screens.Support
 
         private Dictionary<TSoundType, PooledSound> sounds;
 
-        List<TaggedSoundInstance> activeSounds;
+        readonly List<TaggedSoundInstance> activeSounds = new();
         public static MusicManager<TSoundType> Instance { get; } = new();
-        private MusicManager() { }      
+        private MusicManager() { sounds = null!; }      
 
         public PooledSound this[TSoundType tag] => sounds[tag];
 
@@ -75,7 +75,7 @@ namespace BaseGameLibrary.Screens.Support
         {
             var stoppingSound = activeSounds[soundIndex];
             //swapping and removing at end to avoid shifting
-            (activeSounds[activeSounds.Count - 1], activeSounds[soundIndex]) = (stoppingSound, activeSounds[activeSounds.Count - 1]);
+            (activeSounds[^1], activeSounds[soundIndex]) = (stoppingSound, activeSounds[^1]);
             activeSounds.RemoveAt(activeSounds.Count - 1);
 
             var soundCache = sounds[stoppingSound.tag];
