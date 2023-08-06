@@ -57,7 +57,7 @@ namespace BaseGameLibrary.Audio
         }
     }
 
-    public class PlayList<TSoundType> where TSoundType : Enum
+    public sealed class PlayList<TSoundType> : IRunnable where TSoundType : Enum
     {
         readonly List<TSoundType> sounds;
         SoundEffectInstance currentSound;
@@ -79,5 +79,9 @@ namespace BaseGameLibrary.Audio
             currentSound = MusicManager<TSoundType>.Instance.Play(sounds[soundPicker.GetNextLocation()]);
 
         }
+
+        void IRunnable.Update(GameTime gameTime) => Update();
+
+        void IRunnable.Draw(SpriteBatch spriteBatch) { }
     }
 }

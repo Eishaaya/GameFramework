@@ -7,6 +7,10 @@ using System.Text;
 
 namespace BaseGameLibrary
 {
+    public interface IGameObject : IRunnable
+    {
+        void Die();
+    }
     public interface IRunnable
     {
         void Update();

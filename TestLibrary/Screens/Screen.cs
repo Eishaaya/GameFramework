@@ -94,6 +94,8 @@ namespace BaseGameLibrary
         public abstract void Draw();
     }
 
+    
+
     public abstract class ScreenBase<TScreenum, TSoundType> : IScreen where TScreenum : Enum where TSoundType : Enum//: IRunnable
     {
 
@@ -101,8 +103,6 @@ namespace BaseGameLibrary
         protected List<IRunnable> objects;
 
         //Music management
-        public TSoundType IntroMusic { get; set; }
-        public TSoundType Music { get; set; }
         public abstract bool DrawBelow { get; }
         public abstract bool UpdateBelow { get; }
 
@@ -126,7 +126,7 @@ namespace BaseGameLibrary
         //    : this(m, null, buttons, pretties) { }
         //public Screen(SoundEffect m, SoundEffect im, IEnumerable<ActionButton> buttons = null, IEnumerable<IRunnable> pretties = null)
         //    : this(m, im, new ButtonManager(buttons), new AestheticsManager(pretties)) { }
-        public ScreenBase(SoundEffect m, SoundEffect im, ButtonManager buttons, AestheticsManager pretties)
+        public ScreenBase(List<IRunnable> objects = null)
         {
             buttonManager = buttons ?? new ButtonManager();
             aesthetics = pretties ?? new AestheticsManager();
