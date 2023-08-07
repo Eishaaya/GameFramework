@@ -83,14 +83,46 @@ namespace BaseGameLibrary
     //    }
     //}
 
-    public interface IScreen
+    public interface IScreen<TScreenum> where TScreenum : Enum
     {
+
+        /// <summary>
+        /// Enum ID representing this specific screen
+        /// </summary>
+        public TScreenum ID { get; }
+
+        /// <summary>
+        /// Whether other screens are allowed to update below this one
+        /// </summary>
         public bool DrawBelow { get; }
+        /// <summary>
+        /// Whether other screens are allowed to update below this one
+        /// </summary>
         public bool UpdateBelow { get; }
 
+        /// <summary>
+        /// screen is opened
+        /// </summary>
         public abstract void Start();
-        public abstract void End();
+        /// <summary>
+        /// screen about to change to the next
+        /// </summary>
+        public abstract void Pass();
+        /// <summary>
+        /// Screen being returned to after being passed
+        /// </summary>
+        public abstract void Resume();
+        /// <summary>
+        /// Screen being fully closed
+        /// </summary>
+        public abstract void Stop();
+        /// <summary>
+        /// Update runs every frame
+        /// </summary>
         public abstract void Update();
+        /// <summary>
+        /// Draw runs after update when monogame allows
+        /// </summary>
         public abstract void Draw();
     }
 

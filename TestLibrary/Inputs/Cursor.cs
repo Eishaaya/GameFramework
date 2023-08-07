@@ -22,7 +22,7 @@ namespace BaseGameLibrary.Inputs
             X,
             Y
         }//TEST X & Y
-        public enum ClickStatus : int
+        public enum ClickStatus : int //WHY IS THIS INT
         {
             No,
             Hovering,

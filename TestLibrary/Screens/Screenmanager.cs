@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BaseGameLibrary.Inputs;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,24 +15,25 @@ namespace BaseGameLibrary
         public TimeSpan DeltaTime => gameTime.ElapsedGameTime;
         public TimeSpan TotalTime => gameTime.TotalGameTime;
         
-        public IScreen CurrentScreen => activeScreens.Peek();
+        public IScreen<TScreenum> CurrentScreen => activeScreens.Peek();
 
-        Stack<IScreen> activeScreens;
-        Dictionary<TScreenum, IScreen> allScreens;
-        public Stack<IScreen> PreviousScreens { get; private set; }
+        Stack<IScreen<TScreenum>> activeScreens;
+        Dictionary<TScreenum, IScreen<TScreenum>> allScreens;
+        public Stack<IScreen<TScreenum>> PreviousScreens { get; private set; }
         public static Screenmanager<TScreenum> Instance { get; } = new();
         private Screenmanager() { }
         //public Screen Peek()
         //{
         //    return CurrentScreen;
         //}
-        public void Init(CursorRoot mouse, params (TScreenum key, IScreen)[] screens)
+        public void Init<TCursor>(TCursor mouse, params (TScreenum key, IScreen<TScreenum> screen)[] screens) where TCursor : CursorRoot
         {
             Cursor = mouse;
-            activeScreens = new Stack<IScreen>();
+            activeScreens = new ();
+            PreviousScreens = new();
+
             allScreens = screens.ToDictionary(m => m.Item1, m => m.Item2);
             activeScreens.Push(screens[0].screen);
-            PreviousScreens = new Stack<IScreen>();
             CurrentScreen.Start();
         }
 
@@ -38,7 +41,7 @@ namespace BaseGameLibrary
 
     public void Back()
         {
-            activeScreens.Pop().StopMusic();
+            activeScreens.Pop().Stop();
             if (activeScreens.Count > 0)
             {
                 if (CurrentScreen != PreviousScreens.Peek())
