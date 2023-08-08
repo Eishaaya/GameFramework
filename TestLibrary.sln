@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseGameLibrary", "TestLibr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProj", "TestProj\TestProj.csproj", "{9EF55A6A-3106-411E-BA1D-E30969B52C3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HamsterTest", "HamsterTest\HamsterTest.csproj", "{E14EB71C-BA55-4512-9DB2-464C0726D24D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HamsterTest", "HamsterTest\HamsterTest.csproj", "{E14EB71C-BA55-4512-9DB2-464C0726D24D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C3130582-C653-4607-B5B4-1FCACB7C40AC}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

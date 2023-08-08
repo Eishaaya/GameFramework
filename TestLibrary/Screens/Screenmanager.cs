@@ -7,113 +7,85 @@ using System.Text;
 
 namespace BaseGameLibrary
 {
-    public class Screenmanager<TScreenum> where TScreenum : Enum
+    public sealed class Screenmanager<TScreenum> where TScreenum : Enum
     {
+        Action? exitAction;
         public CursorRoot Cursor { get; set; }
 
         GameTime gameTime;
         public TimeSpan DeltaTime => gameTime.ElapsedGameTime;
         public TimeSpan TotalTime => gameTime.TotalGameTime;
-        
+
         public IScreen<TScreenum> CurrentScreen => activeScreens.Peek();
 
         Stack<IScreen<TScreenum>> activeScreens;
         Dictionary<TScreenum, IScreen<TScreenum>> allScreens;
-        public Stack<IScreen<TScreenum>> PreviousScreens { get; private set; }
         public static Screenmanager<TScreenum> Instance { get; } = new();
+
+    #nullable disable
         private Screenmanager() { }
-        //public Screen Peek()
-        //{
-        //    return CurrentScreen;
-        //}
-        public void Init<TCursor>(TCursor mouse, params (TScreenum key, IScreen<TScreenum> screen)[] screens) where TCursor : CursorRoot
+    #nullable enable
+
+        public void Init<TCursor>(TCursor mouse, Action? exitAction = null, params (TScreenum key, IScreen<TScreenum> screen)[] screens) where TCursor : CursorRoot
         {
             Cursor = mouse;
-            activeScreens = new ();
-            PreviousScreens = new();
-
-            allScreens = screens.ToDictionary(m => m.Item1, m => m.Item2);
+            activeScreens = new();
+            allScreens = screens.ToDictionary(m => m.key, m => m.screen);
             activeScreens.Push(screens[0].screen);
             CurrentScreen.Start();
+            this.exitAction = exitAction;
         }
 
 
 
-    public void Back()
+        public void Back()
         {
             activeScreens.Pop().Stop();
             if (activeScreens.Count > 0)
             {
-                if (CurrentScreen != PreviousScreens.Peek())
-                {
-                    activeScreens.Pop().StopMusic();
-                }
-                else
-                {
-                    PreviousScreens.Pop();
-                    CurrentScreen.heldMouse = true;
-                    CurrentScreen.Start();
-                    return;
-                }
+                CurrentScreen.Resume();
             }
-            activeScreens.Push(PreviousScreens.Pop());
-            CurrentScreen.heldMouse = true;
+            else 
+            {
+                exitAction?.Invoke();
+            }
+        }
+        public void ReplaceCurrent(TScreenum choice)
+        {
+            CurrentScreen.Pass();
+            activeScreens.Push(allScreens[choice]);
             CurrentScreen.Start();
         }
-        public void Next(TScreenum choice, bool replace)
+        public void Next(TScreenum choice)
         {
-            if (replace)
-            {
-                CurrentScreen.StopMusic();
-                PreviousScreens.Push(activeScreens.Pop());
-                if (activeScreens.Count > 0)
-                {
-                    CurrentScreen.StopMusic();
-                    activeScreens.Clear();
-                }
-                activeScreens.Push(allScreens[choice]);
-            }
-            else
-            {
-                PreviousScreens.Push(CurrentScreen);
-                activeScreens.Push(allScreens[choice]);
-            }
-            CurrentScreen.heldMouse = true;
+            activeScreens.Push(allScreens[choice]);
             CurrentScreen.Start();
-        }
-        public void ClearMemory()
-        {
-            PreviousScreens.Clear();
         }
         public void Update(GameTime time)
         {
             gameTime = time;
-            Stack<IScreen> drawScreens = new();
-            while (activeScreens.Count > 0)
+            foreach (var screen in activeScreens)
             {
-                drawScreens.Push(activeScreens.Pop());
+                screen.Update();
+                if (!screen.UpdateBelow) break;
             }
-            drawScreens.Peek().Play(time);
-            while (drawScreens.Count > 0)
-            {
-                activeScreens.Push(drawScreens.Pop());
-            }
-            CurrentScreen.Update(time);
         }
 
-        public void Draw(SpriteBatch batch)
+        public void Draw() => Draw(activeScreens.GetEnumerator());
+        private void Draw(Stack<IScreen<TScreenum>>.Enumerator screenEnumerator)
         {
-            Stack<IScreen> drawScreens = new ();
-            while (activeScreens.Count > 0)
+            if (!screenEnumerator.MoveNext()) return;
+
+            var current = screenEnumerator.Current;
+
+            if (current.DrawBelow)
             {
-                drawScreens.Push(activeScreens.Pop());
+                Draw(screenEnumerator);
             }
-            while (drawScreens.Count > 0)
-            {
-                var current = drawScreens.Pop();
-                current.Draw(batch);
-                activeScreens.Push(current);
-            }
+
+            current.Draw();
         }
+
+
     }
 }
