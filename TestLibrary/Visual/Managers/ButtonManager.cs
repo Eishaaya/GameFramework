@@ -34,7 +34,7 @@ namespace BaseGameLibrary.Visual
             {
                 var currentButton = buttons[i];
 
-                currentButton.Click(Screenmanager<TScreenum>.Instance.Cursor);
+                currentButton.Click(ScreenManager<TScreenum>.Instance.Cursor);
             }
         }
 

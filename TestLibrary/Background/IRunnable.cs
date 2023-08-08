@@ -14,9 +14,10 @@ namespace BaseGameLibrary
     public interface IRunnable
     {
         void Update();
-        void Update(GameTime gameTime);
+        void Update(GameTime gameTime) => Update();
         void Draw(SpriteBatch spriteBatch);
-        
+        void Pause() { }
+        void Begin() { }
     }
 
     public interface ICopyable<out T> where T : ICopyable<T>

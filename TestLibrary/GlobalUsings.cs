@@ -6,3 +6,5 @@ global using BaseGameLibrary.Screens;
 global using BaseGameLibrary.Inputs;
 global using BaseGameLibrary.Visual;
 global using BaseGameLibrary.Screens.Support;
+
+global using ScreenManager = BaseGameLibrary.ScreeenManagerBase;

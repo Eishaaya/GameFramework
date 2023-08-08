@@ -1,32 +1,53 @@
-﻿using BaseGameLibrary.Inputs;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace BaseGameLibrary
 {
-    public sealed class Screenmanager<TScreenum> where TScreenum : Enum
+    public abstract class ScreeenManagerBase
     {
-        Action? exitAction;
-        public CursorRoot Cursor { get; set; }
 
+
+        static Func<ScreeenManagerBase>? instance;
+        protected static Func<ScreeenManagerBase> InstanceFunc
+        {
+            get => instance?? throw new InvalidOperationException("Access the instance of an initialized concrete Screenmanager before using this!");
+            set => instance = instance == null ? value : throw new InvalidOperationException("You should not have two screenmanagers active at the same time!");
+        }
+
+        public static ScreeenManagerBase Instance => InstanceFunc();
+
+#nullable disable
+        public CursorRoot Cursor { get; protected set; }
         GameTime gameTime;
+#nullable enable
+
         public TimeSpan DeltaTime => gameTime.ElapsedGameTime;
         public TimeSpan TotalTime => gameTime.TotalGameTime;
+
+        public abstract void Back();
+        public virtual void Update(GameTime time)
+        {
+            gameTime = time;
+        }
+        public abstract void Draw();
+    }
+    public sealed class ScreenManager<TScreenum> :ScreeenManagerBase where TScreenum : Enum
+    {
+        Action? exitAction;
 
         public IScreen<TScreenum> CurrentScreen => activeScreens.Peek();
 
         Stack<IScreen<TScreenum>> activeScreens;
         Dictionary<TScreenum, IScreen<TScreenum>> allScreens;
-        public static Screenmanager<TScreenum> Instance { get; } = new();
+        public static new ScreenManager<TScreenum> Instance { get; } = new();
 
-    #nullable disable
-        private Screenmanager() { }
-    #nullable enable
+#nullable disable
+        private ScreenManager() { ScreeenManagerBase.InstanceFunc = () => Instance; }
+#nullable enable
 
-        public void Init<TCursor>(TCursor mouse, Action? exitAction = null, params (TScreenum key, IScreen<TScreenum> screen)[] screens) where TCursor : CursorRoot
+        public void Init(CursorRoot mouse, Action? exitAction = null, params (TScreenum key, IScreen<TScreenum> screen)[] screens)
         {
             Cursor = mouse;
             activeScreens = new();
@@ -38,14 +59,14 @@ namespace BaseGameLibrary
 
 
 
-        public void Back()
+        public override void Back()
         {
             activeScreens.Pop().Stop();
             if (activeScreens.Count > 0)
             {
                 CurrentScreen.Resume();
             }
-            else 
+            else
             {
                 exitAction?.Invoke();
             }
@@ -61,9 +82,9 @@ namespace BaseGameLibrary
             activeScreens.Push(allScreens[choice]);
             CurrentScreen.Start();
         }
-        public void Update(GameTime time)
+        public override void Update(GameTime time)
         {
-            gameTime = time;
+            base.Update(time);
             foreach (var screen in activeScreens)
             {
                 screen.Update();
@@ -71,7 +92,7 @@ namespace BaseGameLibrary
             }
         }
 
-        public void Draw() => Draw(activeScreens.GetEnumerator());
+        public override void Draw() => Draw(activeScreens.GetEnumerator());
         private void Draw(Stack<IScreen<TScreenum>>.Enumerator screenEnumerator)
         {
             if (!screenEnumerator.MoveNext()) return;

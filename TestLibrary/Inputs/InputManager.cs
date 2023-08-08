@@ -12,7 +12,7 @@ namespace BaseGameLibrary
 {
     public sealed class InputManager<T> where T : Enum
     {
-        private static Dictionary<InputSources, Action<InputManager<T>>> defaultStates = new Dictionary<InputSources, Action<InputManager<T>>>()
+        private readonly static Dictionary<InputSources, Action<InputManager<T>>> defaultStates = new ()
         {
             [InputSources.Keyboard] = m => m.ks = Keyboard.GetState(),
             [InputSources.Mouse] = m => m.ms = Mouse.GetState(),
@@ -50,7 +50,7 @@ namespace BaseGameLibrary
         }
 
 
-        public static InputManager<T> Instance { get; } = new InputManager<T>();
+        public static InputManager<T> Instance { get; } = new ();
         Dictionary<T, InputControl> buttons; //{ get; private set; }
 
         public void Fill(Dictionary<T, InputControl> buttons) { Fill(buttons, GetSources(buttons)); }
@@ -70,6 +70,7 @@ namespace BaseGameLibrary
             : this(new Dictionary<T, InputControl>()) { }
         private InputManager(Dictionary<T, InputControl> buttons)
             : this(buttons, GetSources(buttons)) { }
+#nullable disable
         private InputManager(Dictionary<T, InputControl> buttons, InputSources sources)
         {
             this.buttons = buttons;
@@ -81,8 +82,9 @@ namespace BaseGameLibrary
 
             PrepareStates();
         }
+#nullable enable
 
-        private static Dictionary<Type, InputSources> defaultMap = new Dictionary<Type, InputSources>()
+        private readonly static Dictionary<Type, InputSources> defaultMap = new ()
         {
             [typeof(KeyControl)] = InputSources.Keyboard,
             [typeof(MouseControl)] = InputSources.Mouse,
@@ -132,9 +134,9 @@ namespace BaseGameLibrary
     public struct BoolInt
     {
         [FieldOffset(0)]
-        bool digital;
+        readonly bool digital;
         [FieldOffset(0)]
-        int analog;
+        readonly int analog;
 
         public BoolInt(bool digital)
         {
@@ -148,10 +150,10 @@ namespace BaseGameLibrary
         }
 
         public static implicit operator bool(BoolInt me) => me.digital;
-        public static implicit operator BoolInt(bool mine) => new BoolInt(mine);
+        public static implicit operator BoolInt(bool mine) => new (mine);
 
         public static implicit operator int(BoolInt me) => me.analog;
-        public static implicit operator BoolInt(int mine) => new BoolInt(mine);
+        public static implicit operator BoolInt(int mine) => new (mine);
     }
 }
 #endregion

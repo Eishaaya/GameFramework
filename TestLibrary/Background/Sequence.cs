@@ -6,34 +6,28 @@ using System.Text;
 namespace BaseGameLibrary
 {
     using DelayFunc = ParamFunc<Timer, bool>;
-    public class Sequence<TScreenum> : IRunnable where TScreenum : Enum
-    {
+    public class Sequence : IRunnable    {
         /// <summary>
         /// the operations that make up the sequence
         /// </summary>
         public List<IParamFunc<bool>> Tasks { get; private set; }
         int current;
 
-        public Sequence()
-        {
-            current = 0;
-        }
-
         public Sequence(params IParamFunc<bool>[] funcs)
         {
             current = 0;
-            AssignTasks(funcs);
+            Tasks = new(funcs);
         }
-        /// <summary>
-        /// Assigns the tasks the sequence will run
-        /// </summary>
-        /// <param name="funcs">the tasks</param>
-        public void AssignTasks(params IParamFunc<bool>[] funcs)
-        {
-            Tasks = new List<IParamFunc<bool>>(funcs);
-        }        
+        ///// <summary>
+        ///// Assigns the tasks the sequence will run
+        ///// </summary>
+        ///// <param name="funcs">the tasks</param>
+        //public void AssignTasks(params IParamFunc<bool>[] funcs)
+        //{
+        //    Tasks = new List<IParamFunc<bool>>(funcs);
+        //}        
 
-        public DelayFunc Delay(int time) => new (m => { m.Tick(Screenmanager<TScreenum>.Instance.DeltaTime); return m.Ready(); }, new Timer(time));
+        public static DelayFunc Delay(int time) => new (m => { m.Tick(ScreenManager.Instance.DeltaTime); return m.Ready(); }, new Timer(time));
 
         //private bool Wait(int time)
         //{
@@ -59,5 +53,8 @@ namespace BaseGameLibrary
 
         public void Draw(SpriteBatch spriteBatch) { }
 
+        public void Pause() { }
+
+        public void Begin() => current = 0;
     }
 }
