@@ -7,10 +7,7 @@ using System.Text;
 
 namespace BaseGameLibrary
 {
-    public interface IGameObject : IRunnable
-    {
-        void Die();
-    }
+    public interface IGameObject : IRunnable, IPoolable { }
     public interface IRunnable
     {
         void Update();
@@ -25,5 +22,5 @@ namespace BaseGameLibrary
         T Clone();
     }
 
-    public interface IGameObject<out T> : IRunnable, ICopyable<T> where T : IGameObject<T> { }
+    public interface IGameObject<out T> : IGameObject, ICopyable<T> where T : IGameObject<T> { }
 }

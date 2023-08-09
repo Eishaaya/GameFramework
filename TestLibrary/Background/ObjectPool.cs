@@ -3,7 +3,13 @@ using System.Collections.Generic;
 
 namespace BaseGameLibrary
 {
-    public interface IPoolable { }
+    public interface IPoolable 
+    {
+        /// <summary>
+        /// Clear any data that does not need to be stored as this item is pooled
+        /// </summary>
+        public void Die();
+    }
     public class NotMyObjectException : Exception
     {
         public override string Message => "Alien object submitted into the pool";

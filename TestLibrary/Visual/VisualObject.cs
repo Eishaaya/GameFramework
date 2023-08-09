@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BaseGameLibrary.Visual
 {
-    public abstract class VisualObject : IPoolable, IGameObject<VisualObject>
+    public abstract class VisualObject : IGameObject<VisualObject>
     {
         public enum ColorNums
         {
@@ -16,8 +16,6 @@ namespace BaseGameLibrary.Visual
             Blue,
             Black,
         };
-        protected Random random;
-
         //ColorChange variables
         protected float changeFactor = 0;
         protected float totalColorDistance = -1;
@@ -63,8 +61,7 @@ namespace BaseGameLibrary.Visual
             this.Rotation = Rotation;
             OriginalColor = color;
             oldScale = Scale;
-            oldRotation = this.Rotation;
-            random = Extensions.random;
+            oldRotation = this.Rotation;            
 
             offset = Vector2.Zero;
             moved = false;
@@ -118,7 +115,7 @@ namespace BaseGameLibrary.Visual
         ///</summary>
         ///<param name="distance">How far away the VisualObject vibrates to</param>
         ///<param name="sped">How fast the VisualObject moves</param>
-        ///<param name="rando">Determines if the point the VisualObject vibrates to is randomly generated</param>
+        ///<param name="rando">Determines if the point the VisualObject vibrates to is Random.Sharedly generated</param>
 
         public bool Vibrate(int distance, float sped, bool rando = true)
         {
@@ -126,7 +123,7 @@ namespace BaseGameLibrary.Visual
             {
                 if (rando)
                 {
-                    spotSet = new Vector2(random.Next(-distance, distance), random.Next(-distance, distance));
+                    spotSet = new Vector2(Random.Shared.Next(-distance, distance), Random.Shared.Next(-distance, distance));
                 }
                 else
                 {
@@ -161,14 +158,14 @@ namespace BaseGameLibrary.Visual
         ///</summary>
         ///<param name="size">How large the VisualObject grows/shrinks to</param>
         ///<param name="sped">How fast the VisualObject scales</param>
-        ///<param name="rando">Determines if the size the VisualObject scales to is randomly generated</param>
+        ///<param name="rando">Determines if the size the VisualObject scales to is Random.Sharedly generated</param>
         public bool Pulsate(int size, float sped, bool rando = true)
         {
             if (float.IsNaN(sizeSet))
             {
                 if (rando)
                 {
-                    sizeSet = random.Next(size) + oldScale * 100;
+                    sizeSet = Random.Shared.Next(size) + oldScale * 100;
                 }
                 else
                 {
@@ -212,7 +209,7 @@ namespace BaseGameLibrary.Visual
             {
                 if (rando)
                 {
-                    degreeSet = random.Next((int)-target * 1000, (int)target * 1000);
+                    degreeSet = Random.Shared.Next((int)-target * 1000, (int)target * 1000);
                     degreeSet /= 1000;
                 }
                 else
@@ -369,6 +366,9 @@ namespace BaseGameLibrary.Visual
         ///Draws the visual object to the screen
         ///</summary>
         public abstract void Draw(SpriteBatch spriteBatch);
+
+        public abstract void Die();
+        
         #endregion
     }
 }
