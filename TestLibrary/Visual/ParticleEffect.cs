@@ -44,7 +44,7 @@ namespace BaseGameLibrary.Visual
                     {
                         scale = new Vector2(scales[j], scales[j]);
                     }
-                    var tempPart = ObjectPool<Particle>.Instance.Borrow<Particle>();
+                    var tempPart = ReflectiveObjectPool<Particle>.Instance.Borrow<Particle>();
                     tempPart.SetParticle(image, origin, colors[j], 0, SpriteEffects.None, new Vector2(image.Width / 2, image.Height / 2), new Vector2((float)(Math.Cos(angle) * speeds[j]), (float)(Math.Sin(angle) * speeds[j])), time, scale, 1f - (.1f / amount * i), scales[j]);
                     particles.Add(tempPart);
                 }
@@ -64,13 +64,13 @@ namespace BaseGameLibrary.Visual
                             {
                                 Y = random.Next(-zoneHeight, zoneHeight);
                             }
-                            var tempPart = ObjectPool<Particle>.Instance.Borrow<Particle>();
+                            var tempPart = ReflectiveObjectPool<Particle>.Instance.Borrow<Particle>();
                             var location = new Vector2(X, Y) + origin;
                             tempPart.SetParticle(image, location, colors[j], 0, SpriteEffects.None, new Vector2(image.Width / 2, image.Height / 2), new Vector2(directionX, directionY) * new Vector2((float)(speeds[j]), (float)speeds[j]), time, new Vector2(scales[j], scales[j]), 1, scales[j], e * 10, false);
                             particles.Add(tempPart);
                             if (e % 2 == 0)
                             {
-                                tempPart = ObjectPool<Particle>.Instance.Borrow<Particle>();
+                                tempPart = ReflectiveObjectPool<Particle>.Instance.Borrow<Particle>();
                                 tempPart.SetParticle(image, location, colors[j], 0, SpriteEffects.None, new Vector2(image.Width / 2, image.Height / 2), Vector2.Transform(new Vector2(directionX, directionY), Matrix.CreateRotationZ(MathHelper.Pi)) * new Vector2((float)(speeds[j]), (float)speeds[j]), time, new Vector2(scales[j], scales[j]), 1, scales[j], e * 10, false);
                                 particles.Add(tempPart);
                             }

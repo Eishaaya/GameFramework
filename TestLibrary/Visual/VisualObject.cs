@@ -367,7 +367,7 @@ namespace BaseGameLibrary.Visual
         ///</summary>
         public abstract void Draw(SpriteBatch spriteBatch);
 
-        public abstract void Die();
+        public abstract void  Die();
         
         #endregion
     }

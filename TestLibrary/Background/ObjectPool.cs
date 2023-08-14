@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace BaseGameLibrary
 {
@@ -7,21 +8,40 @@ namespace BaseGameLibrary
     {
         /// <summary>
         /// Clear any data that does not need to be stored as this item is pooled
-        /// </summary>
+        /// </summary>        
+
         public void Die();
     }
-    public class NotMyObjectException : Exception
+    public class NotMyObjectException : ArgumentException
     {
         public override string Message => "Alien object submitted into the pool";
     }
 
-    sealed class ObjectPool<T>
+    sealed class ObjectPool<T> where T : IPoolable
+    {
+
+
+        Func<T> templateGenerator;
+        Stack<T> pooledItems = new();
+        public static ObjectPool<T> Instance { get; } = new();
+        private ObjectPool() { }
+
+
+
+        public void Init(Func<T> templateGenerator) => this.templateGenerator = templateGenerator;
+
+        public void Submit(T item) => pooledItems.Push(item);
+
+        public T Borrow() => pooledItems.TryPop(out var item) ? item : templateGenerator();
+    }
+
+    sealed class ReflectiveObjectPool<T>
         where T : IPoolable
     {
         #region Singleton
-        public static ObjectPool<T> Instance { get; } = new ObjectPool<T>();
-        static ObjectPool() { }
-        private ObjectPool() { }
+        public static ReflectiveObjectPool<T> Instance { get; } = new ReflectiveObjectPool<T>();
+        static ReflectiveObjectPool() { }
+        private ReflectiveObjectPool() { }
         #endregion Singleton
 
         private Dictionary<Type, (Func<T> createFunc, Queue<T> objects)> objectMap = new Dictionary<Type, (Func<T>, Queue<T>)>();

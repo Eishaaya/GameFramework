@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace BaseGameLibrary
-{
+{    
     public interface IGameObject : IRunnable, IPoolable { }
     public interface IRunnable
     {
